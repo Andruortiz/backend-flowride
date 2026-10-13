@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FlowRide.Dominio/FlowRide.Dominio.csproj" />
+    <Project Path="src/FlowRide.Infraestructura/FlowRide.Infraestructura.csproj" />
+    <Project Path="src/FlowRide.Inicializador/FlowRide.Inicializador.csproj" />
+    <Project Path="src/FlowRide.Servicios/FlowRide.Servicios.csproj" />
+    <Project Path="src/FlowRide.Transversal/FlowRide.Transversal.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FlowRide.Pruebas.Arquitectura/FlowRide.Pruebas.Arquitectura.csproj" />
+    <Project Path="tests/FlowRide.Pruebas.Contrato/FlowRide.Pruebas.Contrato.csproj" />
+    <Project Path="tests/FlowRide.Pruebas.Dominio/FlowRide.Pruebas.Dominio.csproj" />
+    <Project Path="tests/FlowRide.Pruebas.Integracion/FlowRide.Pruebas.Integracion.csproj" />
+    <Project Path="tests/FlowRide.Pruebas.Servicios/FlowRide.Pruebas.Servicios.csproj" />
+  </Folder>
+</Solution>
