@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using FlowRide.Dominio.Compartido;
 using FlowRide.Transversal.Excepciones;
+using FlowRide.Transversal.Helpers;
 
 namespace FlowRide.Dominio.Usuarios;
 
@@ -30,8 +31,6 @@ public sealed class Usuario : Entidad
 
     public RolUsuario Rol { get; private set; }
 
-      public Guid? ClienteEmpresarialId { get; private set; }
-
     public string? IdentidadExterna { get; private set; }
 
     public bool Activo { get; private set; }
@@ -46,17 +45,16 @@ public sealed class Usuario : Entidad
         string? telefono,
         string codigoInterno,
         RolUsuario rol,
-        Guid? clienteEmpresarialId,
-        DateTimeOffset ahora)
+        DateTimeOffset ahora,
+        Guid? id = null)
     {
         var correoNormalizado = NormalizarCorreo(correo);
         var telefonoNormalizado = NormalizarTelefono(telefono);
 
         ValidarContactoSegunRol(rol, correoNormalizado, telefonoNormalizado);
-        ValidarCliente(rol, clienteEmpresarialId);
 
         return new Usuario(
-            Guid.CreateVersion7(),
+            UuidHelper.GetOrGenerate(id),
             NormalizarTextoObligatorio(nombre, "El nombre del usuario es obligatorio."),
             NormalizarTextoObligatorio(codigoInterno, "El código interno del usuario es obligatorio."),
             rol,
@@ -64,11 +62,10 @@ public sealed class Usuario : Entidad
         {
             Correo = correoNormalizado,
             Telefono = telefonoNormalizado,
-            ClienteEmpresarialId = clienteEmpresarialId,
         };
     }
 
-      public void ActualizarDatos(string nombre, string? correo, string? telefono)
+    public void ActualizarDatos(string nombre, string? correo, string? telefono)
     {
         var nombreNormalizado = NormalizarTextoObligatorio(nombre, "El nombre del usuario es obligatorio.");
         var correoNormalizado = NormalizarCorreo(correo);
@@ -81,21 +78,14 @@ public sealed class Usuario : Entidad
         Telefono = telefonoNormalizado;
     }
 
-      public void CambiarRol(RolUsuario nuevoRol)
+    public void CambiarRol(RolUsuario nuevoRol)
     {
         ValidarContactoSegunRol(nuevoRol, Correo, Telefono);
-        ValidarCliente(nuevoRol, ClienteEmpresarialId);
 
         Rol = nuevoRol;
     }
 
-    public void AsignarClienteEmpresarial(Guid? clienteEmpresarialId)
-    {
-        ValidarCliente(Rol, clienteEmpresarialId);
-        ClienteEmpresarialId = clienteEmpresarialId;
-    }
-
-       public void VincularIdentidadExterna(string identidadExterna)
+    public void VincularIdentidadExterna(string identidadExterna)
     {
         var identidad = NormalizarTextoObligatorio(identidadExterna, "La identidad externa es obligatoria.");
 
@@ -107,7 +97,7 @@ public sealed class Usuario : Entidad
         IdentidadExterna = identidad;
     }
 
-     public void Desactivar(DateTimeOffset ahora)
+    public void Desactivar(DateTimeOffset ahora)
     {
         if (!Activo)
         {
@@ -131,7 +121,7 @@ public sealed class Usuario : Entidad
 
     private static string NormalizarTextoObligatorio(string valor, string mensaje)
     {
-        if (string.IsNullOrWhiteSpace(valor))
+        if (TextHelper.IsEmptyWithTrim(valor))
         {
             throw new DomainException(mensaje);
         }
@@ -141,7 +131,7 @@ public sealed class Usuario : Entidad
 
     private static string? NormalizarCorreo(string? correo)
     {
-        if (string.IsNullOrWhiteSpace(correo))
+        if (TextHelper.IsEmptyWithTrim(correo))
         {
             return null;
         }
@@ -158,7 +148,7 @@ public sealed class Usuario : Entidad
 
     private static string? NormalizarTelefono(string? telefono)
     {
-        if (string.IsNullOrWhiteSpace(telefono))
+        if (TextHelper.IsEmptyWithTrim(telefono))
         {
             return null;
         }
@@ -190,11 +180,4 @@ public sealed class Usuario : Entidad
         }
     }
 
-    private static void ValidarCliente(RolUsuario rol, Guid? clienteEmpresarialId)
-    {
-        if (clienteEmpresarialId is not null && rol != RolUsuario.Pasajero)
-        {
-            throw new DomainException("Solo un pasajero puede asociarse a un cliente empresarial.");
-        }
-    }
 }
