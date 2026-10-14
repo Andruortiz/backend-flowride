@@ -2,10 +2,15 @@ name: CI
 
 on:
   pull_request:
-    branches: [develop, main]
+    branches: [main]
   push:
-    branches: [develop, main]
+    branches: [main]
   workflow_call:
+    inputs:
+      omitir-sonar:
+        description: "Omite el análisis de SonarCloud por que el pipeline ya lo hace "
+        type: boolean
+        default: false
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -67,7 +72,7 @@ jobs:
         run: dotnet test tests/FlowRide.Pruebas.Arquitectura --no-restore -c Release
 
   trivy:
-    name: Escaneo Trivy (repositorio)
+    name: Escaneo Trivy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -81,3 +86,46 @@ jobs:
           severity: HIGH,CRITICAL
           ignore-unfixed: true
           exit-code: "1"
+
+
+  sonar:
+    name: Análisis SonarCloud
+    runs-on: ubuntu-latest
+  
+    if: ${{ inputs.omitir-sonar != true && ((github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository) || (github.event_name == 'push' && github.ref_name == github.event.repository.default_branch)) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Instalar dotnet-sonarscanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Analizar
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          dotnet sonarscanner begin \
+            /k:"Andruortiz_backend-flowride" \
+            /o:"andruortiz" \
+            /d:sonar.token="$SONAR_TOKEN" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
+            /d:sonar.exclusions="**/Migraciones/**"
+
+          dotnet build FlowRide.slnx -c Release
+
+          dotnet test FlowRide.slnx -c Release --no-build \
+            --collect:"XPlat Code Coverage" \
+            -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+
+          dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
