@@ -1,0 +1,450 @@
+<mxfile host="app.diagrams.net" pages="2">
+  <diagram name="Página-1" id="fyfK4mR1tuoYRkn1BLUN">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="nuiDMKqovkmk5MXVD9pS-56" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="1067.5" width="1820" x="-380" y="-320" as="geometry" />
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-15" edge="1" parent="1" source="6F6lWVyqzDKVupjAqDXb-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="g7TMzFRaHcbSuGxoWEtK-14">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="440" />
+              <mxPoint x="180" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-16" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#d0cee2;labelBorderColor=#56517e;" value="Solicita autenticación&lt;br&gt;&amp;nbsp;validación de identidad, &lt;br&gt;tokens y gestión de sesiones." vertex="1">
+          <mxGeometry relative="1" x="0.6222" y="-2" as="geometry">
+            <mxPoint x="2" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0_6ptB_vrPyAksFsKBqe-1" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];inheritText=1;" value="Text" vertex="1">
+          <mxGeometry relative="1" x="0.6294" y="8" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-18" edge="1" parent="1" source="6F6lWVyqzDKVupjAqDXb-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="g7TMzFRaHcbSuGxoWEtK-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320.06" y="402.47" />
+              <mxPoint x="-99.94" y="402.47" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-19" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#d0cee2;labelBorderColor=#56517e;" value="Solicita el envío de mensajes&lt;br&gt;&amp;nbsp;confirmaciones, asignaciones&lt;br&gt;recordatorios y &lt;br&gt;notificaciones por WhatsApp." vertex="1">
+          <mxGeometry relative="1" x="-0.0005" y="-3" as="geometry">
+            <mxPoint x="-135" y="101" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-21" edge="1" parent="1" source="6F6lWVyqzDKVupjAqDXb-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="g7TMzFRaHcbSuGxoWEtK-20">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="440" />
+              <mxPoint x="540" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-22" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-21" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#d0cee2;labelBorderColor=#56517e;" value="&lt;strong&gt;&lt;/strong&gt;Obtener la &lt;strong&gt;posición real y periódica&lt;/strong&gt; del&amp;nbsp;&lt;div&gt;vehículo/conductor..&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.5314" y="-2" as="geometry">
+            <mxPoint x="2" y="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-24" edge="1" parent="1" source="6F6lWVyqzDKVupjAqDXb-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="g7TMzFRaHcbSuGxoWEtK-23">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480.02" y="402.51" />
+              <mxPoint x="900.02" y="402.51" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-25" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-24" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#d0cee2;labelBorderColor=#56517e;" value="Solicita el envío de correos electrónicos&lt;br&gt;&amp;nbsp;para recuperación de credenciales y&lt;br&gt;&amp;nbsp;comunicaciones administrativas." vertex="1">
+          <mxGeometry relative="1" x="0.6415" y="-1" as="geometry">
+            <mxPoint x="1" y="37" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tAasgtTTnA32hIjABubA-11" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-24" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#d0cee2;labelBorderColor=#56517e;" value="&lt;strong&gt;&lt;/strong&gt;Calcular &lt;strong&gt;ruta, distancia, duración y&lt;/strong&gt;&lt;div&gt;&lt;strong&gt;&amp;nbsp;tiempo estimado de llegada&lt;/strong&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.6415" y="-1" as="geometry">
+            <mxPoint x="291" y="56" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="FlowRide" c4Type="Software System" c4Description="Plataforma SaaS de gestión de transporte corporativo interno" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="6F6lWVyqzDKVupjAqDXb-1">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#cce5ff;align=center;arcSize=10;strokeColor=#36393d;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];fontColor=light-dark(#000000,#FFFFFF);" vertex="1">
+            <mxGeometry height="120" width="240" x="260" y="262.5" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-3" edge="1" parent="1" source="g7TMzFRaHcbSuGxoWEtK-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="6F6lWVyqzDKVupjAqDXb-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900.05" y="242.47" />
+              <mxPoint x="439.95" y="242.47" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-13" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#b1ddf0;labelBorderColor=#10739e;" value="Gestiona usuarios&lt;br&gt;roles, recursos&lt;br&gt;reglas de asignación&lt;br&gt;configuración y&lt;br&gt;&amp;nbsp;reportes del tenant." vertex="1">
+          <mxGeometry relative="1" x="-0.0464" y="-3" as="geometry">
+            <mxPoint x="144" y="-89" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Administrador del Operador" c4Type="Person" c4Description="Responsable de administrar la configuración y los recursos del operador de transporte dentro de FlowRide." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="g7TMzFRaHcbSuGxoWEtK-1">
+          <mxCell parent="1" style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#cce5ff;strokeColor=#36393d;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" vertex="1">
+            <mxGeometry height="180" width="200" x="800" y="-100" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-11" edge="1" parent="1" source="g7TMzFRaHcbSuGxoWEtK-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="6F6lWVyqzDKVupjAqDXb-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540.05" y="200.05" />
+              <mxPoint x="380.05" y="200.05" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-12" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-11" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#b1ddf0;labelBorderColor=#10739e;" value="Monitorea servicios&lt;br&gt;gestiona asignaciones&lt;br&gt;atiende contingencias y&lt;br&gt;&amp;nbsp;realiza intervenciones manuales." vertex="1">
+          <mxGeometry relative="1" x="-0.0822" y="-2" as="geometry">
+            <mxPoint x="37" y="-48" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Operador Logístico " c4Type="Person" c4Description="Responsable de coordinar y supervisar la operación diaria de transporte." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="g7TMzFRaHcbSuGxoWEtK-2">
+          <mxCell parent="1" style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#cce5ff;strokeColor=#36393d;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" vertex="1">
+            <mxGeometry height="180" width="200" x="440" y="-100" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-9" edge="1" parent="1" source="g7TMzFRaHcbSuGxoWEtK-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="g7TMzFRaHcbSuGxoWEtK-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="180" y="280" />
+              <mxPoint x="-200" y="280" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-10" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#b1ddf0;labelBorderColor=#10739e;" value="Recibe asignaciones&lt;br&gt;&amp;nbsp;acepta o rechaza servicios y&lt;br&gt;&amp;nbsp;actualiza el estado del viaje." vertex="1">
+          <mxGeometry relative="1" x="-0.015" as="geometry">
+            <mxPoint x="230" y="-140" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Conductor" c4Type="Person" c4Description="Persona encargada de ejecutar los servicios de transporte asignados por el operador." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="g7TMzFRaHcbSuGxoWEtK-5">
+          <mxCell parent="1" style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#cce5ff;strokeColor=#36393d;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" vertex="1">
+            <mxGeometry height="180" width="200" x="80" y="-100" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-7" edge="1" parent="1" source="g7TMzFRaHcbSuGxoWEtK-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="g7TMzFRaHcbSuGxoWEtK-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-240" y="330" />
+              <mxPoint x="-240" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-8" connectable="0" parent="g7TMzFRaHcbSuGxoWEtK-7" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=#b1ddf0;labelBorderColor=#10739e;" value="Solicita servicios&lt;br&gt;consulta su estado&lt;br&gt;recibe notificaciones y&lt;br&gt;&amp;nbsp;califica el viaje." vertex="1">
+          <mxGeometry relative="1" x="-0.0392" y="3" as="geometry">
+            <mxPoint x="-3" y="-166" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <object placeholders="1" c4Name="Pasajero" c4Type="Person" c4Description="Empleado del cliente empresarial que utiliza el servicio de transporte corporativo." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="g7TMzFRaHcbSuGxoWEtK-6">
+          <mxCell parent="1" style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;fillColor=#cce5ff;strokeColor=#36393d;" vertex="1">
+            <mxGeometry height="180" width="200" x="-280" y="-100" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Proveedor de Identidad y Acceso" c4Type="Software System" c4Description="Servicio externo encargado de gestionar la autenticación, identidad, sesiones y mecanismos de acceso seguro de los usuarios." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="g7TMzFRaHcbSuGxoWEtK-14">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=light-dark(#FFFFFF,#FFFFFF);align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="120" width="240" x="60" y="572.5" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Meta WhatsApp Cloud API" c4Type="Software System" c4Description="Plataforma oficial de WhatsApp Business utilizada como canal de comunicación con pasajeros y conductores." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="g7TMzFRaHcbSuGxoWEtK-17">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=light-dark(#FFFFFF,#FFFFFF);align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="120" width="240" x="-300" y="572.5" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Proveedor de Telemetría GPS" c4Type="Software System" c4Description="Sistema externo encargado de suministrar datos de ubicación de los vehículos durante la operación." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="g7TMzFRaHcbSuGxoWEtK-20">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=light-dark(#FFFFFF,#FFFFFF);align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="120" width="240" x="420" y="572.5" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Servicio de Correo Electrónico" c4Type="Software System" c4Description="Servicio externo utilizado para el envío de comunicaciones administrativas y recuperación de acceso." label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="g7TMzFRaHcbSuGxoWEtK-23">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=light-dark(#FFFFFF,#FFFFFF);align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="120" width="240" x="780" y="572.5" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="g7TMzFRaHcbSuGxoWEtK-26" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#0e8088;fillColor=#b0e3e6;align=center;verticalAlign=middle;rounded=0;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Modelo de Nivel 1&amp;nbsp; (Modelo de Contexto)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="70" width="210" x="275" y="-270" as="geometry" />
+        </mxCell>
+        <object placeholders="1" c4Name="Proveedor de Rutas y ETA" c4Type="Software System" c4Description="Servicio externo que calcula rutas, distancias, duración estimada y tiempo estimado de llegada a partir de coordenadas de origen y destino" label="&lt;font style=&quot;font-size: 16px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot;&gt;&lt;font&gt;%c4Description%&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" id="tAasgtTTnA32hIjABubA-6">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#8C8496;fontColor=light-dark(#FFFFFF,#FFFFFF);align=center;arcSize=10;strokeColor=#736782;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="120" width="240" x="1080" y="572.5" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="tAasgtTTnA32hIjABubA-10" edge="1" parent="1" source="6F6lWVyqzDKVupjAqDXb-1" style="endArrow=classic;dashed=1;html=1;rounded=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=none;startFill=0;endFill=1;" target="tAasgtTTnA32hIjABubA-6" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <Array as="points">
+              <mxPoint x="1200" y="360" />
+              <mxPoint x="1200" y="500" />
+            </Array>
+            <mxPoint x="610" y="430" as="sourcePoint" />
+            <mxPoint x="660" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="_zTXDjabJRD5VYON_oeL" name="Página-2">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="-moaO_4h60-l3L9sqbmE-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#4FA3A5;fillColor=#123B3D;fontColor=#FFFFFF;align=center;verticalAlign=middle;rounded=0;fontSize=17;fontStyle=1;" value="FlowRide — C4 Nivel 2 (Diagrama de Contenedores)" vertex="1">
+          <mxGeometry height="50" width="520" x="1017" y="290" as="geometry" />
+        </mxCell>
+        <object placeholders="1" c4Name="Pasajero" c4Type="Persona" c4Description="Empleado del cliente empresarial que solicita y consulta servicios de transporte por WhatsApp." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-2">
+          <mxCell parent="1" style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#1E3A5F;strokeColor=#9CB3CF;fontColor=#FFFFFF;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" vertex="1">
+            <mxGeometry height="180" width="200" x="380" y="525" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Conductor" c4Type="Persona" c4Description="Ejecuta los servicios asignados; recibe asignaciones y reporta estados por WhatsApp." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-3">
+          <mxCell parent="1" style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#1E3A5F;strokeColor=#9CB3CF;fontColor=#FFFFFF;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" vertex="1">
+            <mxGeometry height="180" width="200" x="390" y="810" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Operador logístico" c4Type="Persona" c4Description="Supervisa la operación en tiempo real e interviene ante contingencias desde el Panel Web." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-4">
+          <mxCell parent="1" style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#1E3A5F;strokeColor=#9CB3CF;fontColor=#FFFFFF;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" vertex="1">
+            <mxGeometry height="180" width="200" x="360" y="1170" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Administrador del operador" c4Type="Persona" c4Description="Administra usuarios, recursos, reglas de asignación, parámetros y reportes del operador." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-5">
+          <mxCell parent="1" style="html=1;fontSize=11;dashed=0;whiteSpace=wrap;fillColor=#1E3A5F;strokeColor=#9CB3CF;fontColor=#FFFFFF;shape=mxgraph.c4.person2;align=center;metaEdit=1;points=[[0.5,0,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0]];resizable=0;" vertex="1">
+            <mxGeometry height="180" width="200" x="360" y="1400" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Plataforma FlowRide — componentes compartidos" c4Type="SystemScopeBoundary" c4Application="sin datos operacionales de los operadores (ADR-0002, T-11)" label="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: right&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: right&quot;&gt;[%c4Application%]&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-6">
+          <mxCell parent="1" style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=2;labelBackgroundColor=none;align=left;verticalAlign=bottom;spacing=10;dashPattern=8 4;metaEdit=1;connectable=0;recursiveResize=0;pointerEvents=0;absoluteArcSize=1;container=0;align=right;fillColor=none;" vertex="1">
+            <mxGeometry height="270" width="990" x="810" y="495" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Proveedor de identidad" c4Type="Contenedor" c4Technology="Keycloak (OIDC/OAuth2)" c4Description="Un realm por operador: login, MFA y recuperación de credenciales del Panel Web (ADR-0003)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-7">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#1B2B40;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#9CB3CF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="150" width="280" x="840" y="555" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Borde: API Gateway + WAF" c4Type="Contenedor" c4Technology="YARP + OWASP CRS, 2 réplicas" c4Description="TLS, ruteo por subdominio al stack del operador, límites de tasa y router de webhooks: valida la firma de Meta y enruta por phone_number_id (ADR-0012)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-8">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#1B2B40;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#9CB3CF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="150" width="300" x="1260" y="570" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Stack Silo del operador — se despliega uno por cada operador" c4Type="SystemScopeBoundary" c4Application="proceso, base de datos, almacenamiento y secretos exclusivos del operador (ADR-0002, ADR-0010)" label="&lt;font style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;&lt;div style=&quot;text-align: left&quot;&gt;%c4Name%&lt;/div&gt;&lt;/b&gt;&lt;/font&gt;&lt;div style=&quot;text-align: left&quot;&gt;[%c4Application%]&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-9">
+          <mxCell parent="1" style="rounded=1;fontSize=11;whiteSpace=wrap;html=1;dashed=1;arcSize=2;labelBackgroundColor=none;align=left;verticalAlign=bottom;spacing=10;dashPattern=8 4;metaEdit=1;connectable=0;recursiveResize=0;pointerEvents=0;absoluteArcSize=1;container=0;" vertex="1">
+            <mxGeometry height="720" width="990" x="790" y="840" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Panel Web Administrativo" c4Type="Contenedor" c4Technology="SPA — HTML/CSS/JS" c4Description="Interfaz del Administrador y del Operador logístico; alertas en tiempo real por canal dedicado (ADR-0015)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-10">
+          <mxCell parent="1" style="shape=mxgraph.c4.webBrowserContainer2;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;strokeColor=#9CB3CF;fillColor=#1B2B40;strokeWidth=2;fontSize=11;fontColor=#FFFFFF;align=center;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="170" width="280" x="840" y="890" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Backend / API FlowRide" c4Type="Contenedor" c4Technology=".NET 10 / ASP.NET Core" c4Description="Monolito modular: identidad, operación, motor de asignación, WhatsApp, telemetría, notificaciones, reportes y auditoría. Hosted services: outbox, recordatorios y retención (ADR-0001)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-11">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#1B2B40;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#9CB3CF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="190" width="300" x="1240" y="890" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Base de datos del operador" c4Type="Contenedor" c4Technology="PostgreSQL + EF Core" c4Description="Esquemas ops (incluye outbox y telemetría particionada) y audit append-only (ADR-0004, ADR-0005, ADR-0007, ADR-0011)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-12">
+          <mxCell parent="1" style="shape=cylinder3;size=15;whiteSpace=wrap;html=1;boundedLbl=1;rounded=0;labelBackgroundColor=none;fillColor=#1E7FB8;fontSize=11;fontColor=#FFFFFF;align=center;strokeColor=#9CD3F2;metaEdit=1;points=[[0.5,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.5,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];resizable=0;" vertex="1">
+            <mxGeometry height="170" width="270" x="840" y="1320" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Almacenamiento de objetos" c4Type="Contenedor" c4Technology="Azure Blob Storage" c4Description="Backups, archivo &gt; 24 meses, exportes y documentos del conductor (ADR-0013)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-13">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#1B2B40;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#9CB3CF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="150" width="270" x="1180" y="1340" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Gestor de secretos" c4Type="Contenedor" c4Technology="Azure Key Vault" c4Description="Credenciales de BD y bucket, token de Meta y claves de cifrado; se leen al arrancar (ADR-0014)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%: %c4Technology%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-14">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontSize=11;labelBackgroundColor=none;fillColor=#1B2B40;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#9CB3CF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="150" width="240" x="1480" y="1330" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Meta WhatsApp Cloud API" c4Type="Sistema externo" c4Description="Canal oficial de pasajeros y conductores; un número (phone_number_id) por operador (ADR-0008)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-15">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#857E91;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#B4ACBF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="140" width="270" x="2030" y="640" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Proveedor de telemetría GPS" c4Type="Sistema externo" c4Description="Proveedor elegido por cada operador; normalizado con ITelemetryProviderAdapter (ADR-0005)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-16">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#857E91;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#B4ACBF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="140" width="270" x="2020" y="820" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Proveedor de rutas / ETA" c4Type="Sistema externo" c4Description="Proveedor externo intercambiable (comercial o motor de rutas autoalojado); estima la duración del trayecto para recalcular el ETA vía IRoutingProvider (ADR-0005)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-17">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#857E91;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#B4ACBF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="140" width="270" x="2020" y="1040" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Servicio de correo electrónico" c4Type="Sistema externo" c4Description="SMTP / API transaccional genérica (IEmailSender, sin proveedor fijo); envía alertas críticas de FlowRide y los correos de recuperación de credenciales de Keycloak (ADR-0015, ADR-0003)." label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-18">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#857E91;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#B4ACBF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="140" width="270" x="2020" y="1230" as="geometry" />
+          </mxCell>
+        </object>
+        <object placeholders="1" c4Name="Observabilidad" c4Type="Sistema externo" c4Description="OpenTelemetry/OTLP hacia un backend intercambiable de trazas, métricas y logs técnicos minimizados; alertas por tier de SLA (ADR-0011)" label="&lt;font style=&quot;font-size: 15px&quot;&gt;&lt;b&gt;%c4Name%&lt;/b&gt;&lt;/font&gt;&lt;div&gt;[%c4Type%]&lt;/div&gt;&lt;br&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px&quot; color=&quot;#D6DEE8&quot;&gt;%c4Description%&lt;/font&gt;&lt;/div&gt;" id="-moaO_4h60-l3L9sqbmE-19">
+          <mxCell parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#857E91;fontColor=#FFFFFF;align=center;arcSize=8;strokeColor=#B4ACBF;metaEdit=1;resizable=0;points=[[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0.25,0],[1,0.5,0],[1,0.75,0],[0.75,1,0],[0.5,1,0],[0.25,1,0],[0,0.75,0],[0,0.5,0],[0,0.25,0]];" vertex="1">
+            <mxGeometry height="140" width="270" x="2020" y="1390" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-20" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#6F6F6F;fillColor=#1C1C1C;fontColor=#E0E0E0;align=left;verticalAlign=top;spacing=10;rounded=0;fontSize=11;" value="Leyenda:&amp;nbsp;&lt;div&gt;persona (azul oscuro)&lt;/div&gt;&lt;div&gt;&amp;nbsp;·&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(224, 224, 224), rgb(45, 45, 45));&quot;&gt;contenedor (azul) ·&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(224, 224, 224), rgb(45, 45, 45));&quot;&gt;base de datos (cilindro)&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(224, 224, 224), rgb(45, 45, 45));&quot;&gt;·&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(224, 224, 224), rgb(45, 45, 45));&quot;&gt;&amp;nbsp;sistema externo (gris)&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(224, 224, 224), rgb(45, 45, 45));&quot;&gt;· límite (línea discontinua).&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;El stack Silo se repite por operador; los componentes de plataforma no guardan datos operacionales. El registro de contenedores y el pipeline de despliegue se muestran en la vista de despliegue (ADR-0010).&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="190" width="990" x="790" y="1630" as="geometry" />
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-21" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-2" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;entryX=0.75;entryY=0;entryDx=0;entryDy=0;dashPattern=12 12;strokeWidth=2;fillColor=none;entryPerimeter=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;startArrow=classic;startFill=1;" target="-moaO_4h60-l3L9sqbmE-15" value="Envía solicitudes, consultas y calificaciones;&amp;nbsp;&lt;div&gt;recibe confirmaciones y recordatorios [WhatsApp]&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="410" />
+              <mxPoint x="490" y="410" />
+              <mxPoint x="490" y="420" />
+              <mxPoint x="2232.6" y="420" />
+            </Array>
+            <mxPoint x="470" y="880" as="sourcePoint" />
+            <mxPoint x="2242.5" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-22" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.358;entryY=0.005;entryDx=0;entryDy=0;strokeWidth=2;dashPattern=8 8;entryPerimeter=0;startArrow=classic;startFill=1;" target="-moaO_4h60-l3L9sqbmE-15" value="Recibe asignaciones y reporta estados del viaje [WhatsApp]">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590.0299999999997" y="880.0299999999997" />
+              <mxPoint x="660.0299999999997" y="880.0299999999997" />
+              <mxPoint x="660.0299999999997" y="460.02999999999975" />
+              <mxPoint x="2129.83" y="460.02999999999975" />
+              <mxPoint x="2129.83" y="640.7200000000003" />
+            </Array>
+            <mxPoint x="590" y="890" as="sourcePoint" />
+            <mxPoint x="2129.9" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-23" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;dashPattern=8 8;strokeWidth=2;fillColor=none;exitX=0.148;exitY=0.017;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="-moaO_4h60-l3L9sqbmE-8" value="Entrega mensajes entrantes y estados de entrega&lt;div&gt;&amp;nbsp;[webhook HTTPS/JSON firmado]&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.4196" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2070" y="540" />
+              <mxPoint x="1410" y="540" />
+            </Array>
+            <mxPoint x="2090" y="610" as="sourcePoint" />
+            <mxPoint x="1450" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-24" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.35;entryDx=0;entryDy=0;dashPattern=8 8;strokeWidth=2;fillColor=none;" target="-moaO_4h60-l3L9sqbmE-10" value="Supervisa servicios, asignaciones&lt;div&gt;&amp;nbsp;y contingencias [HTTPS]&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="560" y="1200" />
+              <mxPoint x="640" y="1200" />
+              <mxPoint x="640" y="949.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-25" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fillColor=none;dashPattern=8 8;strokeWidth=2;entryX=0;entryY=0.75;entryDx=0;entryDy=0;entryPerimeter=0;" target="-moaO_4h60-l3L9sqbmE-10" value="Administra usuarios, reglas,&amp;nbsp;&lt;div&gt;parámetros y reportes [HTTPS]&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.5205" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="510" y="1450" />
+              <mxPoint x="740" y="1450" />
+              <mxPoint x="740" y="1020" />
+              <mxPoint x="840" y="1020" />
+            </Array>
+            <mxPoint x="510" y="1480" as="sourcePoint" />
+            <mxPoint x="810" y="1010" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-26" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=0.4;exitY=0;exitDx=0;exitDy=0;entryX=0.4;entryY=1;entryDx=0;entryDy=0;dashPattern=8 8;strokeWidth=2;fillColor=none;startArrow=none;startFill=0;" target="-moaO_4h60-l3L9sqbmE-7" value="Redirige el inicio de sesión&lt;div&gt;&amp;nbsp;[OIDC Authorization Code + PKCE]&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.0811" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-27" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=0.82;exitY=0;exitDx=0;exitDy=0;entryX=0.23;entryY=1;entryDx=0;entryDy=0;fillColor=none;dashPattern=8 8;strokeWidth=2;" target="-moaO_4h60-l3L9sqbmE-8" value="Consume la API REST con token&lt;div&gt;&amp;nbsp;OIDC [HTTPS/JSON]&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.5791" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1070" y="810" />
+              <mxPoint x="1310" y="810" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-28" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=none;dashPattern=8 8;strokeWidth=2;" target="-moaO_4h60-l3L9sqbmE-11" value="Reenvía peticiones y webhooks al stack&amp;nbsp;&lt;div&gt;del operador [HTTPS]&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.1049" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-29" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.85;entryY=1;entryDx=0;entryDy=0;fillColor=none;dashPattern=8 8;strokeWidth=2;" target="-moaO_4h60-l3L9sqbmE-7" value="Valida tokens (JWKS) y&amp;nbsp;&lt;div&gt;cierra sesiones [HTTPS/OIDC]&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.1637" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1180" y="985" />
+              <mxPoint x="1180" y="740" />
+              <mxPoint x="1080" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-30" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=1;exitY=0.15;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashPattern=8 8;strokeWidth=2;fillColor=none;entryPerimeter=0;" target="-moaO_4h60-l3L9sqbmE-15" value="Envía mensajes y plantillas&lt;div&gt;&amp;nbsp;[HTTPS/JSON, Graph API]&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.531" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1540" y="920" />
+              <mxPoint x="1890" y="920" />
+              <mxPoint x="1890" y="710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-31" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=0;exitY=0.5;exitDx=0;exitDy=0;dashPattern=8 8;strokeWidth=2;fillColor=none;exitPerimeter=0;entryX=1;entryY=0.398;entryDx=0;entryDy=0;entryPerimeter=0;" target="-moaO_4h60-l3L9sqbmE-8" value="Envía eventos de ubicación&lt;div&gt;&amp;nbsp;[HTTPS/JSON]&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.6946" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2020.0299999999997" y="830.0299999999997" />
+              <mxPoint x="1990.0299999999997" y="830.0299999999997" />
+              <mxPoint x="1990.0299999999997" y="790.0299999999997" />
+              <mxPoint x="1835" y="790.0299999999997" />
+              <mxPoint x="1835" y="629.69" />
+            </Array>
+            <mxPoint x="1990.0000000000005" y="819.5" as="sourcePoint" />
+            <mxPoint x="1580" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-32" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=1;exitY=0.68;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fillColor=none;dashPattern=8 8;strokeWidth=2;entryPerimeter=0;" target="-moaO_4h60-l3L9sqbmE-17" value="Solicita estimaciones de&amp;nbsp;&lt;div&gt;ETA [HTTPS/JSON]&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.2334" y="-1" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1990" y="1019.19" />
+              <mxPoint x="2087.52" y="1020" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-33" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=1;exitY=0.89;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;fillColor=none;dashPattern=8 8;strokeWidth=2;entryPerimeter=0;" target="-moaO_4h60-l3L9sqbmE-18" value="Envía alertas críticas&lt;div&gt;&amp;nbsp;[SMTP/HTTPS]&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1880" y="1059.17" />
+              <mxPoint x="1880" y="1220" />
+              <mxPoint x="2087.5" y="1220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-34" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=0.1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashPattern=8 8;strokeWidth=2;fillColor=none;" target="-moaO_4h60-l3L9sqbmE-12" value="Lee y escribe datos transaccionales&amp;nbsp;&lt;div&gt;[TLS / Npgsql]&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1270" y="1170" />
+              <mxPoint x="965" y="1170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-35" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashPattern=8 8;strokeWidth=2;fillColor=none;" target="-moaO_4h60-l3L9sqbmE-13" value="Guarda backups, archivo y&lt;div&gt;&amp;nbsp;exportes [HTTPS]&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-36" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=0.88;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=none;dashPattern=8 8;strokeWidth=2;" target="-moaO_4h60-l3L9sqbmE-14" value="Lee secretos al arrancar [HTTPS,&amp;nbsp;&lt;div&gt;identidad de carga de trabajo]&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1505" y="1170" />
+              <mxPoint x="1600" y="1170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-moaO_4h60-l3L9sqbmE-37" edge="1" parent="1" source="-moaO_4h60-l3L9sqbmE-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;fontSize=10;fontColor=#FFFFFF;labelBackgroundColor=#24364D;labelBorderColor=#7F9BBF;endArrow=blockThin;endFill=1;jumpStyle=arc;jumpSize=10;exitX=1;exitY=0.99;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=none;dashPattern=8 8;strokeWidth=2;" target="-moaO_4h60-l3L9sqbmE-19" value="Exporta trazas,&amp;nbsp;&lt;div&gt;métricas y logs [OTLP]&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1745" y="1079" />
+              <mxPoint x="1745" y="1430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

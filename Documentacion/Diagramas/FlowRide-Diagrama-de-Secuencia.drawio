@@ -1,0 +1,308 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="pag2" name="Aceptación, viaje y cierre">
+    <mxGraphModel dx="2368" dy="1390" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n2" parent="1" style="text;html=1;align=left;fontSize=16;fontStyle=1;" value="Transacción principal (2/2): aceptación, ejecución del viaje y calificación" vertex="1">
+          <mxGeometry height="34" width="1700" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="n3" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Conductor&lt;br&gt;(app / WhatsApp)" vertex="1">
+          <mxGeometry height="54" width="160" x="50" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="120" as="sourcePoint" />
+            <mxPoint x="130" y="1389" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n5" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Pasajero&lt;br&gt;(app / WhatsApp)" vertex="1">
+          <mxGeometry height="54" width="160" x="285" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="365" y="120" as="sourcePoint" />
+            <mxPoint x="365" y="1389" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="API&lt;br&gt;Controladores" vertex="1">
+          <mxGeometry height="54" width="160" x="520" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="120" as="sourcePoint" />
+            <mxPoint x="600" y="1389" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n9" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Servicios&lt;br&gt;Asignaciones · Viajes" vertex="1">
+          <mxGeometry height="54" width="160" x="755" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="835" y="120" as="sourcePoint" />
+            <mxPoint x="835" y="1389" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n11" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Persistencia&lt;br&gt;UnitOfWork + PostgreSQL + outbox" vertex="1">
+          <mxGeometry height="54" width="160" x="990" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1070" y="120" as="sourcePoint" />
+            <mxPoint x="1070" y="1389" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n13" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ProcesadorOutbox" vertex="1">
+          <mxGeometry height="54" width="160" x="1225" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1305" y="120" as="sourcePoint" />
+            <mxPoint x="1305" y="1389" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n15" parent="1" style="rounded=1;html=1;whiteSpace=wrap;fontSize=11;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Manejadores&lt;br&gt;Solicitudes · Asignaciones · Comunicación" vertex="1">
+          <mxGeometry height="54" width="160" x="1460" y="66" as="geometry" />
+        </mxCell>
+        <mxCell id="n16" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1540" y="120" as="sourcePoint" />
+            <mxPoint x="1540" y="1389" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n17" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#d79b00;strokeWidth=1;dashed=1;dashPattern=8 4;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="60" y="168" as="sourcePoint" />
+            <mxPoint x="1630" y="168" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n18" parent="1" style="text;html=1;align=left;fontSize=12;fontStyle=1;fontColor=#b36b00;" value="&amp;nbsp;El conductor acepta (síncrono)" vertex="1">
+          <mxGeometry height="22" width="520" x="60" y="146" as="geometry" />
+        </mxCell>
+        <mxCell id="n19" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="POST /asignaciones/{id}/aceptar">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="203" as="sourcePoint" />
+            <mxPoint x="600" y="203" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n20" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="AceptarAsync(id)&lt;br&gt;solo el conductor ofrecido">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="245" as="sourcePoint" />
+            <mxPoint x="835" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n21" edge="1" parent="1" style="html=1;endArrow=block;endFill=1;strokeColor=#333333;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="869" y="261" />
+              <mxPoint x="869" y="285" />
+            </Array>
+            <mxPoint x="835" y="261" as="sourcePoint" />
+            <mxPoint x="835" y="285" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n22" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=10;fillColor=#ffffff;" value="Asignacion.Aceptar()&lt;br&gt;ProgramacionViajes.ProgramarAsync()&lt;br&gt;→ Viaje Programado" vertex="1">
+          <mxGeometry height="56" width="250" x="875" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="n23" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="GuardarCambiosAsync()&lt;br&gt;asignación + viaje + auditoría + outbox(AsignacionAceptada)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="835" y="361" as="sourcePoint" />
+            <mxPoint x="1070" y="361" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n24" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;fontSize=11;labelBackgroundColor=none;strokeColor=#666666;fontColor=#555555;" value="ok">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1070" y="388" as="sourcePoint" />
+            <mxPoint x="835" y="388" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n25" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;fontSize=11;labelBackgroundColor=none;strokeColor=#666666;fontColor=#555555;" value="200 OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="415" as="sourcePoint" />
+            <mxPoint x="130" y="415" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n26" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#d79b00;strokeWidth=1;dashed=1;dashPattern=8 4;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="60" y="453" as="sourcePoint" />
+            <mxPoint x="1630" y="453" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n27" parent="1" style="text;html=1;align=left;fontSize=12;fontStyle=1;fontColor=#b36b00;" value="Aviso al pasajero (asíncrono)" vertex="1">
+          <mxGeometry height="22" width="520" x="60" y="431" as="geometry" />
+        </mxCell>
+        <mxCell id="n28" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="AlAceptarAsignacion(AsignacionAceptada)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1305" y="488" as="sourcePoint" />
+            <mxPoint x="1540" y="488" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n29" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;fontSize=11;labelBackgroundColor=none;strokeColor=#b85450;fontColor=#b85450;" value="WhatsApp: conductor y placa">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1540" y="515" as="sourcePoint" />
+            <mxPoint x="365" y="515" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n30" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#d79b00;strokeWidth=1;dashed=1;dashPattern=8 4;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="60" y="553" as="sourcePoint" />
+            <mxPoint x="1630" y="553" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n31" parent="1" style="text;html=1;align=left;fontSize=12;fontStyle=1;fontColor=#b36b00;" value="Inicio del viaje" vertex="1">
+          <mxGeometry height="22" width="520" x="60" y="531" as="geometry" />
+        </mxCell>
+        <mxCell id="n32" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="POST /viajes/{id}/iniciar">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="588" as="sourcePoint" />
+            <mxPoint x="600" y="588" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n33" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="IniciarAsync(id)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="615" as="sourcePoint" />
+            <mxPoint x="835" y="615" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n34" edge="1" parent="1" style="html=1;endArrow=block;endFill=1;strokeColor=#333333;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="869" y="631" />
+              <mxPoint x="869" y="655" />
+            </Array>
+            <mxPoint x="835" y="631" as="sourcePoint" />
+            <mxPoint x="835" y="655" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n35" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=10;fillColor=#ffffff;" value="Viaje.Iniciar() · evento ViajeIniciado" vertex="1">
+          <mxGeometry height="28" width="250" x="875" y="625" as="geometry" />
+        </mxCell>
+        <mxCell id="n36" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="GuardarCambiosAsync() (viaje + outbox)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="835" y="688" as="sourcePoint" />
+            <mxPoint x="1070" y="688" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n37" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;fontSize=11;labelBackgroundColor=none;strokeColor=#666666;fontColor=#555555;" value="200 OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="715" as="sourcePoint" />
+            <mxPoint x="130" y="715" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n38" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="ViajeIniciado → solicitud EnCurso,&lt;br&gt;asignación EnCurso, aviso al pasajero">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1305" y="757" as="sourcePoint" />
+            <mxPoint x="1540" y="757" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n39" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="GuardarCambiosAsync() (solicitud, asignación)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1540" y="784" as="sourcePoint" />
+            <mxPoint x="1070" y="784" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n40" edge="1" parent="1" style="endArrow=none;html=1;strokeColor=#d79b00;strokeWidth=1;dashed=1;dashPattern=8 4;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="60" y="822" as="sourcePoint" />
+            <mxPoint x="1630" y="822" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n41" parent="1" style="text;html=1;align=left;fontSize=12;fontStyle=1;fontColor=#b36b00;" value="Fin del viaje y calificación" vertex="1">
+          <mxGeometry height="22" width="520" x="60" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="n42" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="POST /viajes/{id}/finalizar">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="857" as="sourcePoint" />
+            <mxPoint x="600" y="857" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n43" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="FinalizarAsync(id)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="884" as="sourcePoint" />
+            <mxPoint x="835" y="884" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n44" edge="1" parent="1" style="html=1;endArrow=block;endFill=1;strokeColor=#333333;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="869" y="900" />
+              <mxPoint x="869" y="924" />
+            </Array>
+            <mxPoint x="835" y="900" as="sourcePoint" />
+            <mxPoint x="835" y="924" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n45" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=10;fillColor=#ffffff;" value="Viaje.Finalizar() · evento ViajeFinalizado" vertex="1">
+          <mxGeometry height="28" width="250" x="875" y="894" as="geometry" />
+        </mxCell>
+        <mxCell id="n46" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="GuardarCambiosAsync() (viaje + outbox)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="835" y="957" as="sourcePoint" />
+            <mxPoint x="1070" y="957" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n47" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;fontSize=11;labelBackgroundColor=none;strokeColor=#666666;fontColor=#555555;" value="200 OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="984" as="sourcePoint" />
+            <mxPoint x="130" y="984" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n48" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="ViajeFinalizado → solicitud Finalizada,&lt;br&gt;asignación Finalizada, pedir calificación">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1305" y="1026" as="sourcePoint" />
+            <mxPoint x="1540" y="1026" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n49" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="GuardarCambiosAsync() (solicitud, asignación)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1540" y="1053" as="sourcePoint" />
+            <mxPoint x="1070" y="1053" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n50" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;fontSize=11;labelBackgroundColor=none;strokeColor=#b85450;fontColor=#b85450;" value="WhatsApp: «califica tu viaje de 1 a 5»">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1540" y="1080" as="sourcePoint" />
+            <mxPoint x="365" y="1080" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n51" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="POST /viajes/{id}/calificacion&lt;br&gt;{puntaje, comentario}">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="365" y="1122" as="sourcePoint" />
+            <mxPoint x="600" y="1122" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n52" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="CalificarAsync(id)">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="1149" as="sourcePoint" />
+            <mxPoint x="835" y="1149" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n53" edge="1" parent="1" style="html=1;endArrow=block;endFill=1;strokeColor=#333333;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="869" y="1165" />
+              <mxPoint x="869" y="1189" />
+            </Array>
+            <mxPoint x="835" y="1165" as="sourcePoint" />
+            <mxPoint x="835" y="1189" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n54" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=10;fillColor=#ffffff;" value="Calificacion.Crear()&lt;br&gt;viaje finalizado · mismo pasajero · una por viaje" vertex="1">
+          <mxGeometry height="42" width="300" x="875" y="1159" as="geometry" />
+        </mxCell>
+        <mxCell id="n55" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=block;endFill=1;fontSize=11;labelBackgroundColor=none;strokeColor=#333333;" value="GuardarCambiosAsync()">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="835" y="1236" as="sourcePoint" />
+            <mxPoint x="1070" y="1236" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n56" edge="1" parent="1" style="html=1;verticalAlign=bottom;endArrow=open;endFill=0;dashed=1;fontSize=11;labelBackgroundColor=none;strokeColor=#666666;fontColor=#555555;" value="200 OK">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="600" y="1263" as="sourcePoint" />
+            <mxPoint x="365" y="1263" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
