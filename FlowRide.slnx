@@ -16,11 +16,7 @@
     <Project Path="src/Modulos/FlowRide.Viajes/FlowRide.Viajes.csproj" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/FlowRide.Dominio/FlowRide.Dominio.csproj" />
-    <Project Path="src/FlowRide.Infraestructura/FlowRide.Infraestructura.csproj" />
     <Project Path="src/FlowRide.Inicializador/FlowRide.Inicializador.csproj" />
-    <Project Path="src/FlowRide.Servicios/FlowRide.Servicios.csproj" />
-    <Project Path="src/FlowRide.Transversal/FlowRide.Transversal.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/FlowRide.Pruebas.Arquitectura/FlowRide.Pruebas.Arquitectura.csproj" />
