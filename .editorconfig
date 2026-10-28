@@ -1,0 +1,12 @@
+root = true
+
+[*.cs]
+charset = utf-8
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+
+# Código generado por `dotnet ef`: no se revisa ni se corrige a mano.
+[**/Migraciones/*.cs]
+generated_code = true
+dotnet_analyzer_diagnostic.severity = none

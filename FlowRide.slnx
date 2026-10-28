@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/src/Compartido/">
+    <Project Path="src/Compartido/FlowRide.Contratos/FlowRide.Contratos.csproj" />
+    <Project Path="src/Compartido/FlowRide.Nucleo/FlowRide.Nucleo.csproj" />
+    <Project Path="src/Compartido/FlowRide.Persistencia/FlowRide.Persistencia.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/FlowRide.Dominio/FlowRide.Dominio.csproj" />
     <Project Path="src/FlowRide.Infraestructura/FlowRide.Infraestructura.csproj" />
