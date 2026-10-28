@@ -131,7 +131,7 @@ jobs:
         run: |
           dotnet tool restore
           dotnet ef migrations bundle \
-            --project src/FlowRide.Infraestructura \
+            --project src/FlowRide.Inicializador \
             --startup-project src/FlowRide.Inicializador \
             --self-contained -r linux-x64 \
             --output flowride-migrations-${{ needs.validar.outputs.imagen_tag }}
