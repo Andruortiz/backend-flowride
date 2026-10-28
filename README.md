@@ -8,23 +8,26 @@ Testcontainers · Docker.
 
 diagrama de componentes
 
-!FlowRide-Diagrama-de-Componentes.drawio.png
+<img width="1782" height="1299" alt="FlowRide-Diagrama-de-Componentes drawio" src="https://github.com/user-attachments/assets/db52aa12-cb3a-4734-be09-da6dd2e5ec52" />
+
 
 diagrama de secuencia finalizar viaje
+<img width="1700" height="1372" alt="FlowRide-Diagrama-de-Secuencia-Aceptacin_viaje_y_cierre drawio" src="https://github.com/user-attachments/assets/0d0f668b-5388-46e5-8f54-dcf9d977cd82" />
 
-!FlowRide-Diagrama-de-Secuencia-Aceptación, viaje y cierre.drawio.png
 
 diagram de paquetes
+<img width="2672" height="2664" alt="FlowRide-Diagrama-de-Paquetes-Resumen drawio" src="https://github.com/user-attachments/assets/d711c0ad-2453-4eaa-8b45-3289f01d7457" />
 
-!FlowRide-Diagrama-de-Paquetes-Resumen.drawio.png
 
 diagrama c4 nivel 1
 
-!Diagrama sin título-Página-1.drawio (1).png.png)
+<img width="1822" height="1069" alt="Diagrama_sin_ttulo-Pgina-1 drawio_(1)" src="https://github.com/user-attachments/assets/c5d7603f-d243-4b46-a613-d9ec2f79f8c4" />
+
 
 diagrama de despligue (c4 nivel 2)
 
-!Diagrama sin título-Página-2.drawio.png
+<img width="1942" height="1532" alt="Diagrama_sin_ttulo-Pgina-2 drawio" src="https://github.com/user-attachments/assets/77bd0453-31c1-4cd0-b9c6-59ff138fce12" />
+
 
 La documentacion en markdown se encuentra en la carpeta
 flowride-backend\Documentacion
