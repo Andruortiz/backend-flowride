@@ -4,6 +4,11 @@
     <Project Path="src/Compartido/FlowRide.Nucleo/FlowRide.Nucleo.csproj" />
     <Project Path="src/Compartido/FlowRide.Persistencia/FlowRide.Persistencia.csproj" />
   </Folder>
+  <Folder Name="/src/Modulos/">
+    <Project Path="src/Modulos/FlowRide.Clientes/FlowRide.Clientes.csproj" />
+    <Project Path="src/Modulos/FlowRide.Identidad/FlowRide.Identidad.csproj" />
+    <Project Path="src/Modulos/FlowRide.Plataforma/FlowRide.Plataforma.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/FlowRide.Dominio/FlowRide.Dominio.csproj" />
     <Project Path="src/FlowRide.Infraestructura/FlowRide.Infraestructura.csproj" />
