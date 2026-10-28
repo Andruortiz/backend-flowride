@@ -6,8 +6,10 @@
   </Folder>
   <Folder Name="/src/Modulos/">
     <Project Path="src/Modulos/FlowRide.Clientes/FlowRide.Clientes.csproj" />
+    <Project Path="src/Modulos/FlowRide.Flota/FlowRide.Flota.csproj" />
     <Project Path="src/Modulos/FlowRide.Identidad/FlowRide.Identidad.csproj" />
     <Project Path="src/Modulos/FlowRide.Plataforma/FlowRide.Plataforma.csproj" />
+    <Project Path="src/Modulos/FlowRide.Solicitudes/FlowRide.Solicitudes.csproj" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/FlowRide.Dominio/FlowRide.Dominio.csproj" />
