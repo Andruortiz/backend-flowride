@@ -7,14 +7,33 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.13">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="10.0.13" />
+    <PackageReference Include="Npgsql.OpenTelemetry" Version="10.0.3" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.20.1" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.20.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.20.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.20.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FlowRide.Infraestructura\FlowRide.Infraestructura.csproj" />
-    <ProjectReference Include="..\FlowRide.Servicios\FlowRide.Servicios.csproj" />
-    <ProjectReference Include="..\FlowRide.Dominio\FlowRide.Dominio.csproj" />
-    <ProjectReference Include="..\FlowRide.Transversal\FlowRide.Transversal.csproj" />
+    <ProjectReference Include="..\Compartido\FlowRide.Nucleo\FlowRide.Nucleo.csproj" />
+    <ProjectReference Include="..\Compartido\FlowRide.Contratos\FlowRide.Contratos.csproj" />
+    <ProjectReference Include="..\Compartido\FlowRide.Persistencia\FlowRide.Persistencia.csproj" />
+    <ProjectReference Include="..\Modulos\FlowRide.Plataforma\FlowRide.Plataforma.csproj" />
+    <ProjectReference Include="..\Modulos\FlowRide.Clientes\FlowRide.Clientes.csproj" />
+    <ProjectReference Include="..\Modulos\FlowRide.Identidad\FlowRide.Identidad.csproj" />
+    <ProjectReference Include="..\Modulos\FlowRide.Flota\FlowRide.Flota.csproj" />
+    <ProjectReference Include="..\Modulos\FlowRide.Solicitudes\FlowRide.Solicitudes.csproj" />
+    <ProjectReference Include="..\Modulos\FlowRide.Viajes\FlowRide.Viajes.csproj" />
+    <ProjectReference Include="..\Modulos\FlowRide.Asignaciones\FlowRide.Asignaciones.csproj" />
+    <ProjectReference Include="..\Modulos\FlowRide.Comunicacion\FlowRide.Comunicacion.csproj" />
+    <ProjectReference Include="..\Modulos\FlowRide.Operacion\FlowRide.Operacion.csproj" />
   </ItemGroup>
 
 </Project>
