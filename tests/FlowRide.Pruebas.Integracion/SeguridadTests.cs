@@ -44,7 +44,6 @@ public sealed class SeguridadTests(FabricaApi api)
         var id = usuarios.EnumerateArray().First(u => u.GetProperty("codigoInterno").GetString() == "PAS-002").GetProperty("id").GetString();
         Assert.Equal(HttpStatusCode.NoContent, (await admin.PostAsync($"/api/v1/usuarios/{id}/desactivar", null)).StatusCode);
 
-        // Sigue autenticado pero ya sin rol: 403, no 401.
         Assert.Equal(HttpStatusCode.Forbidden, (await pasajero.GetAsync("/api/v1/solicitudes")).StatusCode);
 
         await admin.PostAsync($"/api/v1/usuarios/{id}/activar", null);

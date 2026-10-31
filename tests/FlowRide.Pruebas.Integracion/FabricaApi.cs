@@ -6,17 +6,12 @@ using Testcontainers.PostgreSql;
 
 namespace FlowRide.Pruebas.Integracion;
 
-/// <summary>
-/// Una sola instancia de la API y de la base para todas las clases de prueba. No puede haber dos a la vez:
-/// la configuración viaja por variables de entorno, que son globales del proceso.
-/// </summary>
 [CollectionDefinition(Nombre)]
 public sealed class ColeccionApi : ICollectionFixture<FabricaApi>
 {
     public const string Nombre = "api";
 }
 
-/// <summary>API completa sobre un PostgreSQL real y desechable.</summary>
 public sealed class FabricaApi : WebApplicationFactory<Program>, IAsyncLifetime
 {
     public const string SecretoWebhook = "secreto-solo-para-pruebas";
@@ -27,11 +22,11 @@ public sealed class FabricaApi : WebApplicationFactory<Program>, IAsyncLifetime
     {
         await _base.StartAsync();
 
-        // Variables de entorno: Program las lee al construir el host, antes de cualquier configuración de la fábrica.
         Environment.SetEnvironmentVariable("ConnectionStrings__FlowRide", _base.GetConnectionString());
         Environment.SetEnvironmentVariable("Outbox__IntervaloSegundos", "1");
         Environment.SetEnvironmentVariable("Planificador__Habilitado", "false");
         Environment.SetEnvironmentVariable("WhatsApp__SecretoWebhook", SecretoWebhook);
+        Environment.SetEnvironmentVariable("Jwt__Authority", " ");
     }
 
     async Task IAsyncLifetime.DisposeAsync()
@@ -62,7 +57,6 @@ public sealed class FabricaApi : WebApplicationFactory<Program>, IAsyncLifetime
         return JsonDocument.Parse(texto).RootElement.Clone();
     }
 
-    /// <summary>Espera a que el outbox procese los eventos: la asignación y las notificaciones son asíncronas.</summary>
     public static async Task<T> EsperarAsync<T>(Func<Task<T?>> consulta, TimeSpan? limite = null)
         where T : struct
     {

@@ -6,10 +6,6 @@ namespace FlowRide.Persistencia;
 
 internal static class ConvencionesModelo
 {
-    /// <summary>
-    /// El dominio expone propiedades <c>{ get; }</c> que se asignan en el constructor. EF no las mapea por convención,
-    /// y sin ellas no puede enlazar el constructor privado: se declaran aquí, solo las que tienen campo de respaldo.
-    /// </summary>
     public static void MapearPropiedadesDeSoloLectura(ModelBuilder modelo, IEnumerable<Type> entidades)
     {
         foreach (var tipo in entidades)
@@ -40,7 +36,6 @@ internal static class ConvencionesModelo
                 modelo.Entity(tipo.ClrType).Ignore(nameof(RaizAgregado.EventosDominio));
             }
 
-            // Concurrencia optimista (ADR-0007): xmin de PostgreSQL, sin columna propia.
             if (typeof(Entidad).IsAssignableFrom(tipo.ClrType))
             {
                 modelo.Entity(tipo.ClrType).Property<uint>("xmin").IsRowVersion();

@@ -6,7 +6,6 @@ using FlowRide.Solicitudes.Dominio;
 
 namespace FlowRide.Solicitudes.Aplicacion;
 
-/// <summary>El viaje empezó: el servicio de la solicitud pasa a EnCurso.</summary>
 internal sealed class AlIniciarViaje(ISolicitudRepository solicitudes, IUnitOfWork unidad) : IManejadorEvento<ViajeIniciado>
 {
     public async Task ManejarAsync(ViajeIniciado evento, CancellationToken ct = default)
@@ -23,7 +22,6 @@ internal sealed class AlIniciarViaje(ISolicitudRepository solicitudes, IUnitOfWo
     }
 }
 
-/// <summary>El viaje terminó: la solicitud queda Finalizada.</summary>
 internal sealed class AlFinalizarViaje(ISolicitudRepository solicitudes, IUnitOfWork unidad) : IManejadorEvento<ViajeFinalizado>
 {
     public async Task ManejarAsync(ViajeFinalizado evento, CancellationToken ct = default)
@@ -37,7 +35,6 @@ internal sealed class AlFinalizarViaje(ISolicitudRepository solicitudes, IUnitOf
 
         if (solicitud.Estado == EstadoSolicitud.Asignada)
         {
-            // El evento de inicio aún no se procesó: se reintenta para respetar el orden.
             throw new InvalidOperationException("La solicitud todavía no registra el inicio del viaje.");
         }
 

@@ -35,10 +35,6 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 
 namespace FlowRide.Comunicacion.Infraestructura;
 
-/// <summary>
-/// Reemplazo del proveedor real de WhatsApp mientras no esté contratado (ADR-0008): registra el envío sin salir de la máquina.
-/// Se cambia por el adaptador del proveedor en el registro de servicios, sin tocar los casos de uso.
-/// </summary>
 internal sealed partial class WhatsAppSandboxGateway(ILogger<WhatsAppSandboxGateway> logger) : IWhatsAppGateway
 {
     public Task EnviarAsync(string telefono, string texto, CancellationToken ct = default)
@@ -49,7 +45,6 @@ internal sealed partial class WhatsAppSandboxGateway(ILogger<WhatsAppSandboxGate
         return Task.CompletedTask;
     }
 
-    // El número es un dato personal: solo los últimos cuatro dígitos llegan a los logs.
     private static string Enmascarar(string telefono) =>
         telefono.Length <= 4 ? "****" : "****" + telefono[^4..];
 

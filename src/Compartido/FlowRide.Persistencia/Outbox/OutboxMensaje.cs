@@ -1,6 +1,5 @@
 namespace FlowRide.Persistencia.Outbox;
 
-/// <summary>Evento de dominio pendiente de publicar. Se escribe en la misma transacción que el cambio que lo originó (ADR-0007).</summary>
 public sealed class OutboxMensaje
 {
     public Guid Id { get; set; }

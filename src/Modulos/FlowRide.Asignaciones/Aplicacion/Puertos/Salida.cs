@@ -35,7 +35,6 @@ internal interface IAsignacionRepository
 
     Task<Asignacion?> ObtenerPendienteDeConductorAsync(Guid conductorId, CancellationToken ct = default);
 
-    /// <summary>Conductores que ya rechazaron o fueron reemplazados en esa solicitud: no se les vuelve a ofrecer.</summary>
     Task<IReadOnlySet<Guid>> ConductoresDescartadosAsync(Guid solicitudId, CancellationToken ct = default);
 
     Task<IReadOnlyDictionary<Guid, int>> ContarActivasPorConductorAsync(IEnumerable<Guid> conductorIds, CancellationToken ct = default);

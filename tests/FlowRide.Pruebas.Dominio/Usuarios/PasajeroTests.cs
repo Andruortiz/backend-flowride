@@ -76,4 +76,32 @@ public class PasajeroTests
 
         Assert.Throws<DomainException>(() => pasajero.CambiarClienteEmpresarial(Guid.Empty));
     }
+
+    [Fact]
+    public void DefinirDomicilioLoGuardaSinEspaciosSobrantes()
+    {
+        var pasajero = Pasajero.Crear(UsuarioPasajero(), Cliente);
+
+        pasajero.DefinirDomicilio("  Calle 10 # 5-20, Bogotá  ");
+
+        Assert.Equal("Calle 10 # 5-20, Bogotá", pasajero.Domicilio);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void DefinirDomicilioVacioFalla(string domicilio)
+    {
+        var pasajero = Pasajero.Crear(UsuarioPasajero(), Cliente);
+
+        Assert.Throws<DomainException>(() => pasajero.DefinirDomicilio(domicilio));
+    }
+
+    [Fact]
+    public void DefinirDomicilioMuyLargoFalla()
+    {
+        var pasajero = Pasajero.Crear(UsuarioPasajero(), Cliente);
+
+        Assert.Throws<DomainException>(() => pasajero.DefinirDomicilio(new string('a', Pasajero.MaximoDomicilio + 1)));
+    }
 }

@@ -23,10 +23,8 @@ public interface IServicioParametros
 
 public interface IServicioAuditoria
 {
-    /// <summary>Agrega el registro a la unidad de trabajo actual; lo confirma quien llama junto con su cambio.</summary>
     Task RegistrarAsync(string accion, string recurso, string? motivo = null, string? antes = null, string? despues = null, CancellationToken ct = default);
 
-    /// <summary>Un rechazo se guarda en su propia transacción: el intento debe quedar aunque la operación falle.</summary>
     Task RegistrarRechazoAsync(string accion, string recurso, string motivo, CancellationToken ct = default);
 
     Task<IReadOnlyList<AuditoriaResponse>> ConsultarAsync(string? accion, string? recurso, DateTimeOffset? desde, DateTimeOffset? hasta, int pagina, int tamano, CancellationToken ct = default);
@@ -38,6 +36,5 @@ public interface IServicioOperador
 
     Task<OperadorResponse> ActualizarAsync(ActualizarOperadorRequest request, CancellationToken ct = default);
 
-    /// <summary>Zona horaria del operador, para fechas de negocio. Cae a Bogotá si aún no hay operador configurado.</summary>
     Task<TimeZoneInfo> ZonaAsync(CancellationToken ct = default);
 }

@@ -27,12 +27,12 @@ using FlowRide.Viajes.Aplicacion.Puertos;
 using FlowRide.Plataforma.Dominio;
 using FlowRide.Plataforma.Aplicacion.Dtos;
 using FlowRide.Plataforma.Aplicacion.Puertos;
+using FlowRide.Clientes.Aplicacion;
 
 namespace FlowRide.Comunicacion.Aplicacion.Puertos;
 
 public interface IServicioNotificaciones
 {
-    /// <summary>Envía por el canal que corresponde al destinatario. Un reintento del mismo evento no repite el mensaje.</summary>
     Task EnviarAUsuarioAsync(Guid usuarioId, Guid eventoId, TipoNotificacion tipo, string claveMensaje, IReadOnlyDictionary<string, string> variables, CancellationToken ct = default);
 
     Task EnviarAPasajeroAsync(Guid pasajeroId, Guid eventoId, TipoNotificacion tipo, string claveMensaje, IReadOnlyDictionary<string, string> variables, CancellationToken ct = default);
@@ -42,7 +42,6 @@ public interface IServicioNotificaciones
 
 public interface IServicioAlertas
 {
-    /// <summary>Crea la alerta salvo que ya exista una con la misma clave (evita repetirla en cada reintento o evento GPS).</summary>
     Task CrearAsync(string tipo, SeveridadAlerta severidad, string titulo, string detalle, string referencia, string claveDeduplicacion, CancellationToken ct = default);
 
     Task<IReadOnlyList<AlertaResponse>> ListarAsync(bool soloNoLeidas, int pagina, int tamano, CancellationToken ct = default);
@@ -54,9 +53,12 @@ public interface IServicioAlertas
 
 public interface IServicioConversaciones
 {
-    /// <summary>
-    /// Procesa un mensaje entrante de WhatsApp: identifica al usuario por su teléfono, ejecuta lo que pidió y responde.
-    /// Un mensaje con el mismo identificador externo se procesa una sola vez.
-    /// </summary>
     Task<RespuestaBotResponse> ProcesarAsync(MensajeEntranteRequest request, CancellationToken ct = default);
+}
+
+public interface IServicioCargaItinerarios
+{
+    ResultadoLectura Previsualizar(string contenido);
+
+    Task<ResultadoCarga> ConfirmarAsync(Guid pasajeroId, IReadOnlyList<FilaItinerario> filas, CancellationToken ct = default);
 }

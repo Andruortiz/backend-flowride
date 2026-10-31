@@ -3,10 +3,6 @@ using FlowRide.Nucleo.Seguridad;
 
 namespace FlowRide.Inicializador.Seguridad;
 
-/// <summary>
-/// El actor sale del token (reclamos ya validados) o, en trabajos de fondo, es "sistema".
-/// El bot de WhatsApp puede fijarlo explícitamente con <see cref="Establecer"/>.
-/// </summary>
 internal sealed class ContextoActor(IHttpContextAccessor http) : IContextoActorEstablecible
 {
     private (Guid Id, string Nombre, RolUsuario Rol)? _fijado;

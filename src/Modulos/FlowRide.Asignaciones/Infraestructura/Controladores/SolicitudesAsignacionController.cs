@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlowRide.Asignaciones.Infraestructura.Controladores;
 
-/// <summary>Acciones de asignación sobre una solicitud. La ruta sigue siendo /solicitudes/{id}/… para no cambiar la API.</summary>
 [ApiController]
 [Route("api/v1/solicitudes")]
 public sealed class SolicitudesAsignacionController(IServicioAsignaciones asignaciones) : ControllerBase

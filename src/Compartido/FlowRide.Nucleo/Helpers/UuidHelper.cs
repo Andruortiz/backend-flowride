@@ -13,6 +13,5 @@ public static class UuidHelper
 
     public static Guid Generate() => Guid.CreateVersion7();
 
-    /// <summary>Si no vino un id (nulo o por defecto) genera uno nuevo; si vino, lo respeta.</summary>
     public static Guid GetOrGenerate(Guid? value) => IsDefault(value) ? Generate() : value!.Value;
 }

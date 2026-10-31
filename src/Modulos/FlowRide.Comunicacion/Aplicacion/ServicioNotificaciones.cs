@@ -59,7 +59,6 @@ internal sealed partial class ServicioNotificaciones(
 
         foreach (var canal in PoliticaCanal.Resolver(usuario.Rol))
         {
-            // Los canales de panel y correo no se emiten desde aquí: el panel lee las alertas operativas.
             if (canal != CanalNotificacion.WhatsApp)
             {
                 continue;

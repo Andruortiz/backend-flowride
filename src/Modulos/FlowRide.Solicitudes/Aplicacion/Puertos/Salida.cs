@@ -33,11 +33,11 @@ internal interface ISolicitudRepository
         int tamano,
         CancellationToken ct = default);
 
-    /// <summary>Asignadas cuya hora de servicio cae en el rango y aún sin recordatorio.</summary>
     Task<IReadOnlyList<SolicitudTransporte>> ListarParaRecordatorioAsync(DateTimeOffset desde, DateTimeOffset hasta, CancellationToken ct = default);
 
-    /// <summary>Abiertas (pendientes o en revisión) creadas antes del límite.</summary>
-    Task<IReadOnlyList<SolicitudTransporte>> ListarAbiertasAntesDeAsync(DateTimeOffset limite, CancellationToken ct = default);
+    Task<IReadOnlyList<SolicitudTransporte>> ListarAbiertasAntesDeAsync(DateTimeOffset limite, DateTimeOffset serviciosHasta, CancellationToken ct = default);
+
+    Task<IReadOnlyList<SolicitudTransporte>> ListarPendientesHastaAsync(DateTimeOffset serviciosHasta, CancellationToken ct = default);
 
     Task AgregarAsync(SolicitudTransporte solicitud, CancellationToken ct = default);
 }

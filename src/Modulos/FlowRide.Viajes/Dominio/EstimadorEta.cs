@@ -12,16 +12,11 @@ using FlowRide.Plataforma.Dominio;
 
 namespace FlowRide.Viajes.Dominio;
 
-/// <summary>
-/// Estima la llegada con la velocidad observada en las dos últimas posiciones. Es una estimación de monitoreo:
-/// nunca se usa para reasignar por cercanía (restricción de negocio).
-/// </summary>
 public static class EstimadorEta
 {
     private const double VelocidadMinimaKmh = 5;
     private const double VelocidadMaximaKmh = 120;
 
-    /// <param name="recientes">Posiciones del viaje, de la más antigua a la más reciente.</param>
     public static DateTimeOffset? EstimarLlegada(IReadOnlyList<RegistroUbicacion> recientes, Coordenada destino)
     {
         ArgumentNullException.ThrowIfNull(recientes);

@@ -27,6 +27,7 @@ using FlowRide.Viajes.Aplicacion.Puertos;
 using FlowRide.Plataforma.Dominio;
 using FlowRide.Plataforma.Aplicacion.Dtos;
 using FlowRide.Plataforma.Aplicacion.Puertos;
+using FlowRide.Clientes.Aplicacion;
 
 namespace FlowRide.Comunicacion.Aplicacion.Dtos;
 
@@ -34,3 +35,7 @@ public sealed record AlertaResponse(
     Guid Id, string Tipo, SeveridadAlerta Severidad, string Titulo, string Detalle, string Referencia, DateTimeOffset CreadaEn, DateTimeOffset? LeidaEn);
 
 public sealed record RespuestaBotResponse(string Texto, Guid? SolicitudId);
+
+public sealed record ViajeCargado(int Linea, string CodigoServicio, DateOnly Fecha, Guid SolicitudId);
+
+public sealed record ResultadoCarga(IReadOnlyList<ViajeCargado> Creados, IReadOnlyList<ErrorFila> Omitidos);

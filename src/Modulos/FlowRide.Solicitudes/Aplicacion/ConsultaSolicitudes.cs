@@ -14,6 +14,9 @@ internal sealed class ConsultaSolicitudes(ISolicitudRepository solicitudes) : IC
     public Task<IReadOnlyList<SolicitudTransporte>> ListarParaRecordatorioAsync(DateTimeOffset desde, DateTimeOffset hasta, CancellationToken ct = default) =>
         solicitudes.ListarParaRecordatorioAsync(desde, hasta, ct);
 
-    public Task<IReadOnlyList<SolicitudTransporte>> ListarAbiertasAntesDeAsync(DateTimeOffset limite, CancellationToken ct = default) =>
-        solicitudes.ListarAbiertasAntesDeAsync(limite, ct);
+    public Task<IReadOnlyList<SolicitudTransporte>> ListarAbiertasAntesDeAsync(DateTimeOffset limite, DateTimeOffset serviciosHasta, CancellationToken ct = default) =>
+        solicitudes.ListarAbiertasAntesDeAsync(limite, serviciosHasta, ct);
+
+    public Task<IReadOnlyList<SolicitudTransporte>> ListarPendientesHastaAsync(DateTimeOffset serviciosHasta, CancellationToken ct = default) =>
+        solicitudes.ListarPendientesHastaAsync(serviciosHasta, ct);
 }

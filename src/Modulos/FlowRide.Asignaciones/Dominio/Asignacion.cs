@@ -25,7 +25,6 @@ public enum EstadoAsignacion
     Cancelada = 7,
 }
 
-/// <summary>Conductor y vehículo comprometidos con una solicitud. Solo puede haber una asignación activa por solicitud.</summary>
 public sealed class Asignacion : RaizAgregado
 {
     private Asignacion(
@@ -59,10 +58,8 @@ public sealed class Asignacion : RaizAgregado
 
     public EstadoAsignacion Estado { get; private set; }
 
-    /// <summary>Versión de la configuración de reglas con la que se decidió.</summary>
     public int VersionConfiguracion { get; }
 
-    /// <summary>Por qué se eligió este conductor (RF-11); nulo en una reasignación manual.</summary>
     public DecisionAsignacion? Explicacion { get; }
 
     public bool EsManual { get; }
@@ -91,7 +88,6 @@ public sealed class Asignacion : RaizAgregado
         return asignacion;
     }
 
-    /// <summary>RF-12: la crea el operador logístico y exige un motivo para la auditoría.</summary>
     public static Asignacion CrearManual(
         Guid solicitudId,
         Guid conductorId,
@@ -141,7 +137,6 @@ public sealed class Asignacion : RaizAgregado
         Estado = EstadoAsignacion.Finalizada;
     }
 
-    /// <summary>La reemplaza <paramref name="nueva"/>; la anterior queda en el histórico (RF-12).</summary>
     public void Reasignar(Asignacion nueva, string motivo, DateTimeOffset ahora)
     {
         ArgumentNullException.ThrowIfNull(nueva);
@@ -156,7 +151,6 @@ public sealed class Asignacion : RaizAgregado
         Registrar(new AsignacionReasignada(Id, nueva.Id, SolicitudId, ConductorId, nueva.ConductorId, motivo, ahora));
     }
 
-    /// <summary>La solicitud se canceló antes de empezar.</summary>
     public void Cancelar(DateTimeOffset ahora)
     {
         if (Estado is not (EstadoAsignacion.PendienteAceptacion or EstadoAsignacion.Aceptada))

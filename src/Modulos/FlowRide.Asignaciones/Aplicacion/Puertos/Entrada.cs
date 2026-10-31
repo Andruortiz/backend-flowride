@@ -29,7 +29,6 @@ namespace FlowRide.Asignaciones.Aplicacion.Puertos;
 
 public interface IServicioAsignaciones
 {
-    /// <summary>Ejecuta el motor para una solicitud pendiente. Es idempotente: si ya no está pendiente no hace nada.</summary>
     Task<ResultadoAsignacionResponse?> AsignarAutomaticoAsync(Guid solicitudId, CancellationToken ct = default);
 
     Task<ResultadoAsignacionResponse> ReasignarManualAsync(Guid solicitudId, ReasignarManualRequest request, CancellationToken ct = default);

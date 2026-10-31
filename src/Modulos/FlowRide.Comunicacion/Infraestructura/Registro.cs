@@ -10,7 +10,6 @@ namespace FlowRide.Comunicacion.Infraestructura;
 
 public static class Registro
 {
-    /// <summary>Registra los servicios, consultas, repositorios y manejadores de eventos del módulo.</summary>
     public static IServiceCollection AgregarModuloComunicacion(this IServiceCollection servicios)
     {
         servicios.AddSingleton<IConfiguradorModelo, ConfiguracionModelo>();
@@ -31,6 +30,7 @@ public static class Registro
         servicios.AddScoped<IMensajeEntranteRepository, MensajeEntranteRepository>();
         servicios.AddScoped<INotificacionEnviadaRepository, NotificacionEnviadaRepository>();
         servicios.AddScoped<IServicioAlertas, ServicioAlertas>();
+        servicios.AddScoped<IServicioCargaItinerarios, ServicioCargaItinerarios>();
         servicios.AddScoped<IServicioConversaciones, ServicioConversaciones>();
         servicios.AddScoped<IServicioNotificaciones, ServicioNotificaciones>();
         servicios.AddScoped<IWhatsAppGateway, WhatsAppSandboxGateway>();
@@ -38,6 +38,5 @@ public static class Registro
         return servicios;
     }
 
-    /// <summary>Solo para la fábrica de migraciones (dotnet ef): las tablas del módulo.</summary>
     public static IConfiguradorModelo CrearConfiguradorModelo() => new ConfiguracionModelo();
 }

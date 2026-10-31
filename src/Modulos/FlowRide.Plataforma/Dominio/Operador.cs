@@ -10,7 +10,6 @@ using FlowRide.Contratos;
 
 namespace FlowRide.Plataforma.Dominio;
 
-/// <summary>El operador de transporte al que sirve esta instancia (un Silo por operador).</summary>
 public sealed class Operador : Entidad
 {
     private Operador(Guid id, string razonSocial, string nit, string correoContacto, string zonaHoraria, DateTimeOffset creadoEn)
@@ -30,7 +29,6 @@ public sealed class Operador : Entidad
 
     public string CorreoContacto { get; private set; }
 
-    /// <summary>Identificador IANA (por ejemplo America/Bogota). Define el "día" del servicio y los turnos.</summary>
     public string ZonaHoraria { get; private set; }
 
     public bool Activo { get; private set; }

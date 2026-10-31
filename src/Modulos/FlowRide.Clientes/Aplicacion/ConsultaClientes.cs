@@ -10,4 +10,7 @@ internal sealed class ConsultaClientes(IClienteEmpresarialRepository clientes, I
 
     public Task<Itinerario?> ObtenerItinerarioAsync(Guid id, CancellationToken ct = default) =>
         itinerarios.ObtenerAsync(id, ct);
+
+    public Task<bool> ExisteItinerarioDePasajeroAsync(Guid pasajeroId, string codigoServicio, DateOnly fecha, CancellationToken ct = default) =>
+        itinerarios.ExisteDePasajeroAsync(pasajeroId, codigoServicio, fecha, ct);
 }

@@ -35,11 +35,10 @@ using FlowRide.Comunicacion.Aplicacion.Puertos;
 
 namespace FlowRide.Operacion.Aplicacion.Puertos;
 
-public sealed record ResultadoPlanificacion(int Recordatorios, int AlertasSinConductor, int AlertasDocumentos);
+public sealed record ResultadoPlanificacion(int Recordatorios, int AlertasSinConductor, int AlertasDocumentos, int Asignadas);
 
 public interface IServicioPlanificacion
 {
-    /// <summary>Un ciclo de las tareas programadas: recordatorios, solicitudes sin conductor y documentos por vencer. Idempotente.</summary>
     Task<ResultadoPlanificacion> EjecutarAsync(CancellationToken ct = default);
 }
 

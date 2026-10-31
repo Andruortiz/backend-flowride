@@ -35,7 +35,6 @@ using FlowRide.Comunicacion.Aplicacion.Puertos;
 
 namespace FlowRide.Operacion.Aplicacion.Puertos;
 
-/// <summary>Consultas de solo lectura para reportes e indicadores (RF-42, RF-46 a RF-49).</summary>
 internal interface IReportesQuery
 {
     Task<IReadOnlyList<ViajeRealizadoReporte>> ViajesRealizadosAsync(DateTimeOffset desde, DateTimeOffset hasta, Guid? clienteEmpresarialId, CancellationToken ct = default);

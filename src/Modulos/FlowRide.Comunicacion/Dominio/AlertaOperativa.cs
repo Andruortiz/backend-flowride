@@ -22,7 +22,6 @@ public enum SeveridadAlerta
     Critica = 3,
 }
 
-/// <summary>Aviso para administración y operación logística en el Panel Web (RF-45). La clave evita duplicados.</summary>
 public sealed class AlertaOperativa : Entidad
 {
     private AlertaOperativa(
@@ -53,7 +52,6 @@ public sealed class AlertaOperativa : Entidad
 
     public string Detalle { get; }
 
-    /// <summary>Identificador del recurso al que se refiere (viaje, solicitud, conductor…).</summary>
     public string Referencia { get; }
 
     public string ClaveDeduplicacion { get; }

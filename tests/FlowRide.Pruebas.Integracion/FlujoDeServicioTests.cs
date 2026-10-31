@@ -1,6 +1,8 @@
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using FlowRide.Operacion.Aplicacion.Puertos;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FlowRide.Pruebas.Integracion;
 
@@ -54,7 +56,6 @@ public sealed class FlujoDeServicioTests(FabricaApi api)
         await FabricaApi.LeerAsync(await conductor.PostAsync($"/api/v1/viajes/{viajeId}/finalizar", null));
         await FabricaApi.LeerAsync(await pasajero.PostAsJsonAsync($"/api/v1/viajes/{viajeId}/calificacion", new { puntaje = 5, comentario = "Excelente" }));
 
-        // La solicitud pasa a Finalizada al procesarse el evento ViajeFinalizado (consistencia eventual entre módulos).
         await FabricaApi.EsperarAsync(async () =>
         {
             var actual = await FabricaApi.LeerAsync(await pasajero.GetAsync($"/api/v1/solicitudes/{solicitudId}"));
@@ -88,6 +89,34 @@ public sealed class FlujoDeServicioTests(FabricaApi api)
 
         var lista = await FabricaApi.LeerAsync(await gestion.GetAsync("/api/v1/asignaciones?estado=PendienteAceptacion&tamano=200"));
         Assert.Equal(1, lista.EnumerateArray().Count(a => a.GetProperty("solicitudId").GetString() == solicitudId));
+    }
+
+    [Fact]
+    public async Task UnServicioLejanoEsperaYLaPlanificacionLoAsignaDentroDeLaVentana()
+    {
+        var pasajero = await api.ClienteComoAsync("PAS-002");
+        var creada = await FabricaApi.LeerAsync(await pasajero.PostAsJsonAsync("/api/v1/solicitudes", NuevaSolicitud(72)));
+        var solicitudId = creada.GetProperty("id").GetString()!;
+
+        await Task.Delay(TimeSpan.FromSeconds(4));
+        var espera = await FabricaApi.LeerAsync(await pasajero.GetAsync($"/api/v1/solicitudes/{solicitudId}"));
+        Assert.Equal("Pendiente", espera.GetProperty("estado").GetString());
+
+        var administracion = await api.ClienteComoAsync("ADM-001");
+        await FabricaApi.LeerAsync(await administracion.PutAsJsonAsync("/api/v1/parametros/asignacion.anticipacion_horas", new { valor = 100 }));
+
+        try
+        {
+            using var alcance = api.Services.CreateScope();
+            var resultado = await alcance.ServiceProvider.GetRequiredService<IServicioPlanificacion>().EjecutarAsync();
+            Assert.True(resultado.Asignadas >= 1);
+
+            await FabricaApi.EsperarAsync(() => SolicitudAsignadaAsync(pasajero, solicitudId));
+        }
+        finally
+        {
+            await administracion.PutAsJsonAsync("/api/v1/parametros/asignacion.anticipacion_horas", new { valor = 24 });
+        }
     }
 
     [Fact]

@@ -15,7 +15,6 @@ public enum ResultadoAuditoria
     Rechazada = 2,
 }
 
-/// <summary>Evidencia de una acción sensible: quién, qué, cuándo y con qué resultado (RF-52). Se conserva 5 años.</summary>
 public sealed class RegistroAuditoria : Entidad
 {
     private RegistroAuditoria(

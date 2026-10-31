@@ -95,7 +95,6 @@ internal sealed class UbicacionRepository(FlowRideDbContext db) : IUbicacionRepo
             .Take(maximo)
             .ToListAsync(ct);
 
-        // Las que aún no se han guardado en esta unidad de trabajo también cuentan.
         var pendientes = db.ChangeTracker.Entries<RegistroUbicacion>()
             .Where(e => e.State == EntityState.Added && e.Entity.VehiculoId == vehiculoId && e.Entity.TimestampOrigen >= desde)
             .Select(e => e.Entity);

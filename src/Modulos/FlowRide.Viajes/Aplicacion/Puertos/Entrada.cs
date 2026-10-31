@@ -39,6 +39,5 @@ public interface IServicioViajes
 
 public interface IServicioSeguimiento
 {
-    /// <summary>Ingesta de un evento GPS. Duplicado (vehículo, instante, fuente) se acepta sin volver a guardarlo.</summary>
     Task<UbicacionResponse> ReportarAsync(ReportarUbicacionRequest request, CancellationToken ct = default);
 }

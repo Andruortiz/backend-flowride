@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlowRide.Asignaciones.Infraestructura;
 
-/// <summary>Tablas e índices del módulo. Los compone el DbContext único (ADR-0004).</summary>
 internal sealed class ConfiguracionModelo : IConfiguradorModelo
 {
     private const string EstadosActivosAsignacion = "estado IN ('PendienteAceptacion','Aceptada','EnCurso')";
@@ -21,7 +20,6 @@ internal sealed class ConfiguracionModelo : IConfiguradorModelo
                 e.HasIndex(x => x.SolicitudId);
                 e.HasIndex(x => new { x.ConductorId, x.Estado });
     
-                // Invariante: una solicitud tiene a lo sumo una asignación viva. Cubre la carrera entre dos reasignaciones.
                 e.HasIndex(x => x.SolicitudId, "ux_asignaciones_activa_por_solicitud").IsUnique().HasFilter(EstadosActivosAsignacion);
             });
 

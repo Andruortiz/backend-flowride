@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace FlowRide.Inicializador.Configuracion;
 
-/// <summary>Solo para las herramientas de migraciones (<c>dotnet ef</c>). La conexión real llega por configuración en tiempo de ejecución.</summary>
 internal sealed class FabricaDbContextDiseno : IDesignTimeDbContextFactory<FlowRideDbContext>
 {
     public FlowRideDbContext CreateDbContext(string[] args)

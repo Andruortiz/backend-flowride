@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlowRide.Plataforma.Infraestructura;
 
-/// <summary>Tablas e índices del módulo. Los compone el DbContext único (ADR-0004).</summary>
 internal sealed class ConfiguracionModelo : IConfiguradorModelo
 {
     public IReadOnlyList<Type> Entidades { get; } = [typeof(Operador), typeof(ParametroOperador), typeof(RegistroAuditoria)];

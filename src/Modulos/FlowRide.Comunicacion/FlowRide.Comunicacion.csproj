@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="../../Compartido/FlowRide.Persistencia/FlowRide.Persistencia.csproj" />
     <ProjectReference Include="../../Compartido/FlowRide.Contratos/FlowRide.Contratos.csproj" />
+    <ProjectReference Include="../FlowRide.Clientes/FlowRide.Clientes.csproj" />
     <ProjectReference Include="../FlowRide.Identidad/FlowRide.Identidad.csproj" />
     <ProjectReference Include="../FlowRide.Flota/FlowRide.Flota.csproj" />
     <ProjectReference Include="../FlowRide.Solicitudes/FlowRide.Solicitudes.csproj" />

@@ -5,12 +5,10 @@ using FlowRide.Identidad.Dominio;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Seguridad;
 
-
 namespace FlowRide.Pruebas.Dominio.Usuarios;
 
 public class TurnoTests
 {
-    // 2026-10-14 es miércoles.
     private static readonly DateOnly Miercoles = new(2026, 10, 14);
     private static readonly DateOnly Jueves = new(2026, 10, 15);
 

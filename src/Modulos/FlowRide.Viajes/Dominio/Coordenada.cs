@@ -12,7 +12,6 @@ using FlowRide.Plataforma.Dominio;
 
 namespace FlowRide.Viajes.Dominio;
 
-/// <summary>Punto geográfico válido (WGS84, grados decimales).</summary>
 public sealed record Coordenada
 {
     private const double RadioTierraKm = 6371.0088;
@@ -42,7 +41,6 @@ public sealed record Coordenada
         return new Coordenada(latitud, longitud);
     }
 
-    /// <summary>Distancia por el círculo máximo (fórmula de Haversine).</summary>
     public double DistanciaKm(Coordenada otra)
     {
         ArgumentNullException.ThrowIfNull(otra);

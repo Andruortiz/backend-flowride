@@ -48,7 +48,6 @@ public sealed class OpcionesPlanificador
     public int IntervaloSegundos { get; set; } = 60;
 }
 
-/// <summary>Dispara el ciclo de tareas programadas (recordatorios, alertas de espera y de documentos).</summary>
 public sealed partial class PlanificadorBackground(
     IServiceScopeFactory fabrica,
     IOptions<OpcionesPlanificador> opciones,
@@ -62,7 +61,7 @@ public sealed partial class PlanificadorBackground(
             {
                 await using var alcance = fabrica.CreateAsyncScope();
                 var resultado = await alcance.ServiceProvider.GetRequiredService<IServicioPlanificacion>().EjecutarAsync(stoppingToken);
-                CicloTerminado(logger, resultado.Recordatorios, resultado.AlertasSinConductor, resultado.AlertasDocumentos);
+                CicloTerminado(logger, resultado.Recordatorios, resultado.AlertasSinConductor, resultado.AlertasDocumentos, resultado.Asignadas);
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {
@@ -73,8 +72,8 @@ public sealed partial class PlanificadorBackground(
         }
     }
 
-    [LoggerMessage(Level = LogLevel.Debug, Message = "Planificación: {Recordatorios} recordatorios, {SinConductor} esperas, {Documentos} documentos")]
-    private static partial void CicloTerminado(ILogger logger, int recordatorios, int sinConductor, int documentos);
+    [LoggerMessage(Level = LogLevel.Debug, Message = "Planificación: {Recordatorios} recordatorios, {SinConductor} esperas, {Documentos} documentos, {Asignadas} asignadas")]
+    private static partial void CicloTerminado(ILogger logger, int recordatorios, int sinConductor, int documentos, int asignadas);
 
     [LoggerMessage(Level = LogLevel.Error, Message = "El ciclo de planificación falló")]
     private static partial void CicloFallido(ILogger logger, Exception ex);

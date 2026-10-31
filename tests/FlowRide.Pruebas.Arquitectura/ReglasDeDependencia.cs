@@ -5,13 +5,8 @@ using NetArchTest.Rules;
 
 namespace FlowRide.Pruebas.Arquitectura;
 
-/// <summary>
-/// Monolito modular (ADR-0001): cada módulo es un proyecto con Dominio, Aplicacion e Infraestructura.
-/// Los módulos solo dependen de los que tienen debajo y se hablan por puertos de consulta, servicios o eventos.
-/// </summary>
 public class ReglasDeDependencia
 {
-    // Quién puede depender de quién (de abajo hacia arriba). Cualquier otra referencia entre módulos es un error.
     private static readonly Dictionary<string, string[]> Grafo = new()
     {
         ["Plataforma"] = [],
@@ -21,7 +16,7 @@ public class ReglasDeDependencia
         ["Solicitudes"] = ["Identidad", "Plataforma"],
         ["Viajes"] = ["Identidad", "Flota", "Plataforma"],
         ["Asignaciones"] = ["Clientes", "Flota", "Solicitudes", "Viajes", "Identidad", "Plataforma"],
-        ["Comunicacion"] = ["Identidad", "Flota", "Solicitudes", "Asignaciones", "Viajes", "Plataforma"],
+        ["Comunicacion"] = ["Clientes", "Identidad", "Flota", "Solicitudes", "Asignaciones", "Viajes", "Plataforma"],
         ["Operacion"] = ["Plataforma", "Clientes", "Identidad", "Flota", "Solicitudes", "Viajes", "Asignaciones", "Comunicacion"],
     };
 

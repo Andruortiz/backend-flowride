@@ -5,7 +5,6 @@ using Npgsql;
 
 namespace FlowRide.Persistencia;
 
-/// <summary>Confirma agregados y outbox en una transacción y traduce los choques de concurrencia a <see cref="ConflictException"/>.</summary>
 internal sealed class UnitOfWork(FlowRideDbContext db) : IUnitOfWork
 {
     public async Task GuardarCambiosAsync(CancellationToken ct = default)

@@ -63,7 +63,6 @@ public sealed class ViajesController(IServicioViajes servicio) : ControllerBase
 [Route("api/v1/ubicaciones")]
 public sealed class UbicacionesController(IServicioSeguimiento servicio) : ControllerBase
 {
-    // Shortcut: hasta integrar el proveedor GPS (credencial propia), el reporte lo hace la gestión; luego pasa a una clave de servicio.
     [HttpPost]
     [Authorize(Politicas.Gestion)]
     public async Task<UbicacionResponse> Reportar(ReportarUbicacionRequest request, CancellationToken ct) =>

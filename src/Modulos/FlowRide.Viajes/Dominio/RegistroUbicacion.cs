@@ -18,7 +18,6 @@ public enum CalidadUbicacion
     Puntual = 2,
 }
 
-/// <summary>Posición normalizada de un vehículo, con el instante de origen y el de recepción (RF-55).</summary>
 public sealed class RegistroUbicacion : Entidad
 {
     private static readonly TimeSpan ToleranciaFuturo = TimeSpan.FromMinutes(2);
@@ -63,7 +62,6 @@ public sealed class RegistroUbicacion : Entidad
 
     public CalidadUbicacion Calidad { get; }
 
-    /// <summary>Proveedor o canal que la entregó (por ejemplo "proveedor-gps", "whatsapp", "simulador").</summary>
     public string Fuente { get; }
 
     public TimeSpan RetrasoIngesta => TimestampRecepcion - TimestampOrigen;

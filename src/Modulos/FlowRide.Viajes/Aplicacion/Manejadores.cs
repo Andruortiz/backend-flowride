@@ -6,7 +6,6 @@ using FlowRide.Viajes.Dominio;
 
 namespace FlowRide.Viajes.Aplicacion;
 
-/// <summary>Si cancelan la solicitud antes de empezar, el viaje programado se cancela.</summary>
 internal sealed class AlCancelarSolicitud(IViajeRepository viajes, IUnitOfWork unidad, TimeProvider reloj) : IManejadorEvento<SolicitudCancelada>
 {
     public async Task ManejarAsync(SolicitudCancelada evento, CancellationToken ct = default)

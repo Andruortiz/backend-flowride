@@ -31,7 +31,6 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 
 namespace FlowRide.Comunicacion.Aplicacion;
 
-/// <summary>Arma las variables de los mensajes: textos de negocio con la fecha en la zona del operador.</summary>
 internal sealed class ComposicionMensajes(
     IConsultaSolicitudes solicitudes,
     IConsultaIdentidad identidad,

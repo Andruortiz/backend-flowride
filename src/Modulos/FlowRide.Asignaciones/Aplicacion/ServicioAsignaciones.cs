@@ -285,7 +285,6 @@ internal sealed class ServicioAsignaciones(
             ? conductor
             : throw new ForbiddenException("El usuario autenticado no es un conductor.");
 
-    /// <summary>Solo el conductor ofrecido responde la asignación.</summary>
     private async Task<Asignacion> BuscarParaConductorAsync(Guid asignacionId, CancellationToken ct)
     {
         var asignacion = await asignaciones.ObtenerAsync(asignacionId, ct) ?? throw new NotFoundException("La asignación no existe.");

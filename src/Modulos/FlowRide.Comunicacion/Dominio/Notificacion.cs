@@ -36,7 +36,6 @@ public enum TipoNotificacion
     DesviacionEtaPasajero = 10,
 }
 
-/// <summary>Lo que un módulo quiere comunicar. El canal y el formato los decide el gateway según el destinatario.</summary>
 public sealed record SolicitudNotificacion(
     Guid EventoId,
     Guid DestinatarioId,
@@ -45,7 +44,6 @@ public sealed record SolicitudNotificacion(
     string ClaveMensaje,
     IReadOnlyDictionary<string, string> Variables);
 
-/// <summary>Pasajero y conductor solo por WhatsApp; administración y operación logística por el panel (ADR-0015).</summary>
 public static class PoliticaCanal
 {
     public static IReadOnlyList<CanalNotificacion> Resolver(RolUsuario rol, bool critica = false) =>
@@ -54,7 +52,6 @@ public static class PoliticaCanal
             : critica ? [CanalNotificacion.Panel, CanalNotificacion.Correo] : [CanalNotificacion.Panel];
 }
 
-/// <summary>Textos es-CO por clave estable (ADR-0016). Una clave desconocida es un error de programación.</summary>
 public static class CatalogoMensajes
 {
     private static readonly Dictionary<string, string> Textos = new()

@@ -215,6 +215,10 @@ namespace FlowRide.Inicializador.Migraciones
                         .HasColumnType("character varying(300)")
                         .HasColumnName("origen");
 
+                    b.Property<Guid?>("PasajeroId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("pasajero_id");
+
                     b.Property<uint>("xmin")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
@@ -226,6 +230,11 @@ namespace FlowRide.Inicializador.Migraciones
 
                     b.HasIndex("ClienteEmpresarialId", "Fecha")
                         .HasDatabaseName("ix_itinerarios_cliente_empresarial_id_fecha");
+
+                    b.HasIndex("PasajeroId", "CodigoServicio", "Fecha")
+                        .IsUnique()
+                        .HasDatabaseName("ix_itinerarios_pasajero_id_codigo_servicio_fecha")
+                        .HasFilter("pasajero_id IS NOT NULL");
 
                     b.ToTable("itinerarios", "ops");
                 });
@@ -513,6 +522,11 @@ namespace FlowRide.Inicializador.Migraciones
                     b.Property<Guid>("ClienteEmpresarialId")
                         .HasColumnType("uuid")
                         .HasColumnName("cliente_empresarial_id");
+
+                    b.Property<string>("Domicilio")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("domicilio");
 
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("uuid")
