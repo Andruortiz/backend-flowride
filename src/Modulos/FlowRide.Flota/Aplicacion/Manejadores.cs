@@ -5,7 +5,6 @@ using FlowRide.Nucleo.Persistencia;
 
 namespace FlowRide.Flota.Aplicacion;
 
-/// <summary>Si desactivan al usuario de un conductor, el conductor deja de recibir asignaciones.</summary>
 internal sealed class AlDesactivarUsuario(IConductorRepository conductores, IUnitOfWork unidad) : IManejadorEvento<UsuarioDesactivado>
 {
     public async Task ManejarAsync(UsuarioDesactivado evento, CancellationToken ct = default)

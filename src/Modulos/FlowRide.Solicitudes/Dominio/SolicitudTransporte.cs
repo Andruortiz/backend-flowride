@@ -11,7 +11,6 @@ using FlowRide.Plataforma.Dominio;
 
 namespace FlowRide.Solicitudes.Dominio;
 
-/// <summary>Pedido de transporte de un pasajero. Su estado es la fuente de verdad del avance del servicio.</summary>
 public sealed class SolicitudTransporte : RaizAgregado
 {
     private SolicitudTransporte(
@@ -49,24 +48,20 @@ public sealed class SolicitudTransporte : RaizAgregado
 
     public string Destino { get; private set; }
 
-    /// <summary>Coordenadas del destino, si se conocen. Sin ellas no se estima la ETA, solo se monitorea.</summary>
     public double? DestinoLatitud { get; }
 
     public double? DestinoLongitud { get; }
 
-    /// <summary>Instante UTC del servicio.</summary>
     public DateTimeOffset FechaHoraProgramada { get; private set; }
 
     public bool Urgente { get; }
 
-    /// <summary>Si es personal, administración y operación logística no ven origen ni destino (PAS-SEG-01).</summary>
     public bool EsPersonal { get; }
 
     public EstadoSolicitud Estado { get; private set; }
 
     public Guid? AsignacionId { get; private set; }
 
-    /// <summary>Asignaciones que no prosperaron (rechazo o sin recurso).</summary>
     public int Intentos { get; private set; }
 
     public bool RecordatorioEnviado { get; private set; }
@@ -114,7 +109,6 @@ public sealed class SolicitudTransporte : RaizAgregado
 
     public bool EstaAbierta => Estado is EstadoSolicitud.Pendiente or EstadoSolicitud.EnRevision;
 
-    /// <summary>RF-32: solo se puede modificar mientras no tenga conductor.</summary>
     public void Modificar(string origen, string destino, DateTimeOffset fechaHoraProgramada, DateTimeOffset ahora)
     {
         if (!EstaAbierta)
@@ -141,7 +135,6 @@ public sealed class SolicitudTransporte : RaizAgregado
         AsignacionId = asignacionId;
     }
 
-    /// <summary>RF-12: el operador cambia el conductor de una solicitud ya asignada sin contarlo como intento fallido.</summary>
     public void CambiarAsignacion(Guid nuevaAsignacionId)
     {
         if (Estado != EstadoSolicitud.Asignada)
@@ -152,7 +145,6 @@ public sealed class SolicitudTransporte : RaizAgregado
         AsignacionId = nuevaAsignacionId;
     }
 
-    /// <summary>El conductor rechazó o la asignación se deshizo: vuelve a la cola.</summary>
     public void VolverAPendiente()
     {
         if (Estado != EstadoSolicitud.Asignada)
@@ -197,9 +189,6 @@ public sealed class SolicitudTransporte : RaizAgregado
         Estado = EstadoSolicitud.Finalizada;
     }
 
-    /// <summary>
-    /// RF-32. El pasajero cancela dentro de la ventana; el operador puede hacerlo siempre que el servicio no haya empezado.
-    /// </summary>
     public void Cancelar(string motivo, bool esOperador, int ventanaMinutos, DateTimeOffset ahora)
     {
         if (Estado is EstadoSolicitud.EnCurso or EstadoSolicitud.Finalizada or EstadoSolicitud.Cancelada)
@@ -226,7 +215,6 @@ public sealed class SolicitudTransporte : RaizAgregado
         Registrar(new SolicitudCancelada(Id, PasajeroId, asignacionPrevia, MotivoCancelacion, ahora));
     }
 
-    /// <summary>Marca el recordatorio y emite el evento una sola vez (RF-35).</summary>
     public void RegistrarRecordatorioDebido(DateTimeOffset ahora)
     {
         if (RecordatorioEnviado || Estado != EstadoSolicitud.Asignada)

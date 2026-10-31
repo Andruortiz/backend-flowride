@@ -1,14 +1,14 @@
-## .NET
+
 bin/
 obj/
 *.user
 *.suo
 .vs/
 TestResults/
-## IDEs
+
 .idea/
 .vscode/
-## Secretos (ADR-0014: nunca en el repositorio)
+
 appsettings.*.local.json
 .env
 .env.*

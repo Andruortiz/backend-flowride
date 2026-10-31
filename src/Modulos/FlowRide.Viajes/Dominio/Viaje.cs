@@ -20,10 +20,8 @@ public enum EstadoViaje
     Cancelado = 4,
 }
 
-/// <summary>Entrada de la trazabilidad del viaje (RF-40).</summary>
 public sealed record HitoViaje(DateTimeOffset Instante, string Tipo, string Detalle);
 
-/// <summary>Ejecución real de un servicio asignado: inicio, fin, incidentes y desviación de ETA.</summary>
 public sealed class Viaje : RaizAgregado
 {
     private readonly List<HitoViaje> _hitos = [];
@@ -67,7 +65,6 @@ public sealed class Viaje : RaizAgregado
 
     public DateTimeOffset ProgramadoPara { get; }
 
-    /// <summary>Llegada prevista (UTC) contra la que se mide la desviación.</summary>
     public DateTimeOffset EtaProgramada { get; }
 
     public double? DestinoLatitud { get; }
@@ -78,7 +75,6 @@ public sealed class Viaje : RaizAgregado
 
     public DateTimeOffset? FinalizadoEn { get; private set; }
 
-    /// <summary>Hay una alerta de desviación abierta; evita repetirla en cada evento GPS.</summary>
     public bool AlertaEtaActiva { get; private set; }
 
     public IReadOnlyList<HitoViaje> Hitos => _hitos;
@@ -173,9 +169,6 @@ public sealed class Viaje : RaizAgregado
         _hitos.Add(new HitoViaje(ahora, "Cancelado", "El viaje se canceló antes de iniciar"));
     }
 
-    /// <summary>
-    /// RF-56. Emite el evento solo al cruzar el umbral y rearma la alerta cuando la ETA vuelve a ser normal.
-    /// </summary>
     public void EvaluarDesviacionEta(DateTimeOffset etaEstimada, int umbralMinutos, DateTimeOffset ahora)
     {
         if (Estado != EstadoViaje.EnCurso)

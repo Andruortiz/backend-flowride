@@ -30,5 +30,7 @@ internal interface IItinerarioRepository
 
     Task<IReadOnlyList<Itinerario>> ListarAsync(Guid? clienteEmpresarialId, CancellationToken ct = default);
 
+    Task<bool> ExisteDePasajeroAsync(Guid pasajeroId, string codigoServicio, DateOnly fecha, CancellationToken ct = default);
+
     Task AgregarAsync(Itinerario itinerario, CancellationToken ct = default);
 }

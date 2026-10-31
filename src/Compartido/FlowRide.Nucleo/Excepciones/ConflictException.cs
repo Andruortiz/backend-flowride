@@ -1,6 +1,5 @@
 namespace FlowRide.Nucleo.Excepciones;
 
-/// <summary>Conflicto de estado o de concurrencia: otro proceso cambió el recurso o ya existe.</summary>
 public class ConflictException : Exception
 {
     public ConflictException()

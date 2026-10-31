@@ -12,7 +12,6 @@ using FlowRide.Plataforma.Dominio;
 
 namespace FlowRide.Viajes.Dominio;
 
-/// <summary>Puntaje que el pasajero da al conductor al terminar un viaje (RF-54). Una por viaje.</summary>
 public sealed class Calificacion : Entidad
 {
     public const int PuntajeMinimo = 1;

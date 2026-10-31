@@ -10,7 +10,6 @@ using FlowRide.Plataforma.Dominio;
 
 namespace FlowRide.Clientes.Dominio;
 
-/// <summary>Empresa atendida por el operador (aerolínea, minera, hospital). No aísla tenants: eso lo hace el Silo.</summary>
 public sealed class ClienteEmpresarial : Entidad
 {
     private ClienteEmpresarial(Guid id, string nombre, string? nit)

@@ -18,7 +18,6 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 
 namespace FlowRide.Solicitudes.Aplicacion.Dtos;
 
-/// <summary>Origen y destino llegan nulos cuando la solicitud es personal y quien consulta es administración u operación (PAS-SEG-01).</summary>
 public sealed record SolicitudResponse(
     Guid Id,
     Guid PasajeroId,

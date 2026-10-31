@@ -16,7 +16,6 @@ namespace FlowRide.Asignaciones.Dominio;
 
 public sealed record ConfiguracionRegla(string ReglaId, bool Activa, int Orden, double Peso);
 
-/// <summary>Reglas activas, su orden y sus pesos para un operador. Cada cambio crea una versión nueva, para reproducir decisiones.</summary>
 public sealed class ConfiguracionAsignacion : Entidad
 {
     private ConfiguracionAsignacion(Guid id, int version, IReadOnlyList<ConfiguracionRegla> reglas, Guid? creadaPor, DateTimeOffset creadaEn)
@@ -72,7 +71,6 @@ public sealed class ConfiguracionAsignacion : Entidad
     }
 }
 
-/// <summary>Rechaza configuraciones inválidas antes de activarlas (ADR-0009).</summary>
 public static class ValidadorConfiguracion
 {
     public static void Validar(IReadOnlyList<ConfiguracionRegla> reglas, IReadOnlyList<IAssignmentRule> catalogo)

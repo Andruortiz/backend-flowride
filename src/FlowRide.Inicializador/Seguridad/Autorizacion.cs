@@ -25,10 +25,6 @@ internal static class PoliticasAutorizacion
     }
 }
 
-/// <summary>
-/// Convierte la identidad del token en el usuario del sistema. El rol sale de la base, no del token, y un usuario
-/// desactivado no recibe reclamos: pierde el acceso aunque su token siga vigente.
-/// </summary>
 internal sealed class TransformadorUsuario(FlowRideDbContext db) : IClaimsTransformation
 {
     public async Task<ClaimsPrincipal> TransformAsync(ClaimsPrincipal principal)
@@ -74,7 +70,6 @@ internal sealed class ContextoTenant(Guid tenantId) : IContextoTenant
     public Guid TenantId { get; } = tenantId;
 }
 
-/// <summary>Silo por operador: este proceso atiende un solo tenant. Un token de otro tenant se rechaza (falla cerrado).</summary>
 internal sealed class GuardiaTenant(RequestDelegate siguiente)
 {
     public async Task InvokeAsync(HttpContext contexto, IContextoTenant tenant)

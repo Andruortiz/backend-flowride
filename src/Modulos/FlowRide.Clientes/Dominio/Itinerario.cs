@@ -10,7 +10,6 @@ using FlowRide.Plataforma.Dominio;
 
 namespace FlowRide.Clientes.Dominio;
 
-/// <summary>Servicio programado o recurrente que registra el operador logístico (RF-08). Las horas son locales del operador.</summary>
 public sealed class Itinerario : Entidad
 {
     private Itinerario(
@@ -22,9 +21,11 @@ public sealed class Itinerario : Entidad
         DateOnly fecha,
         TimeOnly horaSalida,
         TimeOnly horaLlegada,
-        DateTimeOffset creadoEn)
+        DateTimeOffset creadoEn,
+        Guid? pasajeroId)
         : base(id)
     {
+        PasajeroId = pasajeroId;
         CodigoServicio = codigoServicio;
         ClienteEmpresarialId = clienteEmpresarialId;
         Origen = origen;
@@ -34,6 +35,8 @@ public sealed class Itinerario : Entidad
         HoraLlegada = horaLlegada;
         CreadoEn = creadoEn;
     }
+
+    public Guid? PasajeroId { get; }
 
     public string CodigoServicio { get; }
 
@@ -60,7 +63,8 @@ public sealed class Itinerario : Entidad
         TimeOnly horaSalida,
         TimeOnly horaLlegada,
         DateTimeOffset ahora,
-        Guid? id = null)
+        Guid? id = null,
+        Guid? pasajeroId = null)
     {
         if (TextHelper.IsEmptyWithTrim(codigoServicio))
         {
@@ -96,6 +100,7 @@ public sealed class Itinerario : Entidad
             fecha,
             horaSalida,
             horaLlegada,
-            ahora);
+            ahora,
+            pasajeroId);
     }
 }

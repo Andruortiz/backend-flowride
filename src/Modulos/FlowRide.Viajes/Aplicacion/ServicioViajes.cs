@@ -63,7 +63,6 @@ internal sealed class ServicioViajes(
             throw new ConflictException("El vehículo ya tiene un viaje en curso.");
         }
 
-        // La solicitud y la asignación avanzan al recibir ViajeIniciado.
         viaje.Iniciar(reloj.GetUtcNow());
 
         await auditoria.RegistrarAsync("viaje.iniciar", $"viaje/{id}", ct: ct);
@@ -75,7 +74,6 @@ internal sealed class ServicioViajes(
     public async Task<ViajeResponse> FinalizarAsync(Guid id, CancellationToken ct = default)
     {
         var viaje = await BuscarDelConductorAsync(id, ct);
-        // La solicitud y la asignación avanzan al recibir ViajeFinalizado.
         viaje.Finalizar(reloj.GetUtcNow());
 
         await auditoria.RegistrarAsync("viaje.finalizar", $"viaje/{id}", ct: ct);

@@ -40,7 +40,6 @@ using FlowRide.Comunicacion.Aplicacion.Puertos;
 
 namespace FlowRide.Operacion.Infraestructura.Repositorios;
 
-/// <summary>Lecturas para reportes. Siempre sin seguimiento de cambios y con rango acotado por el caso de uso.</summary>
 internal sealed class ReportesQuery(FlowRideDbContext db) : IReportesQuery
 {
     public async Task<IReadOnlyList<ViajeRealizadoReporte>> ViajesRealizadosAsync(
@@ -118,7 +117,6 @@ internal sealed class ReportesQuery(FlowRideDbContext db) : IReportesQuery
             .Select(g => new { Manual = g.Key, Total = g.Count() })
             .ToListAsync(ct);
 
-        // Shortcut: la puntualidad se calcula en memoria sobre dos columnas; pasar a SQL si el rango anual pesa.
         var salidas = await db.Set<Viaje>().AsNoTracking()
             .Where(v => v.Estado == EstadoViaje.Finalizado && v.FinalizadoEn >= desde && v.FinalizadoEn < hasta && v.IniciadoEn != null)
             .Select(v => new { v.ProgramadoPara, Inicio = v.IniciadoEn!.Value })

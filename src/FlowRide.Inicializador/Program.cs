@@ -60,7 +60,7 @@ builder.Services.AgregarModuloAsignaciones();
 builder.Services.AgregarModuloComunicacion();
 builder.Services.AgregarModuloOperacion(builder.Configuration);
 
-// Autenticación: el proveedor de identidad real (Authority) llega con su integración. En desarrollo se firma con una clave efímera.
+
 SymmetricSecurityKey? claveDesarrollo = null;
 var authority = builder.Configuration["Jwt:Authority"];
 
@@ -79,6 +79,7 @@ builder.Services
     .AddJwtBearer(o =>
     {
         o.MapInboundClaims = false;
+        o.RequireHttpsMetadata = !esDesarrollo;
 
         if (claveDesarrollo is null)
         {
@@ -148,7 +149,7 @@ app.MapHealthChecks("/health/ready", new() { Predicate = r => r.Tags.Contains("r
 
 if (claveDesarrollo is not null)
 {
-    // Solo existe en Development: emite un token para un usuario sembrado. Nunca se registra fuera de ese entorno.
+    
     app.MapPost("/dev/token", async (SolicitudToken solicitud, FlowRideDbContext db, IContextoTenant tenant) =>
     {
         var usuario = await db.Set<Usuario>().AsNoTracking().FirstOrDefaultAsync(u => u.CodigoInterno == solicitud.CodigoInterno);

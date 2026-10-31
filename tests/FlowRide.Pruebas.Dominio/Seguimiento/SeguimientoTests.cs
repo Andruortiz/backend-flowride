@@ -4,7 +4,6 @@ using FlowRide.Contratos;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Viajes.Dominio;
 
-
 namespace FlowRide.Pruebas.Dominio.SeguimientoGps;
 
 public class SeguimientoTests
@@ -82,7 +81,6 @@ public class SeguimientoTests
         var llegada = EstimadorEta.EstimarLlegada([a, b], destino);
 
         Assert.NotNull(llegada);
-        // 2,2 km en 4 min = 33 km/h; faltan unos 20 km: alrededor de 36 minutos.
         var minutos = (llegada!.Value - b.TimestampOrigen).TotalMinutes;
         Assert.InRange(minutos, 30, 42);
     }
@@ -96,7 +94,6 @@ public class SeguimientoTests
 
         var llegada = EstimadorEta.EstimarLlegada([a, b], destino);
 
-        // Parado: se asume 5 km/h, nunca infinito.
         Assert.True((llegada!.Value - b.TimestampOrigen).TotalHours < 5);
     }
 }

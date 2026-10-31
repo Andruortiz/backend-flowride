@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FlowRide.Persistencia;
 
-/// <summary>Valores y colecciones pequeñas que viven dentro de su agregado se guardan como jsonb, no como tablas aparte.</summary>
 public static class ColumnasJson
 {
     public static readonly JsonSerializerOptions Opciones = new(JsonSerializerDefaults.Web)
@@ -18,7 +17,6 @@ public static class ColumnasJson
 
     public static T Deserializar<T>(string json) => JsonSerializer.Deserialize<T>(json, Opciones)!;
 
-    // Cambios en sitio (p. ej. registrar un documento) se detectan comparando el JSON.
     public static PropertyBuilder<T> ComoJson<T>(this PropertyBuilder<T> propiedad) =>
         propiedad
             .HasColumnType("jsonb")

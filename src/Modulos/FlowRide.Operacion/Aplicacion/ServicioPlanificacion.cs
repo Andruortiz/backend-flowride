@@ -41,6 +41,7 @@ namespace FlowRide.Operacion.Aplicacion;
 internal sealed class ServicioPlanificacion(
     IConsultaSolicitudes solicitudes,
     IConsultaFlota flota,
+    IServicioAsignaciones asignaciones,
     IServicioParametros parametros,
     IServicioOperador operador,
     IServicioAlertas alertas,
@@ -51,11 +52,34 @@ internal sealed class ServicioPlanificacion(
     {
         var ahora = reloj.GetUtcNow();
 
+        var asignadas = await AsignarProximasAsync(ahora, ct);
         var recordatorios = await EmitirRecordatoriosAsync(ahora, ct);
         var sinConductor = await AlertarSinConductorAsync(ahora, ct);
         var documentos = await AlertarDocumentosAsync(ct);
 
-        return new ResultadoPlanificacion(recordatorios, sinConductor, documentos);
+        return new ResultadoPlanificacion(recordatorios, sinConductor, documentos, asignadas);
+    }
+
+    private async Task<int> AsignarProximasAsync(DateTimeOffset ahora, CancellationToken ct)
+    {
+        var horas = await parametros.ValorAsync(CatalogoParametros.AnticipacionAsignacionHoras, ct);
+        var pendientes = await solicitudes.ListarPendientesHastaAsync(ahora.AddHours(horas), ct);
+        var asignadas = 0;
+
+        foreach (var solicitud in pendientes)
+        {
+            try
+            {
+                await asignaciones.AsignarAutomaticoAsync(solicitud.Id, ct);
+                asignadas++;
+            }
+            catch (ConflictException)
+            {
+                continue;
+            }
+        }
+
+        return asignadas;
     }
 
     private async Task<int> EmitirRecordatoriosAsync(DateTimeOffset ahora, CancellationToken ct)
@@ -79,7 +103,8 @@ internal sealed class ServicioPlanificacion(
     private async Task<int> AlertarSinConductorAsync(DateTimeOffset ahora, CancellationToken ct)
     {
         var minutos = await parametros.ValorAsync(CatalogoParametros.AlertaSinConductorMinutos, ct);
-        var abiertas = await solicitudes.ListarAbiertasAntesDeAsync(ahora.AddMinutes(-minutos), ct);
+        var horas = await parametros.ValorAsync(CatalogoParametros.AnticipacionAsignacionHoras, ct);
+        var abiertas = await solicitudes.ListarAbiertasAntesDeAsync(ahora.AddMinutes(-minutos), ahora.AddHours(horas), ct);
 
         foreach (var solicitud in abiertas)
         {

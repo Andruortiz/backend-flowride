@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FlowRide.Inicializador.Seguridad;
 
-/// <summary>Traduce las excepciones del sistema a ProblemDetails. Un error inesperado no filtra su mensaje.</summary>
 internal sealed partial class ManejadorExcepciones(IProblemDetailsService problemas, ILogger<ManejadorExcepciones> logger) : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)

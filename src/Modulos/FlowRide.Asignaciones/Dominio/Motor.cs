@@ -21,14 +21,12 @@ public enum TipoRegla
     Puntuacion = 3,
 }
 
-/// <summary>Un conductor con su vehículo y la carga que lleva, listo para ser evaluado.</summary>
 public sealed record CandidatoAsignacion(Conductor Conductor, Vehiculo? Vehiculo, int CargaActual, int AsignacionesRecientes)
 {
     public EvaluacionAsignabilidad Asignabilidad(DateOnly fecha, TimeOnly hora) =>
         Conductor.EvaluarAsignabilidad(Vehiculo, fecha, hora);
 }
 
-/// <summary>El servicio a asignar, expresado en hora local del operador.</summary>
 public sealed record ContextoAsignacion(SolicitudTransporte Solicitud, DateOnly Fecha, TimeOnly Hora, int PasajerosRequeridos = 1);
 
 public sealed record EvaluacionRegla(bool Descarta, string? Motivo, double Puntos)
@@ -40,7 +38,6 @@ public sealed record EvaluacionRegla(bool Descarta, string? Motivo, double Punto
     public static EvaluacionRegla ConPuntos(double puntos) => new(false, null, puntos);
 }
 
-/// <summary>Una regla del motor: filtra, prioriza o puntúa candidatos. Una regla nueva no obliga a tocar las demás.</summary>
 public interface IAssignmentRule
 {
     string Id { get; }
@@ -49,7 +46,6 @@ public interface IAssignmentRule
 
     TipoRegla Tipo { get; }
 
-    /// <summary>Las obligatorias no se pueden desactivar (restricciones operativas y regulatorias).</summary>
     bool Obligatoria { get; }
 
     EvaluacionRegla Evaluar(ContextoAsignacion contexto, CandidatoAsignacion candidato);
@@ -147,7 +143,6 @@ public sealed class ReglaCapacidadServicio : IAssignmentRule
             : EvaluacionRegla.Pasa;
 }
 
-/// <summary>Un servicio urgente prefiere a quien está libre; no usa la cercanía GPS.</summary>
 public sealed class ReglaServicioUrgente : IAssignmentRule
 {
     public string Id => "urgente";
@@ -190,7 +185,6 @@ public sealed class ReglaAsignacionesRecientes : IAssignmentRule
         EvaluacionRegla.ConPuntos(Math.Max(0, 100 - (candidato.AsignacionesRecientes * 20)));
 }
 
-/// <summary>Catálogo de reglas disponibles; la activación, el orden y los pesos se configuran por operador.</summary>
 public static class CatalogoReglas
 {
     public static IReadOnlyList<IAssignmentRule> Todas { get; } =

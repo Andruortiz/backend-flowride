@@ -7,10 +7,8 @@ using FlowRide.Identidad.Dominio;
 using FlowRide.Nucleo.Seguridad;
 using FlowRide.Solicitudes.Dominio;
 
-
 namespace FlowRide.Pruebas.Dominio;
 
-/// <summary>Datos de prueba comunes. 2026-10-14 es miércoles.</summary>
 internal static class Escenarios
 {
     public static readonly DateTimeOffset Ahora = new(2026, 10, 14, 8, 0, 0, TimeSpan.Zero);
@@ -37,7 +35,6 @@ internal static class Escenarios
         return vehiculo;
     }
 
-    /// <summary>Conductor en turno el día de prueba, con licencia vigente.</summary>
     public static Conductor ConductorListo(int n, DateOnly? venceLicencia = null)
     {
         var usuario = Usuario.Crear($"Conductor {n}", null, $"+57300{n:D7}", $"C-{n:D3}", RolUsuario.Conductor, Ahora);

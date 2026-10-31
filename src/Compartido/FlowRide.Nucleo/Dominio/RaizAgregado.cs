@@ -1,6 +1,5 @@
 namespace FlowRide.Nucleo.Dominio;
 
-/// <summary>Entidad que acumula eventos de dominio; la infraestructura los publica por outbox al confirmar.</summary>
 public abstract class RaizAgregado : Entidad
 {
     private readonly List<IEventoDominio> _eventos = [];

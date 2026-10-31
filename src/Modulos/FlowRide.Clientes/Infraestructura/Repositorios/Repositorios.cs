@@ -40,5 +40,8 @@ internal sealed class ItinerarioRepository(FlowRideDbContext db) : IItinerarioRe
             .OrderBy(i => i.Fecha).ThenBy(i => i.HoraSalida).ThenBy(i => i.Id)
             .ToListAsync(ct);
 
+    public Task<bool> ExisteDePasajeroAsync(Guid pasajeroId, string codigoServicio, DateOnly fecha, CancellationToken ct = default) =>
+        db.Set<Itinerario>().AnyAsync(i => i.PasajeroId == pasajeroId && i.CodigoServicio == codigoServicio && i.Fecha == fecha, ct);
+
     public async Task AgregarAsync(Itinerario itinerario, CancellationToken ct = default) => await db.Set<Itinerario>().AddAsync(itinerario, ct);
 }

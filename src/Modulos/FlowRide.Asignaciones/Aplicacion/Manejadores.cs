@@ -29,21 +29,35 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 
 namespace FlowRide.Asignaciones.Aplicacion;
 
-/// <summary>Un rechazo devuelve la solicitud a la cola: se busca otro conductor.</summary>
 internal sealed class AlRechazarAsignacion(IServicioAsignaciones asignaciones) : IManejadorEvento<AsignacionRechazada>
 {
     public Task ManejarAsync(AsignacionRechazada evento, CancellationToken ct = default) =>
         asignaciones.AsignarAutomaticoAsync(evento.SolicitudId, ct);
 }
 
-/// <summary>Una solicitud nueva entra a la cola: se ejecuta el motor de asignación.</summary>
-internal sealed class AlRegistrarSolicitud(IServicioAsignaciones asignaciones) : IManejadorEvento<SolicitudRegistrada>
+internal sealed class AlRegistrarSolicitud(
+    IServicioAsignaciones asignaciones,
+    IConsultaSolicitudes solicitudes,
+    IServicioParametros parametros,
+    TimeProvider reloj) : IManejadorEvento<SolicitudRegistrada>
 {
-    public Task ManejarAsync(SolicitudRegistrada evento, CancellationToken ct = default) =>
-        asignaciones.AsignarAutomaticoAsync(evento.SolicitudId, ct);
+    public async Task ManejarAsync(SolicitudRegistrada evento, CancellationToken ct = default)
+    {
+        if (!evento.Urgente)
+        {
+            var solicitud = await solicitudes.ObtenerAsync(evento.SolicitudId, ct);
+            var horas = await parametros.ValorAsync(CatalogoParametros.AnticipacionAsignacionHoras, ct);
+
+            if (solicitud is null || solicitud.FechaHoraProgramada > reloj.GetUtcNow().AddHours(horas))
+            {
+                return;
+            }
+        }
+
+        await asignaciones.AsignarAutomaticoAsync(evento.SolicitudId, ct);
+    }
 }
 
-/// <summary>Si cancelan la solicitud, la oferta vigente se cancela.</summary>
 internal sealed class AlCancelarSolicitud(IAsignacionRepository asignaciones, IUnitOfWork unidad, TimeProvider reloj) : IManejadorEvento<SolicitudCancelada>
 {
     public async Task ManejarAsync(SolicitudCancelada evento, CancellationToken ct = default)
@@ -58,7 +72,6 @@ internal sealed class AlCancelarSolicitud(IAsignacionRepository asignaciones, IU
     }
 }
 
-/// <summary>El viaje empezó: la asignación pasa a EnCurso.</summary>
 internal sealed class AlIniciarViaje(IAsignacionRepository asignaciones, IUnitOfWork unidad) : IManejadorEvento<ViajeIniciado>
 {
     public async Task ManejarAsync(ViajeIniciado evento, CancellationToken ct = default)
@@ -73,7 +86,6 @@ internal sealed class AlIniciarViaje(IAsignacionRepository asignaciones, IUnitOf
     }
 }
 
-/// <summary>El viaje terminó: la asignación queda Finalizada.</summary>
 internal sealed class AlFinalizarViaje(IAsignacionRepository asignaciones, IUnitOfWork unidad) : IManejadorEvento<ViajeFinalizado>
 {
     public async Task ManejarAsync(ViajeFinalizado evento, CancellationToken ct = default)
@@ -88,7 +100,6 @@ internal sealed class AlFinalizarViaje(IAsignacionRepository asignaciones, IUnit
                 break;
 
             case EstadoAsignacion.Aceptada:
-                // El evento de inicio aún no se procesó: se reintenta para respetar el orden.
                 throw new InvalidOperationException("La asignación todavía no registra el inicio del viaje.");
         }
     }

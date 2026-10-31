@@ -11,7 +11,6 @@ namespace FlowRide.Operacion.Infraestructura;
 
 public static class Registro
 {
-    /// <summary>Registra los servicios, consultas, repositorios y manejadores de eventos del módulo.</summary>
     public static IServiceCollection AgregarModuloOperacion(this IServiceCollection servicios, IConfiguration configuracion)
     {
         servicios.AddScoped<IReportesQuery, ReportesQuery>();

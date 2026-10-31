@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlowRide.Inicializador.Configuracion;
 
-/// <summary>Datos de prueba para desarrollo local. Solo se ejecuta en Development y solo si la base está vacía.</summary>
 internal static class SembradoDesarrollo
 {
     public static async Task EjecutarAsync(IServiceProvider servicios, CancellationToken ct = default)

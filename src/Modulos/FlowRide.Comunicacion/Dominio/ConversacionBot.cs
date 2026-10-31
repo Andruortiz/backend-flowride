@@ -38,10 +38,6 @@ public sealed record DatosSolicitudConversacion(string Origen, string Destino, D
 
 public sealed record RespuestaConversacion(string Texto, IntencionConversacion Intencion, DatosSolicitudConversacion? Solicitud = null);
 
-/// <summary>
-/// Máquina de estados del bot de WhatsApp para pedir un servicio (RF-15). Es independiente del proveedor del canal:
-/// recibe texto y devuelve la respuesta y, al completarse, los datos de la solicitud.
-/// </summary>
 public sealed class ConversacionBot : Entidad
 {
     public static readonly TimeSpan Vigencia = TimeSpan.FromMinutes(30);

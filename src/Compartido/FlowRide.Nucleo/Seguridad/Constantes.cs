@@ -1,6 +1,5 @@
 namespace FlowRide.Nucleo.Seguridad;
 
-/// <summary>Nombres de los reclamos del token ya validado.</summary>
 public static class Reclamos
 {
     public const string UsuarioId = "usuario_id";
@@ -9,7 +8,6 @@ public static class Reclamos
     public const string Tenant = "tenant_id";
 }
 
-/// <summary>Nombres de las políticas de autorización. Su definición vive en el arranque, no en los módulos.</summary>
 public static class Politicas
 {
     public const string Autenticado = "Autenticado";

@@ -34,7 +34,6 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 
 namespace FlowRide.Comunicacion.Infraestructura.Repositorios;
 
-/// <summary>Un mensaje externo (WhatsApp) ya procesado: su identificador evita ejecutarlo dos veces.</summary>
 internal sealed class MensajeEntranteRegistrado
 {
     public string ExternalMessageId { get; set; } = string.Empty;
@@ -42,7 +41,6 @@ internal sealed class MensajeEntranteRegistrado
     public DateTimeOffset RecibidoEn { get; set; }
 }
 
-/// <summary>Una notificación ya enviada por un canal: un reintento del evento no la duplica.</summary>
 internal sealed class NotificacionEnviadaRegistro
 {
     public Guid EventoId { get; set; }

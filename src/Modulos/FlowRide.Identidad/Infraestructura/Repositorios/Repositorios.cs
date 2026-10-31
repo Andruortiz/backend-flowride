@@ -29,7 +29,6 @@ internal sealed class UsuarioRepository(FlowRideDbContext db) : IUsuarioReposito
 
     public Task<Usuario?> ObtenerPorTelefonoAsync(string telefono, CancellationToken ct = default)
     {
-        // WhatsApp entrega el número sin '+'; en la base se guarda en formato internacional.
         var limpio = telefono.Replace(" ", string.Empty, StringComparison.Ordinal).Replace("-", string.Empty, StringComparison.Ordinal);
         var normalizado = limpio.StartsWith('+') ? limpio : "+" + limpio;
 

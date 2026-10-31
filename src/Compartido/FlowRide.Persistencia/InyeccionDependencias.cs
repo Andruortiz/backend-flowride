@@ -8,7 +8,6 @@ namespace FlowRide.Persistencia;
 
 public static class InyeccionDependencias
 {
-    /// <summary>Registra el contexto único, la unidad de trabajo y el procesador del outbox. La conexión llega por configuración, nunca en el repositorio.</summary>
     public static IServiceCollection AgregarPersistencia(this IServiceCollection servicios, IConfiguration configuracion, string ensambladoMigraciones)
     {
         var conexion = configuracion.GetConnectionString("FlowRide")

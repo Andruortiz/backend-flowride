@@ -74,7 +74,7 @@ internal sealed class ServicioClientes(
         }
 
         var itinerario = Itinerario.Crear(
-            request.CodigoServicio, request.ClienteEmpresarialId, request.Origen, request.Destino, request.Fecha, request.HoraSalida, request.HoraLlegada, reloj.GetUtcNow());
+            request.CodigoServicio, request.ClienteEmpresarialId, request.Origen, request.Destino, request.Fecha, request.HoraSalida, request.HoraLlegada, reloj.GetUtcNow(), pasajeroId: request.PasajeroId);
         await itinerarios.AgregarAsync(itinerario, ct);
         await auditoria.RegistrarAsync("itinerario.crear", $"itinerario/{itinerario.Id}", ct: ct);
         await unidad.GuardarCambiosAsync(ct);

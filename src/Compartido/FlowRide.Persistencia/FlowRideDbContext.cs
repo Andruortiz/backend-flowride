@@ -5,10 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlowRide.Persistencia;
 
-/// <summary>
-/// Un solo contexto y una sola transacción para todos los módulos (ADR-0007). Las tablas las aportan los módulos
-/// por medio de <see cref="IConfiguradorModelo"/>; aquí solo viven las convenciones y el outbox.
-/// </summary>
 public sealed class FlowRideDbContext(
     DbContextOptions<FlowRideDbContext> opciones,
     TimeProvider reloj,
@@ -22,7 +18,6 @@ public sealed class FlowRideDbContext(
 
         var lista = configuradores.ToList();
 
-        // Primero todas las propiedades de solo lectura: las configuraciones siguientes ya las pueden indexar.
         foreach (var configurador in lista)
         {
             ConvencionesModelo.MapearPropiedadesDeSoloLectura(modelBuilder, configurador.Entidades);
@@ -46,7 +41,6 @@ public sealed class FlowRideDbContext(
         ConvencionesModelo.Aplicar(modelBuilder);
     }
 
-    /// <summary>Los eventos de los agregados modificados se guardan en el outbox dentro de la misma transacción.</summary>
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
         CapturarEventos();

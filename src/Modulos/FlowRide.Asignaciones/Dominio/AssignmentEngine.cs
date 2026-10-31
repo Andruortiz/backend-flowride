@@ -20,7 +20,6 @@ public sealed record DesgloseRegla(string Regla, double Peso, double Puntos);
 
 public sealed record PuntajeCandidato(Guid ConductorId, double Total, IReadOnlyList<DesgloseRegla> Desglose);
 
-/// <summary>Explicación completa de una decisión: con ella se reproduce y se audita (ADR-0009).</summary>
 public sealed record DecisionAsignacion(
     int VersionConfiguracion,
     IReadOnlyList<string> ReglasAplicadas,
@@ -34,9 +33,6 @@ public sealed record ResultadoAsignacion(CandidatoAsignacion? Ganador, DecisionA
     public bool Exitoso => Ganador is not null;
 }
 
-/// <summary>
-/// Orquesta las reglas configuradas: elimina, prioriza, puntúa y desempata. Misma entrada, mismo resultado.
-/// </summary>
 public sealed class AssignmentEngine
 {
     private readonly IReadOnlyDictionary<string, IAssignmentRule> _catalogo;
@@ -90,7 +86,6 @@ public sealed class AssignmentEngine
             ranking.Add(new PuntajeCandidato(candidato.Conductor.Id, Math.Round(desglose.Sum(d => d.Puntos), 4), desglose));
         }
 
-        // Desempate estable: a igual puntaje, el identificador del conductor. Nunca aleatorio.
         var ordenado = ranking.OrderByDescending(r => r.Total).ThenBy(r => r.ConductorId).ToList();
         var hayEmpate = ordenado.Count > 1 && ordenado[0].Total == ordenado[1].Total;
         var elegido = ordenado.Count > 0 ? ordenado[0].ConductorId : (Guid?)null;

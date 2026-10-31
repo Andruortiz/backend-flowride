@@ -90,7 +90,6 @@ internal sealed class ServicioSolicitudes(
 
         solicitud.Cancelar(request.Motivo, esOperador, ventana, ahora);
 
-        // La asignación y el viaje se cancelan al recibir SolicitudCancelada (módulos Asignaciones y Viajes).
         await auditoria.RegistrarAsync("solicitud.cancelar", $"solicitud/{id}", motivo: request.Motivo, ct: ct);
         await unidad.GuardarCambiosAsync(ct);
 
@@ -125,7 +124,6 @@ internal sealed class ServicioSolicitudes(
         }
     }
 
-    /// <summary>PAS-SEG-01: el origen y el destino de un servicio personal no se muestran a administración ni a operación logística.</summary>
     private SolicitudResponse A(SolicitudTransporte s)
     {
         var oculta = s.EsPersonal && actor.Rol is RolUsuario.AdministradorOperador or RolUsuario.OperadorLogistico;

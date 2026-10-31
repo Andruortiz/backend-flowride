@@ -15,7 +15,6 @@ public sealed class OpcionesOutbox
     public int MaximoIntentos { get; set; } = 8;
 }
 
-/// <summary>Lleva un evento del outbox a todos sus manejadores. Solo conoce los tipos de eventos del dominio.</summary>
 public sealed class DespachadorEventos
 {
     private static readonly Dictionary<string, Type> Tipos = typeof(FlowRide.Contratos.UsuarioDesactivado).Assembly
@@ -41,10 +40,6 @@ public sealed class DespachadorEventos
     }
 }
 
-/// <summary>
-/// Publica los eventos del outbox: uno por transacción, con SKIP LOCKED para que varias instancias no se pisen.
-/// La entrega es al menos una vez; los manejadores son idempotentes (ADR-0007).
-/// </summary>
 public sealed partial class ProcesadorOutbox(
     IServiceScopeFactory fabrica,
     DespachadorEventos despachador,
@@ -71,7 +66,6 @@ public sealed partial class ProcesadorOutbox(
         }
     }
 
-    /// <summary>Procesa un evento. Devuelve falso si no quedan pendientes.</summary>
     public async Task<bool> ProcesarSiguienteAsync(CancellationToken ct)
     {
         await using var alcanceCola = fabrica.CreateAsyncScope();
@@ -94,7 +88,6 @@ public sealed partial class ProcesadorOutbox(
 
         try
         {
-            // Los manejadores trabajan en su propio alcance (otra conexión): su fallo no ensucia esta transacción.
             await using var alcanceManejadores = fabrica.CreateAsyncScope();
             await despachador.DespacharAsync(alcanceManejadores.ServiceProvider, mensaje.Tipo, mensaje.Carga, ct);
 

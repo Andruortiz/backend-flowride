@@ -48,12 +48,21 @@ internal sealed class SolicitudRepository(FlowRideDbContext db) : ISolicitudRepo
             .Take(500)
             .ToListAsync(ct);
 
-    public async Task<IReadOnlyList<SolicitudTransporte>> ListarAbiertasAntesDeAsync(DateTimeOffset limite, CancellationToken ct = default) =>
+    public async Task<IReadOnlyList<SolicitudTransporte>> ListarAbiertasAntesDeAsync(DateTimeOffset limite, DateTimeOffset serviciosHasta, CancellationToken ct = default) =>
         await db.Set<SolicitudTransporte>()
             .AsNoTracking()
-            .Where(s => (s.Estado == EstadoSolicitud.Pendiente || s.Estado == EstadoSolicitud.EnRevision) && s.CreadaEn <= limite)
+            .Where(s => s.CreadaEn <= limite
+                && (s.Estado == EstadoSolicitud.EnRevision || (s.Estado == EstadoSolicitud.Pendiente && s.FechaHoraProgramada <= serviciosHasta)))
             .OrderBy(s => s.CreadaEn).ThenBy(s => s.Id)
             .Take(500)
+            .ToListAsync(ct);
+
+    public async Task<IReadOnlyList<SolicitudTransporte>> ListarPendientesHastaAsync(DateTimeOffset serviciosHasta, CancellationToken ct = default) =>
+        await db.Set<SolicitudTransporte>()
+            .AsNoTracking()
+            .Where(s => s.Estado == EstadoSolicitud.Pendiente && s.FechaHoraProgramada <= serviciosHasta)
+            .OrderBy(s => s.FechaHoraProgramada).ThenBy(s => s.Id)
+            .Take(200)
             .ToListAsync(ct);
 
     public async Task AgregarAsync(SolicitudTransporte solicitud, CancellationToken ct = default) => await db.Set<SolicitudTransporte>().AddAsync(solicitud, ct);

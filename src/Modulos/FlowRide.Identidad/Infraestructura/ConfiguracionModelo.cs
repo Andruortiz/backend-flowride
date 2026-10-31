@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlowRide.Identidad.Infraestructura;
 
-/// <summary>Tablas e índices del módulo. Los compone el DbContext único (ADR-0004).</summary>
 internal sealed class ConfiguracionModelo : IConfiguradorModelo
 {
     public IReadOnlyList<Type> Entidades { get; } = [typeof(Usuario), typeof(Pasajero)];
@@ -28,6 +27,7 @@ internal sealed class ConfiguracionModelo : IConfiguradorModelo
         mb.Entity<Pasajero>(e =>
             {
                 e.ToTable("pasajeros");
+                e.Property(x => x.Domicilio).HasMaxLength(Pasajero.MaximoDomicilio);
                 e.HasIndex(x => x.UsuarioId).IsUnique();
                 e.HasIndex(x => x.ClienteEmpresarialId);
             });

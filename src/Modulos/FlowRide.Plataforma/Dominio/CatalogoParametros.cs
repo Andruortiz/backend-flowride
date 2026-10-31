@@ -11,7 +11,6 @@ namespace FlowRide.Plataforma.Dominio;
 
 public sealed record DefinicionParametro(string Clave, string Descripcion, int Minimo, int Maximo, int Defecto, string Unidad);
 
-/// <summary>Parámetros operativos que cada operador puede ajustar sin desplegar (ADR-0016), con su rango válido.</summary>
 public static class CatalogoParametros
 {
     public const string UmbralEtaMinutos = "eta.umbral_minutos";
@@ -23,6 +22,7 @@ public static class CatalogoParametros
     public const string VentanaCargaHoras = "asignacion.ventana_reciente_horas";
     public const string MaximoIntentosAsignacion = "asignacion.maximo_intentos";
     public const string DuracionViajeMinutos = "viaje.duracion_estimada_minutos";
+    public const string AnticipacionAsignacionHoras = "asignacion.anticipacion_horas";
 
     private static readonly DefinicionParametro[] Todas =
     [
@@ -35,6 +35,7 @@ public static class CatalogoParametros
         new(VentanaCargaHoras, "Ventana para contar asignaciones recientes", 1, 72, 24, "h"),
         new(MaximoIntentosAsignacion, "Intentos de asignación antes de pasar a revisión", 1, 10, 3, "intentos"),
         new(DuracionViajeMinutos, "Duración estimada de un viaje sin itinerario", 5, 720, 45, "min"),
+        new(AnticipacionAsignacionHoras, "Antelación con la que se asigna conductor a un servicio programado", 1, 720, 24, "h"),
     ];
 
     public static IReadOnlyList<DefinicionParametro> Definiciones => Todas;

@@ -10,7 +10,6 @@ namespace FlowRide.Viajes.Infraestructura;
 
 public static class Registro
 {
-    /// <summary>Registra los servicios, consultas, repositorios y manejadores de eventos del módulo.</summary>
     public static IServiceCollection AgregarModuloViajes(this IServiceCollection servicios)
     {
         servicios.AddSingleton<IConfiguradorModelo, ConfiguracionModelo>();
@@ -26,6 +25,5 @@ public static class Registro
         return servicios;
     }
 
-    /// <summary>Solo para la fábrica de migraciones (dotnet ef): las tablas del módulo.</summary>
     public static IConfiguradorModelo CrearConfiguradorModelo() => new ConfiguracionModelo();
 }

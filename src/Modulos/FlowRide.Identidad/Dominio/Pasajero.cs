@@ -13,6 +13,8 @@ namespace FlowRide.Identidad.Dominio;
 
 public sealed class Pasajero : Entidad
 {
+    public const int MaximoDomicilio = 300;
+
     private Pasajero(Guid id, Guid usuarioId, Guid clienteEmpresarialId)
         : base(id)
     {
@@ -23,6 +25,8 @@ public sealed class Pasajero : Entidad
     public Guid UsuarioId { get; }
 
     public Guid ClienteEmpresarialId { get; private set; }
+
+    public string? Domicilio { get; private set; }
 
     public static Pasajero Crear(Usuario usuario, Guid clienteEmpresarialId, Guid? id = null)
     {
@@ -43,6 +47,21 @@ public sealed class Pasajero : Entidad
         ValidarCliente(nuevoClienteEmpresarialId);
 
         ClienteEmpresarialId = nuevoClienteEmpresarialId;
+    }
+
+    public void DefinirDomicilio(string domicilio)
+    {
+        if (TextHelper.IsEmptyWithTrim(domicilio))
+        {
+            throw new DomainException("El domicilio es obligatorio.");
+        }
+
+        if (domicilio.Trim().Length > MaximoDomicilio)
+        {
+            throw new DomainException($"El domicilio no puede superar {MaximoDomicilio} caracteres.");
+        }
+
+        Domicilio = domicilio.Trim();
     }
 
     private static void ValidarCliente(Guid clienteEmpresarialId)

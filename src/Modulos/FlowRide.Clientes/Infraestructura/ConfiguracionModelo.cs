@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlowRide.Clientes.Infraestructura;
 
-/// <summary>Tablas e índices del módulo. Los compone el DbContext único (ADR-0004).</summary>
 internal sealed class ConfiguracionModelo : IConfiguradorModelo
 {
     public IReadOnlyList<Type> Entidades { get; } = [typeof(ClienteEmpresarial), typeof(Itinerario)];
@@ -25,6 +24,7 @@ internal sealed class ConfiguracionModelo : IConfiguradorModelo
                 e.Property(x => x.Origen).HasMaxLength(300);
                 e.Property(x => x.Destino).HasMaxLength(300);
                 e.HasIndex(x => new { x.ClienteEmpresarialId, x.Fecha });
+                e.HasIndex(x => new { x.PasajeroId, x.CodigoServicio, x.Fecha }).IsUnique().HasFilter("pasajero_id IS NOT NULL");
             });
     }
 }

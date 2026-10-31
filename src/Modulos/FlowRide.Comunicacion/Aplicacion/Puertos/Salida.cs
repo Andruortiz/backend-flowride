@@ -37,7 +37,6 @@ internal interface IConversacionRepository
     Task AgregarAsync(ConversacionBot conversacion, CancellationToken ct = default);
 }
 
-/// <summary>Idempotencia de los mensajes entrantes: cada mensaje externo se procesa una sola vez.</summary>
 internal interface IMensajeEntranteRepository
 {
     Task<bool> ExisteAsync(string externalMessageId, CancellationToken ct = default);
@@ -45,7 +44,6 @@ internal interface IMensajeEntranteRepository
     Task RegistrarAsync(string externalMessageId, DateTimeOffset recibidoEn, CancellationToken ct = default);
 }
 
-/// <summary>Registro de lo ya enviado por cada canal: un reintento no genera un mensaje duplicado.</summary>
 internal interface INotificacionEnviadaRepository
 {
     Task<bool> ExisteAsync(Guid eventoId, Guid destinatarioId, CanalNotificacion canal, CancellationToken ct = default);
@@ -66,7 +64,6 @@ internal interface IAlertaRepository
     Task AgregarAsync(AlertaOperativa alerta, CancellationToken ct = default);
 }
 
-/// <summary>Salida hacia WhatsApp. El proveedor concreto (Sandbox, Twilio, Meta) se conecta detrás de este puerto (ADR-0008).</summary>
 internal interface IWhatsAppGateway
 {
     Task EnviarAsync(string telefono, string texto, CancellationToken ct = default);

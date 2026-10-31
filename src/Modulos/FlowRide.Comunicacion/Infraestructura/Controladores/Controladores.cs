@@ -62,10 +62,6 @@ public sealed class AlertasController(IServicioAlertas servicio) : ControllerBas
     }
 }
 
-/// <summary>
-/// Entrada de los mensajes de WhatsApp. No usa JWT: el proveedor se autentica con un secreto compartido.
-/// Sin secreto configurado el endpoint no existe (falla cerrado). La verificación de firma del proveedor real queda con su integración.
-/// </summary>
 [ApiController]
 [Route("api/v1/webhooks/whatsapp")]
 [AllowAnonymous]

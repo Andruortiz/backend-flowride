@@ -18,4 +18,4 @@ namespace FlowRide.Clientes.Aplicacion.Dtos;
 public sealed record CrearClienteEmpresarialRequest(string Nombre, string? Nit);
 
 public sealed record CrearItinerarioRequest(
-    string CodigoServicio, Guid? ClienteEmpresarialId, string Origen, string Destino, DateOnly Fecha, TimeOnly HoraSalida, TimeOnly HoraLlegada);
+    string CodigoServicio, Guid? ClienteEmpresarialId, string Origen, string Destino, DateOnly Fecha, TimeOnly HoraSalida, TimeOnly HoraLlegada, Guid? PasajeroId = null);

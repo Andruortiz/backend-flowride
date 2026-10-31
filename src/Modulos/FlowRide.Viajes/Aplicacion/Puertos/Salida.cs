@@ -31,7 +31,6 @@ internal interface IViajeRepository
 
     Task<Viaje?> ObtenerEnCursoDeVehiculoAsync(Guid vehiculoId, CancellationToken ct = default);
 
-    /// <summary>Viaje programado o en curso del conductor, el más próximo.</summary>
     Task<Viaje?> ObtenerVigenteDeConductorAsync(Guid conductorId, CancellationToken ct = default);
 
     Task<Viaje?> ObtenerUltimoFinalizadoDePasajeroAsync(Guid pasajeroId, CancellationToken ct = default);
@@ -54,7 +53,6 @@ internal interface IUbicacionRepository
 {
     Task<bool> ExisteAsync(Guid vehiculoId, DateTimeOffset timestampOrigen, string fuente, CancellationToken ct = default);
 
-    /// <summary>De la más antigua a la más reciente.</summary>
     Task<IReadOnlyList<RegistroUbicacion>> ObtenerRecientesAsync(Guid vehiculoId, DateTimeOffset desde, int maximo, CancellationToken ct = default);
 
     Task AgregarAsync(RegistroUbicacion registro, CancellationToken ct = default);

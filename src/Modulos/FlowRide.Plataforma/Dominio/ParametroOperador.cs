@@ -9,7 +9,6 @@ using FlowRide.Contratos;
 
 namespace FlowRide.Plataforma.Dominio;
 
-/// <summary>Valor vigente de un parámetro del operador, con versión y quién lo cambió.</summary>
 public sealed class ParametroOperador : Entidad
 {
     private ParametroOperador(Guid id, string clave, int valor, DateTimeOffset modificadoEn)
