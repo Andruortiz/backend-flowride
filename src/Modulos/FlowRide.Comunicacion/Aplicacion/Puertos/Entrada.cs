@@ -62,3 +62,8 @@ public interface IServicioCargaItinerarios
 
     Task<ResultadoCarga> ConfirmarAsync(Guid pasajeroId, IReadOnlyList<FilaItinerario> filas, CancellationToken ct = default);
 }
+
+public interface IProcesadorWebhookMeta
+{
+    Task ProcesarAsync(byte[] cuerpo, CancellationToken ct = default);
+}

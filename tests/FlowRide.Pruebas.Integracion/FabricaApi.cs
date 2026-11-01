@@ -15,6 +15,8 @@ public sealed class ColeccionApi : ICollectionFixture<FabricaApi>
 public sealed class FabricaApi : WebApplicationFactory<Program>, IAsyncLifetime
 {
     public const string SecretoWebhook = "secreto-solo-para-pruebas";
+    public const string SecretoMeta = "secreto-meta-pruebas";
+    public const string TokenVerificacion = "token-verificacion-pruebas";
 
     private readonly PostgreSqlContainer _base = new PostgreSqlBuilder("postgres:17-alpine").Build();
 
@@ -27,6 +29,9 @@ public sealed class FabricaApi : WebApplicationFactory<Program>, IAsyncLifetime
         Environment.SetEnvironmentVariable("Planificador__Habilitado", "false");
         Environment.SetEnvironmentVariable("WhatsApp__SecretoWebhook", SecretoWebhook);
         Environment.SetEnvironmentVariable("Jwt__Authority", " ");
+        Environment.SetEnvironmentVariable("WhatsApp__AppSecret", SecretoMeta);
+        Environment.SetEnvironmentVariable("WhatsApp__VerifyToken", TokenVerificacion);
+        Environment.SetEnvironmentVariable("Almacenamiento__Conexion", " ");
     }
 
     async Task IAsyncLifetime.DisposeAsync()

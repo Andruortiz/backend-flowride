@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System.Security.Cryptography;
 using System.Text;
 using FlowRide.Nucleo.Excepciones;
@@ -86,4 +87,55 @@ public sealed class WhatsAppWebhookController(IServicioConversaciones servicio, 
 
         return Ok(await servicio.ProcesarAsync(request, ct));
     }
+}
+
+[ApiController]
+[Route("api/v1/webhooks/meta")]
+[AllowAnonymous]
+public sealed partial class MetaWebhookController(IProcesadorWebhookMeta procesador, IConfiguration configuracion, ILogger<MetaWebhookController> logger) : ControllerBase
+{
+    [HttpGet]
+    public IActionResult Verificar([FromQuery(Name = "hub.mode")] string? modo, [FromQuery(Name = "hub.verify_token")] string? token, [FromQuery(Name = "hub.challenge")] string? desafio)
+    {
+        var esperado = configuracion["WhatsApp:VerifyToken"];
+
+        if (string.IsNullOrEmpty(esperado))
+        {
+            return NotFound();
+        }
+
+        return modo == "subscribe" && token is not null && CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(token), Encoding.UTF8.GetBytes(esperado))
+            ? Content(desafio ?? string.Empty)
+            : Forbid();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Recibir(CancellationToken ct)
+    {
+        var secreto = configuracion["WhatsApp:AppSecret"];
+
+        if (string.IsNullOrEmpty(secreto))
+        {
+            return NotFound();
+        }
+
+        using var memoria = new MemoryStream();
+        await Request.Body.CopyToAsync(memoria, ct);
+        var cuerpo = memoria.ToArray();
+        var firma = "sha256=" + Convert.ToHexStringLower(HMACSHA256.HashData(Encoding.UTF8.GetBytes(secreto), cuerpo));
+
+        if (!CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(Request.Headers["X-Hub-Signature-256"].ToString()), Encoding.UTF8.GetBytes(firma)))
+        {
+            FirmaInvalida(logger, Request.Headers.ContainsKey("X-Hub-Signature-256"));
+
+            return Unauthorized();
+        }
+
+        await procesador.ProcesarAsync(cuerpo, ct);
+
+        return Ok();
+    }
+
+    [LoggerMessage(Level = LogLevel.Warning, Message = "Webhook de Meta rechazado por firma inválida (cabecera presente: {Presente}). Revisa WhatsApp:AppSecret.")]
+    private static partial void FirmaInvalida(ILogger logger, bool presente);
 }
