@@ -4,6 +4,7 @@ using FlowRide.Clientes.Aplicacion.Puertos;
 using FlowRide.Comunicacion.Aplicacion.Dtos;
 using FlowRide.Comunicacion.Aplicacion.Puertos;
 using FlowRide.Identidad.Aplicacion.Puertos;
+using FlowRide.Mensajes;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Plataforma.Aplicacion.Puertos;
 using FlowRide.Solicitudes.Aplicacion.Dtos;
@@ -17,14 +18,15 @@ internal sealed class ServicioCargaItinerarios(
     IServicioClientes clientes,
     IServicioSolicitudes solicitudes,
     IServicioOperador operador,
+    ICatalogoMensajes catalogo,
     TimeProvider reloj) : IServicioCargaItinerarios
 {
     public ResultadoLectura Previsualizar(string contenido) => LectorItinerarioCsv.Leer(contenido);
 
     public async Task<ResultadoCarga> ConfirmarAsync(Guid pasajeroId, IReadOnlyList<FilaItinerario> filas, CancellationToken ct = default)
     {
-        var pasajero = await identidad.ObtenerPasajeroAsync(pasajeroId, ct) ?? throw new NotFoundException("El pasajero no existe.");
-        var domicilio = pasajero.Domicilio ?? throw new DomainException("Registra tu domicilio antes de cargar el itinerario.");
+        var pasajero = await identidad.ObtenerPasajeroAsync(pasajeroId, ct) ?? throw new NotFoundException(catalogo.Texto("carga.pasajero_inexistente"));
+        var domicilio = pasajero.Domicilio ?? throw new DomainException(catalogo.Texto("carga.sin_domicilio"));
         var zona = await operador.ZonaAsync(ct);
         var creados = new List<ViajeCargado>();
         var omitidos = new List<ErrorFila>();
@@ -35,21 +37,21 @@ internal sealed class ServicioCargaItinerarios(
 
             if (recogida <= reloj.GetUtcNow())
             {
-                omitidos.Add(new ErrorFila(fila.Linea, "La hora de recogida ya pasó."));
+                omitidos.Add(new ErrorFila(fila.Linea, catalogo.Texto("carga.hora_pasada")));
 
                 continue;
             }
 
             if (string.Equals(domicilio, fila.Destino, StringComparison.OrdinalIgnoreCase))
             {
-                omitidos.Add(new ErrorFila(fila.Linea, "El destino no puede ser igual a tu domicilio."));
+                omitidos.Add(new ErrorFila(fila.Linea, catalogo.Texto("carga.destino_igual")));
 
                 continue;
             }
 
             if (await consultaClientes.ExisteItinerarioDePasajeroAsync(pasajero.Id, fila.CodigoServicio, fila.Fecha, ct))
             {
-                omitidos.Add(new ErrorFila(fila.Linea, "Este viaje ya estaba cargado."));
+                omitidos.Add(new ErrorFila(fila.Linea, catalogo.Texto("carga.ya_cargado")));
 
                 continue;
             }

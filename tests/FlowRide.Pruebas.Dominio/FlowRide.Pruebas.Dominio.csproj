@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Compartido\FlowRide.Nucleo\FlowRide.Nucleo.csproj" />
     <ProjectReference Include="..\..\src\Compartido\FlowRide.Contratos\FlowRide.Contratos.csproj" />
+    <ProjectReference Include="..\..\src\Compartido\FlowRide.Mensajes\FlowRide.Mensajes.csproj" />
     <ProjectReference Include="..\..\src\Compartido\FlowRide.Persistencia\FlowRide.Persistencia.csproj" />
     <ProjectReference Include="..\..\src\Modulos\FlowRide.Plataforma\FlowRide.Plataforma.csproj" />
     <ProjectReference Include="..\..\src\Modulos\FlowRide.Clientes\FlowRide.Clientes.csproj" />

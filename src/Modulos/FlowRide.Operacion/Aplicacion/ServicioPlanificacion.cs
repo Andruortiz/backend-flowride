@@ -1,4 +1,5 @@
 using System.Globalization;
+using FlowRide.Mensajes;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -39,6 +40,7 @@ using FlowRide.Plataforma.Aplicacion;
 namespace FlowRide.Operacion.Aplicacion;
 
 internal sealed class ServicioPlanificacion(
+    ICatalogoMensajes catalogo,
     IConsultaSolicitudes solicitudes,
     IConsultaFlota flota,
     IServicioAsignaciones asignaciones,
@@ -111,8 +113,8 @@ internal sealed class ServicioPlanificacion(
             await alertas.CrearAsync(
                 "sin_conductor_espera",
                 SeveridadAlerta.Critica,
-                "Solicitud esperando conductor",
-                $"Lleva más de {minutos} minutos sin conductor.",
+                catalogo.Texto("alerta.espera.titulo"),
+                catalogo.Texto("alerta.espera.detalle", new Dictionary<string, string> { ["minutos"] = minutos.ToString(CultureInfo.InvariantCulture) }),
                 $"solicitud/{solicitud.Id}",
                 $"espera:{solicitud.Id}",
                 ct);
@@ -131,7 +133,8 @@ internal sealed class ServicioPlanificacion(
         {
             foreach (var documento in vehiculo.Documentos.Where(d => d.EstadoEn(hoy, aviso) != EstadoVigencia.Vigente))
             {
-                await AlertarDocumentoAsync($"vehículo {vehiculo.Placa}", $"vehiculo/{vehiculo.Id}", documento, hoy, aviso, ct);
+                await AlertarDocumentoAsync(
+                    catalogo.Texto("alerta.documento.sujeto_vehiculo", new Dictionary<string, string> { ["placa"] = vehiculo.Placa }), $"vehiculo/{vehiculo.Id}", documento, hoy, aviso, ct);
                 cantidad++;
             }
         }
@@ -140,7 +143,7 @@ internal sealed class ServicioPlanificacion(
         {
             if (conductor.Licencia.EstadoEn(hoy, aviso) != EstadoVigencia.Vigente)
             {
-                await AlertarDocumentoAsync("licencia de conductor", $"conductor/{conductor.Id}", conductor.Licencia, hoy, aviso, ct);
+                await AlertarDocumentoAsync(catalogo.Texto("alerta.documento.sujeto_licencia"), $"conductor/{conductor.Id}", conductor.Licencia, hoy, aviso, ct);
                 cantidad++;
             }
         }
@@ -152,11 +155,16 @@ internal sealed class ServicioPlanificacion(
     {
         var estado = documento.EstadoEn(hoy, aviso);
         var severidad = estado == EstadoVigencia.Vencido ? SeveridadAlerta.Critica : SeveridadAlerta.Atencion;
-        var detalle = estado == EstadoVigencia.Vencido
-            ? $"El documento {documento.Tipo} de {sujeto} venció el {documento.VenceEl:yyyy-MM-dd}."
-            : $"El documento {documento.Tipo} de {sujeto} vence en {documento.DiasParaVencer(hoy).ToString(CultureInfo.InvariantCulture)} días.";
+        var variables = new Dictionary<string, string>
+        {
+            ["tipo"] = documento.Tipo.ToString(),
+            ["sujeto"] = sujeto,
+            ["fecha"] = documento.VenceEl.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+            ["dias"] = documento.DiasParaVencer(hoy).ToString(CultureInfo.InvariantCulture),
+        };
+        var detalle = catalogo.Texto(estado == EstadoVigencia.Vencido ? "alerta.documento.vencido" : "alerta.documento.por_vencer", variables);
 
         return alertas.CrearAsync(
-            "documento", severidad, "Documento por renovar", detalle, referencia, $"doc:{referencia}:{documento.Tipo}:{documento.VenceEl:yyyyMMdd}:{estado}", ct);
+            "documento", severidad, catalogo.Texto("alerta.documento.titulo"), detalle, referencia, $"doc:{referencia}:{documento.Tipo}:{documento.VenceEl:yyyyMMdd}:{estado}", ct);
     }
 }

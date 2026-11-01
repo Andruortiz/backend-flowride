@@ -29,6 +29,7 @@ public class ReglasDeDependencia
     private static readonly Assembly Nucleo = typeof(Entidad).Assembly;
     private static readonly Assembly Contratos = typeof(FlowRide.Contratos.UsuarioDesactivado).Assembly;
     private static readonly Assembly Persistencia = typeof(FlowRide.Persistencia.FlowRideDbContext).Assembly;
+    private static readonly Assembly Mensajes = typeof(FlowRide.Mensajes.ICatalogoMensajes).Assembly;
 
     private static void SinDependencias(Assembly ensamblado, string descripcion, params string[] prohibidos)
     {
@@ -48,6 +49,10 @@ public class ReglasDeDependencia
     [Fact]
     public void PersistenciaNoConoceANingunModulo() =>
         SinDependencias(Persistencia, "Persistencia", ["FlowRide.Inicializador", .. Grafo.Keys.Select(m => $"FlowRide.{m}")]);
+
+    [Fact]
+    public void MensajesNoConoceANingunModuloNiAPersistencia() =>
+        SinDependencias(Mensajes, "Mensajes", ["FlowRide.Persistencia", "FlowRide.Inicializador", .. Grafo.Keys.Select(m => $"FlowRide.{m}")]);
 
     [Theory]
     [MemberData(nameof(Modulos))]
