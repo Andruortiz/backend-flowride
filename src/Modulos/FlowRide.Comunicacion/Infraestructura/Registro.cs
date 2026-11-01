@@ -1,6 +1,8 @@
 using FlowRide.Comunicacion.Aplicacion;
 using FlowRide.Comunicacion.Aplicacion.Puertos;
+using FlowRide.Comunicacion.Infraestructura.Meta;
 using FlowRide.Comunicacion.Infraestructura.Repositorios;
+using Microsoft.Extensions.Configuration;
 using FlowRide.Contratos;
 using FlowRide.Nucleo.Eventos;
 using FlowRide.Persistencia;
@@ -33,7 +35,13 @@ public static class Registro
         servicios.AddScoped<IServicioCargaItinerarios, ServicioCargaItinerarios>();
         servicios.AddScoped<IServicioConversaciones, ServicioConversaciones>();
         servicios.AddScoped<IServicioNotificaciones, ServicioNotificaciones>();
-        servicios.AddScoped<IWhatsAppGateway, WhatsAppSandboxGateway>();
+        servicios.AddHttpClient<ClienteMeta>(c => c.BaseAddress = new Uri("https://graph.facebook.com/"));
+        servicios.AddScoped<IProcesadorWebhookMeta, ProcesadorWebhookMeta>();
+        servicios.AddScoped<WhatsAppSandboxGateway>();
+        servicios.AddScoped<IWhatsAppGateway>(sp =>
+            string.IsNullOrWhiteSpace(sp.GetRequiredService<IConfiguration>()["WhatsApp:AccessToken"])
+                ? sp.GetRequiredService<WhatsAppSandboxGateway>()
+                : sp.GetRequiredService<ClienteMeta>());
 
         return servicios;
     }

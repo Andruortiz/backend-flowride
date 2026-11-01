@@ -320,6 +320,11 @@ namespace FlowRide.Inicializador.Migraciones
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("actualizada_en");
 
+                    b.Property<string>("ArchivoItinerario")
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("archivo_itinerario");
+
                     b.Property<string>("Destino")
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)")

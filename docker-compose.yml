@@ -27,7 +27,16 @@ services:
     volumes:
       - keycloak-datos:/opt/keycloak/data
 
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    command: azurite-blob --blobHost 0.0.0.0 --skipApiVersionCheck
+    ports:
+      - "127.0.0.1:10000:10000"
+    volumes:
+      - azurite-datos:/data
+
 volumes:
+  azurite-datos:
   flowride-datos:
   keycloak-datos:
   

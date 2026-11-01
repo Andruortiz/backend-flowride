@@ -30,4 +30,6 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 
 namespace FlowRide.Comunicacion.Aplicacion.Dtos;
 
-public sealed record MensajeEntranteRequest(string ExternalMessageId, string Telefono, string Texto);
+public sealed record DocumentoEntrante(string Nombre, byte[] Contenido);
+
+public sealed record MensajeEntranteRequest(string ExternalMessageId, string Telefono, string Texto, DocumentoEntrante? Documento = null);

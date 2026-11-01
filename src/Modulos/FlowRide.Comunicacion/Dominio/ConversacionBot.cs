@@ -25,6 +25,9 @@ public enum EstadoConversacion
     EsperandoUrgencia = 5,
     EsperandoConfirmacion = 6,
     Completa = 7,
+    EsperandoDomicilio = 8,
+    EsperandoArchivo = 9,
+    EsperandoConfirmacionCarga = 10,
 }
 
 public enum IntencionConversacion
@@ -66,6 +69,10 @@ public sealed class ConversacionBot : Entidad
     public DateTimeOffset? FechaHoraUtc { get; private set; }
 
     public bool? Urgente { get; private set; }
+
+    public string? ArchivoItinerario { get; private set; }
+
+    public bool EnCarga => Estado is EstadoConversacion.EsperandoDomicilio or EstadoConversacion.EsperandoArchivo or EstadoConversacion.EsperandoConfirmacionCarga;
 
     public DateTimeOffset ActualizadaEn { get; private set; }
 
@@ -215,6 +222,24 @@ public sealed class ConversacionBot : Entidad
         return new RespuestaConversacion("Listo, registré tu solicitud. Te avisaremos cuando tengamos conductor.", IntencionConversacion.SolicitudCompleta, datos);
     }
 
+    public void EsperarDomicilio(DateTimeOffset ahora) => Avanzar(EstadoConversacion.EsperandoDomicilio, null, ahora);
+
+    public void EsperarArchivo(DateTimeOffset ahora) => Avanzar(EstadoConversacion.EsperandoArchivo, null, ahora);
+
+    public void EsperarConfirmacionCarga(string archivo, DateTimeOffset ahora) =>
+        Avanzar(EstadoConversacion.EsperandoConfirmacionCarga, archivo, ahora);
+
+    public void Terminar(DateTimeOffset ahora) => Avanzar(EstadoConversacion.Inicio, null, ahora);
+
+    private void Avanzar(EstadoConversacion estado, string? archivo, DateTimeOffset ahora)
+    {
+        Reiniciar();
+        Estado = estado;
+        ArchivoItinerario = archivo;
+        ActualizadaEn = ahora;
+        ExpiraEn = ahora + Vigencia;
+    }
+
     private void Reiniciar()
     {
         Estado = EstadoConversacion.Inicio;
@@ -222,5 +247,6 @@ public sealed class ConversacionBot : Entidad
         Destino = null;
         FechaHoraUtc = null;
         Urgente = null;
+        ArchivoItinerario = null;
     }
 }

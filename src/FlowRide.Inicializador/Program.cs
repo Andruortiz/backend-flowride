@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 using FlowRide.Identidad.Dominio;
+using FlowRide.Inicializador.Almacenamiento;
 using FlowRide.Inicializador.Configuracion;
 using FlowRide.Inicializador.Seguridad;
 using FlowRide.Nucleo.Seguridad;
@@ -50,6 +51,7 @@ builder.Services.AddExceptionHandler<ManejadorExcepciones>();
 
 builder.Services.AgregarPersistencia(builder.Configuration, typeof(Program).Assembly.GetName().Name!);
 builder.Services.AgregarSeguridad(builder.Configuration);
+builder.Services.AgregarAlmacenamiento(builder.Configuration, esDesarrollo);
 builder.Services.AgregarModuloPlataforma();
 builder.Services.AgregarModuloClientes();
 builder.Services.AgregarModuloIdentidad();

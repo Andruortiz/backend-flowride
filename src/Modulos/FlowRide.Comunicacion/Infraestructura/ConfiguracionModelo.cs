@@ -17,6 +17,7 @@ internal sealed class ConfiguracionModelo : IConfiguradorModelo
                 e.HasIndex(x => x.UsuarioId).IsUnique();
                 e.Property(x => x.Origen).HasMaxLength(300);
                 e.Property(x => x.Destino).HasMaxLength(300);
+                e.Property(x => x.ArchivoItinerario).HasMaxLength(300);
             });
 
         mb.Entity<AlertaOperativa>(e =>
