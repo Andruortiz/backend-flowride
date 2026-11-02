@@ -17,10 +17,12 @@
     <Project Path="src/Modulos/FlowRide.Viajes/FlowRide.Viajes.csproj" />
   </Folder>
   <Folder Name="/src/">
+    <Project Path="src/FlowRide.Borde/FlowRide.Borde.csproj" />
     <Project Path="src/FlowRide.Inicializador/FlowRide.Inicializador.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/FlowRide.Pruebas.Arquitectura/FlowRide.Pruebas.Arquitectura.csproj" />
+    <Project Path="tests/FlowRide.Pruebas.Borde/FlowRide.Pruebas.Borde.csproj" />
     <Project Path="tests/FlowRide.Pruebas.Contrato/FlowRide.Pruebas.Contrato.csproj" />
     <Project Path="tests/FlowRide.Pruebas.Dominio/FlowRide.Pruebas.Dominio.csproj" />
     <Project Path="tests/FlowRide.Pruebas.Integracion/FlowRide.Pruebas.Integracion.csproj" />

@@ -12,6 +12,7 @@ public static class Registro
 {
     public static IServiceCollection AgregarModuloPlataforma(this IServiceCollection servicios)
     {
+        servicios.AddMemoryCache();
         servicios.AddSingleton<IConfiguradorModelo, ConfiguracionModelo>();
         servicios.AddScoped<IAuditoriaRepository, AuditoriaRepository>();
         servicios.AddScoped<IOperadorRepository, OperadorRepository>();
