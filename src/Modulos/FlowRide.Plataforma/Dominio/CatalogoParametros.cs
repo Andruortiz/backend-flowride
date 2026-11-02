@@ -19,7 +19,8 @@ public static class CatalogoParametros
     public const string AlertaSinConductorMinutos = "alerta.sin_conductor_minutos";
     public const string DiasAvisoDocumentos = "documentos.dias_aviso";
     public const string VentanaEventoGpsMinutos = "telemetria.ventana_evento_minutos";
-    public const string VentanaCargaHoras = "asignacion.ventana_reciente_horas";
+    public const string RetencionTelemetriaMeses = "telemetria.retencion_meses";
+    public const string VentanaCargaHoras ="asignacion.ventana_reciente_horas";
     public const string MaximoIntentosAsignacion = "asignacion.maximo_intentos";
     public const string DuracionViajeMinutos = "viaje.duracion_estimada_minutos";
     public const string AnticipacionAsignacionHoras = "asignacion.anticipacion_horas";
@@ -32,7 +33,8 @@ public static class CatalogoParametros
         new(AlertaSinConductorMinutos, "Tiempo sin conductor antes de alertar al operador", 1, 120, 10, "min"),
         new(DiasAvisoDocumentos, "Días de aviso antes del vencimiento de un documento", 1, 180, 30, "días"),
         new(VentanaEventoGpsMinutos, "Antigüedad máxima aceptada de un evento GPS", 1, 120, 15, "min"),
-        new(VentanaCargaHoras, "Ventana para contar asignaciones recientes", 1, 72, 24, "h"),
+        new(RetencionTelemetriaMeses, "Meses de retención de la telemetría GPS", 1, 24, 6, "meses"),
+        new(VentanaCargaHoras,"Ventana para contar asignaciones recientes", 1, 72, 24, "h"),
         new(MaximoIntentosAsignacion, "Intentos de asignación antes de pasar a revisión", 1, 10, 3, "intentos"),
         new(DuracionViajeMinutos, "Duración estimada de un viaje sin itinerario", 5, 720, 45, "min"),
         new(AnticipacionAsignacionHoras, "Antelación con la que se asigna conductor a un servicio programado", 1, 720, 24, "h"),

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -21,15 +22,46 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 
 namespace FlowRide.Viajes.Aplicacion;
 
-internal sealed class ServicioSeguimiento(
+internal sealed partial class ServicioSeguimiento(
     IUbicacionRepository ubicaciones,
     IConsultaFlota flota,
     IViajeRepository viajes,
     IServicioParametros parametros,
     IUnitOfWork unidad,
-    TimeProvider reloj) : IServicioSeguimiento
+    TimeProvider reloj,
+    ILogger<ServicioSeguimiento> logger) : IServicioSeguimiento
 {
     private const int PuntosParaEstimar = 5;
+
+    public async Task<ResultadoIngesta> IngerirAsync(IReadOnlyList<ReportarUbicacionRequest> eventos, CancellationToken ct = default)
+    {
+        int aceptadas = 0, duplicadas = 0, rechazadas = 0;
+
+        foreach (var evento in eventos)
+        {
+            try
+            {
+                if ((await ReportarAsync(evento, ct)).Duplicada)
+                {
+                    duplicadas++;
+                }
+                else
+                {
+                    aceptadas++;
+                }
+            }
+            catch (Exception e) when (e is DomainException or NotFoundException)
+            {
+                rechazadas++;
+                EventoRechazado(logger, evento.Fuente, e.Message);
+            }
+        }
+
+        return new ResultadoIngesta(aceptadas, duplicadas, rechazadas);
+    }
+
+    [LoggerMessage(Level = LogLevel.Warning, Message = "Evento de telemetría de {Fuente} rechazado: {Motivo}")]
+    private static partial void EventoRechazado(ILogger logger, string fuente, string motivo);
 
     public async Task<UbicacionResponse> ReportarAsync(ReportarUbicacionRequest request, CancellationToken ct = default)
     {

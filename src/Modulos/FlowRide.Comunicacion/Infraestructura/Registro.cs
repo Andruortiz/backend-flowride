@@ -37,6 +37,8 @@ public static class Registro
         servicios.AddScoped<IServicioNotificaciones, ServicioNotificaciones>();
         servicios.AddHttpClient<ClienteMeta>(c => c.BaseAddress = new Uri("https://graph.facebook.com/"));
         servicios.AddScoped<IProcesadorWebhookMeta, ProcesadorWebhookMeta>();
+        servicios.AddScoped<AdaptadorUbicacionWhatsApp>();
+        servicios.AddScoped<FlowRide.Viajes.Aplicacion.Puertos.ITelemetryProviderAdapter>(sp => sp.GetRequiredService<AdaptadorUbicacionWhatsApp>());
         servicios.AddScoped<WhatsAppSandboxGateway>();
         servicios.AddScoped<IWhatsAppGateway>(sp =>
             string.IsNullOrWhiteSpace(sp.GetRequiredService<IConfiguration>()["WhatsApp:AccessToken"])
