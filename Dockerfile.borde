@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-COPY global.json Directory.Build.props ./
+COPY global.json Directory.Build.props .editorconfig ./
 COPY src/FlowRide.Borde/ src/FlowRide.Borde/
 
 RUN dotnet restore src/FlowRide.Borde/FlowRide.Borde.csproj

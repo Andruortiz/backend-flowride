@@ -15,6 +15,7 @@ public static class Registro
         servicios.AddSingleton<IConfiguradorModelo, ConfiguracionModelo>();
         servicios.AddScoped<IConsultaIdentidad, ConsultaIdentidad>();
         servicios.AddScoped<IPasajeroRepository, PasajeroRepository>();
+        servicios.AddScoped<IServicioPasajeros, ServicioPasajeros>();
         servicios.AddScoped<IServicioUsuarios, ServicioUsuarios>();
         servicios.AddScoped<IUsuarioRepository, UsuarioRepository>();
 

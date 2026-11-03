@@ -63,6 +63,9 @@ internal sealed class UsuarioRepository(FlowRideDbContext db) : IUsuarioReposito
 
 internal sealed class PasajeroRepository(FlowRideDbContext db) : IPasajeroRepository
 {
+    public async Task<IReadOnlyList<Pasajero>> ListarAsync(CancellationToken ct = default) =>
+        await db.Set<Pasajero>().AsNoTracking().ToListAsync(ct);
+
     public Task<Pasajero?> ObtenerAsync(Guid id, CancellationToken ct = default) => db.Set<Pasajero>().FirstOrDefaultAsync(p => p.Id == id, ct);
 
     public Task<Pasajero?> ObtenerPorUsuarioAsync(Guid usuarioId, CancellationToken ct = default) =>

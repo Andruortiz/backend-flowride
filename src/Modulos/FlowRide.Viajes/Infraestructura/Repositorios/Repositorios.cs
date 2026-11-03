@@ -83,6 +83,14 @@ internal sealed class CalificacionRepository(FlowRideDbContext db) : ICalificaci
 
 internal sealed class UbicacionRepository(FlowRideDbContext db) : IUbicacionRepository
 {
+    public async Task<IReadOnlyList<RegistroUbicacion>> ObtenerUltimasPorVehiculoAsync(DateTimeOffset desde, CancellationToken ct = default) =>
+        await db.Set<RegistroUbicacion>()
+            .AsNoTracking()
+            .Where(u => u.TimestampOrigen >= desde)
+            .GroupBy(u => u.VehiculoId)
+            .Select(g => g.OrderByDescending(u => u.TimestampOrigen).First())
+            .ToListAsync(ct);
+
     public Task<bool> ExisteAsync(Guid vehiculoId, DateTimeOffset timestampOrigen, string fuente, CancellationToken ct = default) =>
         db.Set<RegistroUbicacion>().AnyAsync(u => u.VehiculoId == vehiculoId && u.TimestampOrigen == timestampOrigen && u.Fuente == fuente, ct);
 

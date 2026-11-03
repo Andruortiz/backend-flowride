@@ -42,4 +42,6 @@ public sealed record CalificacionResponse(Guid Id, Guid ViajeId, int Puntaje, st
 
 public sealed record UbicacionResponse(Guid VehiculoId, double Latitud, double Longitud, DateTimeOffset TimestampOrigen, bool Duplicada);
 
+public sealed record UbicacionVehiculoResponse(Guid VehiculoId, Guid? ViajeId, double Latitud, double Longitud, DateTimeOffset TimestampOrigen, string Fuente);
+
 public sealed record ResultadoIngesta(int Aceptadas, int Duplicadas, int Rechazadas);

@@ -34,3 +34,8 @@ public interface IServicioUsuarios
 
     Task ActivarAsync(Guid id, CancellationToken ct = default);
 }
+
+public interface IServicioPasajeros
+{
+    Task<IReadOnlyList<PasajeroResponse>> ListarAsync(CancellationToken ct = default);
+}
