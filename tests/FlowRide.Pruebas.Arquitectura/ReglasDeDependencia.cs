@@ -51,6 +51,16 @@ public class ReglasDeDependencia
         SinDependencias(Persistencia, "Persistencia", ["FlowRide.Inicializador", .. Grafo.Keys.Select(m => $"FlowRide.{m}")]);
 
     [Fact]
+    public void ElBordeNoReferenciaNingunEnsambladoDelBackend()
+    {
+        var referenciados = typeof(FlowRide.Borde.OpcionesBorde).Assembly.GetReferencedAssemblies()
+            .Select(a => a.Name!)
+            .Where(n => n.StartsWith("FlowRide.", StringComparison.Ordinal));
+
+        Assert.Empty(referenciados);
+    }
+
+    [Fact]
     public void MensajesNoConoceANingunModuloNiAPersistencia() =>
         SinDependencias(Mensajes, "Mensajes", ["FlowRide.Persistencia", "FlowRide.Inicializador", .. Grafo.Keys.Select(m => $"FlowRide.{m}")]);
 

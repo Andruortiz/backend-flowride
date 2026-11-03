@@ -1,3 +1,5 @@
+using System.Globalization;
+using Microsoft.Extensions.Caching.Memory;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -12,16 +14,31 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 
 namespace FlowRide.Plataforma.Aplicacion;
 
-internal sealed class ServicioParametros(IParametroRepository repositorio, IUnitOfWork unidad, IContextoActor actor, TimeProvider reloj)
-    : IServicioParametros
+internal sealed class ServicioParametros(
+    IParametroRepository repositorio,
+    IServicioAuditoria auditoria,
+    IMemoryCache cache,
+    IUnitOfWork unidad,
+    IContextoActor actor,
+    TimeProvider reloj) : IServicioParametros
 {
+    private static readonly TimeSpan Vigencia = TimeSpan.FromSeconds(60);
+
     public async Task<int> ValorAsync(string clave, CancellationToken ct = default)
     {
         var definicion = CatalogoParametros.Obtener(clave);
-        var parametro = await repositorio.ObtenerAsync(clave, ct);
 
-        return parametro?.Valor ?? definicion.Defecto;
+        return await cache.GetOrCreateAsync(
+            ClaveCache(clave),
+            async entrada =>
+            {
+                entrada.AbsoluteExpirationRelativeToNow = Vigencia;
+
+                return (await repositorio.ObtenerAsync(clave, ct))?.Valor ?? definicion.Defecto;
+            });
     }
+
+    private static string ClaveCache(string clave) => $"parametro:{clave}";
 
     public async Task<IReadOnlyList<ParametroResponse>> ListarAsync(CancellationToken ct = default)
     {
@@ -42,6 +59,7 @@ internal sealed class ServicioParametros(IParametroRepository repositorio, IUnit
         var definicion = CatalogoParametros.Obtener(clave);
         var ahora = reloj.GetUtcNow();
         var parametro = await repositorio.ObtenerAsync(clave, ct);
+        var anterior = parametro?.Valor ?? definicion.Defecto;
 
         if (parametro is null)
         {
@@ -53,7 +71,14 @@ internal sealed class ServicioParametros(IParametroRepository repositorio, IUnit
             parametro.Actualizar(request.Valor, actor.UsuarioId, ahora);
         }
 
+        await auditoria.RegistrarAsync(
+            "parametro.actualizar",
+            $"parametro/{clave}",
+            antes: anterior.ToString(CultureInfo.InvariantCulture),
+            despues: request.Valor.ToString(CultureInfo.InvariantCulture),
+            ct: ct);
         await unidad.GuardarCambiosAsync(ct);
+        cache.Remove(ClaveCache(clave));
 
         return new ParametroResponse(definicion.Clave, definicion.Descripcion, definicion.Unidad, definicion.Minimo, definicion.Maximo, definicion.Defecto, parametro.Valor, parametro.Version);
     }
