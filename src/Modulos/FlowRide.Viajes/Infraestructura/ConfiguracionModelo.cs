@@ -35,6 +35,7 @@ internal sealed class ConfiguracionModelo : IConfiguradorModelo
                 e.Property(x => x.Fuente).HasMaxLength(60);
                 e.HasIndex(x => new { x.VehiculoId, x.TimestampOrigen }).IsDescending(false, true);
                 e.HasIndex(x => new { x.VehiculoId, x.TimestampOrigen, x.Fuente }).IsUnique();
+                e.HasIndex(x => new { x.ViajeId, x.TimestampOrigen });
             });
     }
 }

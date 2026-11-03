@@ -20,6 +20,8 @@ public static class Registro
         servicios.AddScoped<IServicioSeguimiento, ServicioSeguimiento>();
         servicios.AddScoped<IServicioViajes, ServicioViajes>();
         servicios.AddScoped<IUbicacionRepository, UbicacionRepository>();
+        servicios.AddScoped<MantenimientoTelemetria>();
+        servicios.AddHostedService<MantenimientoTelemetriaBackground>();
         servicios.AddScoped<IViajeRepository, ViajeRepository>();
 
         return servicios;

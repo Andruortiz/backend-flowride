@@ -18,7 +18,7 @@ public enum CalidadUbicacion
     Puntual = 2,
 }
 
-public sealed class RegistroUbicacion : Entidad
+public sealed class RegistroUbicacion : Entidad, IRegistroInmutable
 {
     private static readonly TimeSpan ToleranciaFuturo = TimeSpan.FromMinutes(2);
 

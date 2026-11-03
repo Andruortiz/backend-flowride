@@ -1,3 +1,4 @@
+using System.Text.Json;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -40,4 +41,13 @@ public interface IServicioViajes
 public interface IServicioSeguimiento
 {
     Task<UbicacionResponse> ReportarAsync(ReportarUbicacionRequest request, CancellationToken ct = default);
+
+    Task<ResultadoIngesta> IngerirAsync(IReadOnlyList<ReportarUbicacionRequest> eventos, CancellationToken ct = default);
+}
+
+public interface ITelemetryProviderAdapter
+{
+    string Fuente { get; }
+
+    Task<IReadOnlyList<ReportarUbicacionRequest>> NormalizarAsync(JsonElement carga, CancellationToken ct = default);
 }

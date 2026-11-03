@@ -41,3 +41,5 @@ public sealed record ViajeResponse(
 public sealed record CalificacionResponse(Guid Id, Guid ViajeId, int Puntaje, string? Comentario, DateTimeOffset CreadaEn);
 
 public sealed record UbicacionResponse(Guid VehiculoId, double Latitud, double Longitud, DateTimeOffset TimestampOrigen, bool Duplicada);
+
+public sealed record ResultadoIngesta(int Aceptadas, int Duplicadas, int Rechazadas);

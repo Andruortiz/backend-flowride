@@ -1,11 +1,17 @@
 using System.Text.Json;
 using FlowRide.Comunicacion.Aplicacion.Dtos;
 using FlowRide.Comunicacion.Aplicacion.Puertos;
+using FlowRide.Viajes.Aplicacion.Puertos;
 using Microsoft.Extensions.Logging;
 
 namespace FlowRide.Comunicacion.Infraestructura.Meta;
 
-internal sealed partial class ProcesadorWebhookMeta(IServicioConversaciones conversaciones, ClienteMeta meta, ILogger<ProcesadorWebhookMeta> logger) : IProcesadorWebhookMeta
+internal sealed partial class ProcesadorWebhookMeta(
+    IServicioConversaciones conversaciones,
+    IServicioSeguimiento seguimiento,
+    AdaptadorUbicacionWhatsApp ubicaciones,
+    ClienteMeta meta,
+    ILogger<ProcesadorWebhookMeta> logger) : IProcesadorWebhookMeta
 {
     public async Task ProcesarAsync(byte[] cuerpo, CancellationToken ct = default)
     {
@@ -17,8 +23,15 @@ internal sealed partial class ProcesadorWebhookMeta(IServicioConversaciones conv
 
             try
             {
-                var telefono = "+" + mensaje.GetProperty("from").GetString();
                 var tipo = mensaje.TryGetProperty("type", out var t) ? t.GetString() : null;
+
+                if (tipo == "location")
+                {
+                    await seguimiento.IngerirAsync(await ubicaciones.NormalizarAsync(mensaje, ct), ct);
+                    continue;
+                }
+
+                var telefono = "+" + mensaje.GetProperty("from").GetString();
                 var texto = tipo == "text" ? mensaje.GetProperty("text").GetProperty("body").GetString() ?? string.Empty : string.Empty;
                 DocumentoEntrante? documento = null;
 

@@ -1045,18 +1045,15 @@ namespace FlowRide.Inicializador.Migraciones
                         .HasColumnType("uuid")
                         .HasColumnName("viaje_id");
 
-                    b.Property<uint>("xmin")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("xid")
-                        .HasColumnName("xmin");
-
                     b.HasKey("Id")
                         .HasName("pk_ubicaciones");
 
                     b.HasIndex("VehiculoId", "TimestampOrigen")
                         .IsDescending(false, true)
                         .HasDatabaseName("ix_ubicaciones_vehiculo_id_timestamp_origen");
+
+                    b.HasIndex("ViajeId", "TimestampOrigen")
+                        .HasDatabaseName("ix_ubicaciones_viaje_id_timestamp_origen");
 
                     b.HasIndex("VehiculoId", "TimestampOrigen", "Fuente")
                         .IsUnique()

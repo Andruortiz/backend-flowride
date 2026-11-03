@@ -36,7 +36,7 @@ internal static class ConvencionesModelo
                 modelo.Entity(tipo.ClrType).Ignore(nameof(RaizAgregado.EventosDominio));
             }
 
-            if (typeof(Entidad).IsAssignableFrom(tipo.ClrType))
+            if (typeof(Entidad).IsAssignableFrom(tipo.ClrType) && !typeof(IRegistroInmutable).IsAssignableFrom(tipo.ClrType))
             {
                 modelo.Entity(tipo.ClrType).Property<uint>("xmin").IsRowVersion();
             }
