@@ -6,6 +6,7 @@ using FlowRide.Nucleo.Seguridad;
 using FlowRide.Nucleo.Persistencia;
 using FlowRide.Nucleo.Eventos;
 using FlowRide.Nucleo.Tenancy;
+using FlowRide.Nucleo.TiempoReal;
 using FlowRide.Contratos;
 using FlowRide.Viajes.Dominio;
 using FlowRide.Viajes.Aplicacion.Dtos;
@@ -29,6 +30,7 @@ internal sealed partial class ServicioSeguimiento(
     IServicioParametros parametros,
     IUnitOfWork unidad,
     TimeProvider reloj,
+    ITransmisorTiempoReal tiempoReal,
     ILogger<ServicioSeguimiento> logger) : IServicioSeguimiento
 {
     private const int PuntosParaEstimar = 5;
@@ -102,6 +104,7 @@ internal sealed partial class ServicioSeguimiento(
         }
 
         await unidad.GuardarCambiosAsync(ct);
+        await tiempoReal.PublicarAsync(TemasTiempoReal.Ubicaciones, ct);
 
         return new UbicacionResponse(request.VehiculoId, request.Latitud, request.Longitud, request.TimestampOrigen, false);
     }
