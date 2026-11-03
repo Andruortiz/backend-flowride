@@ -1,0 +1,18 @@
+FROM quay.io/keycloak/keycloak:26.0 AS builder
+
+ENV KC_DB=postgres
+ENV KC_HEALTH_ENABLED=true
+
+COPY keycloak/realm-flowride.json /opt/keycloak/data/import/realm-flowride.json
+
+RUN /opt/keycloak/bin/kc.sh build
+
+FROM quay.io/keycloak/keycloak:26.0
+
+COPY --from=builder /opt/keycloak/ /opt/keycloak/
+
+ENV KC_HTTP_ENABLED=true
+ENV KC_PROXY_HEADERS=xforwarded
+
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
+CMD ["start", "--optimized", "--import-realm"]
