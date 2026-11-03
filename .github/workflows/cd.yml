@@ -87,10 +87,11 @@ jobs:
             dockerfile: Dockerfile
           - nombre: flowride-borde
             dockerfile: Dockerfile.borde
-    env:
-      REFERENCIA: ${{ env.ACR_NOMBRE }}.azurecr.io/${{ matrix.nombre }}:${{ needs.validar.outputs.imagen_tag }}
     steps:
       - uses: actions/checkout@v7
+
+      - name: Calcular la referencia de la imagen
+        run: echo "REFERENCIA=${ACR_NOMBRE}.azurecr.io/${{ matrix.nombre }}:${{ needs.validar.outputs.imagen_tag }}" >> "$GITHUB_ENV"
 
       - name: Construir
         run: |

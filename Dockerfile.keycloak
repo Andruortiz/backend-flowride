@@ -14,5 +14,7 @@ COPY --from=builder /opt/keycloak/ /opt/keycloak/
 ENV KC_HTTP_ENABLED=true
 ENV KC_PROXY_HEADERS=xforwarded
 
+USER 1000
+
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
 CMD ["start", "--optimized", "--import-realm"]
