@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using FlowRide.Mensajes;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -35,6 +36,7 @@ internal sealed partial class ServicioNotificaciones(
     IConsultaIdentidad identidad,
     IConsultaFlota flota,
     IWhatsAppGateway whatsapp,
+    ICatalogoMensajes catalogo,
     INotificacionEnviadaRepository enviadas,
     IUnitOfWork unidad,
     TimeProvider reloj,
@@ -75,7 +77,7 @@ internal sealed partial class ServicioNotificaciones(
                 continue;
             }
 
-            await whatsapp.EnviarAsync(usuario.Telefono, CatalogoMensajes.Renderizar(solicitud.ClaveMensaje, solicitud.Variables), ct);
+            await whatsapp.EnviarAsync(usuario.Telefono, catalogo.Texto(solicitud.ClaveMensaje, solicitud.Variables), ct);
             await enviadas.RegistrarAsync(solicitud.EventoId, usuarioId, canal, solicitud.ClaveMensaje, reloj.GetUtcNow(), ct);
             await unidad.GuardarCambiosAsync(ct);
         }

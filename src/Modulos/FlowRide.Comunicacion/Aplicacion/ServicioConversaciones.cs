@@ -1,6 +1,8 @@
 using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using FlowRide.Clientes.Aplicacion;
+using FlowRide.Mensajes;
 using FlowRide.Nucleo.Almacenamiento;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
@@ -46,6 +48,7 @@ internal sealed partial class ServicioConversaciones(
     IServicioAsignaciones servicioAsignaciones,
     IServicioViajes servicioViajes,
     IServicioOperador operador,
+    ICatalogoMensajes catalogo,
     IServicioCargaItinerarios cargaItinerarios,
     IObjectStorage almacenamiento,
     IWhatsAppGateway whatsapp,
@@ -54,7 +57,6 @@ internal sealed partial class ServicioConversaciones(
     TimeProvider reloj) : IServicioConversaciones
 {
     private const int MaximoArchivoBytes = 1_048_576;
-    private const string InstruccionArchivo = "Envíame el CSV del mes con las columnas: codigo_servicio,fecha,hora_salida,hora_llegada,destino (fecha AAAA-MM-DD, horas HH:mm).";
 
     public async Task<RespuestaBotResponse> ProcesarAsync(MensajeEntranteRequest request, CancellationToken ct = default)
     {
@@ -69,7 +71,7 @@ internal sealed partial class ServicioConversaciones(
 
         if (usuario is not { Activo: true })
         {
-            texto = "No encontramos tu número registrado. Comunícate con tu empresa o con el operador.";
+            texto = catalogo.Texto("bot.usuario_no_registrado");
         }
         else
         {
@@ -81,7 +83,7 @@ internal sealed partial class ServicioConversaciones(
                 {
                     RolUsuario.Pasajero => await AtenderPasajeroAsync(usuario, request, ct),
                     RolUsuario.Conductor => (await AtenderConductorAsync(usuario, request.Texto, ct), null),
-                    _ => ("El canal de WhatsApp es solo para pasajeros y conductores. Usa el panel web.", null),
+                    _ => (catalogo.Texto("bot.canal_restringido"), null),
                 };
             }
             catch (Exception ex) when (ex is DomainException or ConflictException or ForbiddenException or NotFoundException)
@@ -128,13 +130,13 @@ internal sealed partial class ServicioConversaciones(
                 var creada = await servicioSolicitudes.RegistrarAsync(
                     new CrearSolicitudRequest(null, datos.Origen, datos.Destino, datos.FechaHoraUtc, datos.Urgente, false, null, null, null), ct);
 
-                return (respuesta.Texto, creada.Id);
+                return (catalogo.Texto(respuesta.Clave, respuesta.Variables), creada.Id);
 
             case IntencionConversacion.ConsultarEstado:
                 return (await EstadoDeUltimaSolicitudAsync(usuario, ct), null);
 
             default:
-                return (respuesta.Texto, null);
+                return (catalogo.Texto(respuesta.Clave, respuesta.Variables), null);
         }
     }
 
@@ -151,7 +153,7 @@ internal sealed partial class ServicioConversaciones(
         {
             if (comando is not ("itinerario" or "cargar"))
             {
-                return request.Documento is null ? null : "Escribe ITINERARIO antes de enviar el archivo.";
+                return request.Documento is null ? null : catalogo.Texto("carga.escribe_itinerario");
             }
 
             var pasajeroInicio = await PasajeroAsync(usuario, ct);
@@ -160,19 +162,19 @@ internal sealed partial class ServicioConversaciones(
             {
                 conversacion.EsperarDomicilio(ahora);
 
-                return "Para cargar tu itinerario necesito tu domicilio. Escribe la dirección desde donde te recogemos.";
+                return catalogo.Texto("carga.pedir_domicilio");
             }
 
             conversacion.EsperarArchivo(ahora);
 
-            return InstruccionArchivo;
+            return catalogo.Texto("carga.instruccion");
         }
 
         if (comando == "cancelar")
         {
             conversacion.Terminar(ahora);
 
-            return "Cancelé la carga del itinerario.";
+            return catalogo.Texto("carga.cancelada");
         }
 
         var pasajero = await PasajeroAsync(usuario, ct);
@@ -183,7 +185,7 @@ internal sealed partial class ServicioConversaciones(
                 pasajero.DefinirDomicilio(request.Texto);
                 conversacion.EsperarArchivo(ahora);
 
-                return $"Guardé tu domicilio. {InstruccionArchivo}";
+                return catalogo.Texto("carga.domicilio_guardado", new Dictionary<string, string> { ["instruccion"] = catalogo.Texto("carga.instruccion") });
 
             case EstadoConversacion.EsperandoArchivo:
                 return await RecibirArchivoAsync(pasajero, conversacion, request.Documento, ahora, ct);
@@ -197,26 +199,24 @@ internal sealed partial class ServicioConversaciones(
     {
         if (documento is null)
         {
-            return InstruccionArchivo;
+            return catalogo.Texto("carga.instruccion");
         }
 
         if (documento.Contenido.Length > MaximoArchivoBytes)
         {
-            return "El archivo es demasiado grande. Envía un CSV de hasta 1 MB.";
+            return catalogo.Texto("carga.archivo_grande");
         }
 
         var lectura = cargaItinerarios.Previsualizar(Encoding.UTF8.GetString(documento.Contenido));
 
         if (lectura.Errores.Count > 0)
         {
-            var detalle = string.Join("\n", lectura.Errores.Take(5).Select(e => $"Línea {e.Linea}: {e.Mensaje}"));
-
-            return $"Encontré errores en el archivo:\n{detalle}\nCorrígelo y envíalo de nuevo, o escribe CANCELAR.";
+            return catalogo.Texto("carga.errores", new Dictionary<string, string> { ["detalle"] = DetalleDeFilas(lectura.Errores) });
         }
 
         if (lectura.Filas.Count == 0)
         {
-            return "El archivo no tiene viajes. Envía el CSV con los viajes del mes.";
+            return catalogo.Texto("carga.vacio");
         }
 
         var ruta = $"itinerarios/{pasajero.Id}/{ahora:yyyy-MM}/{Guid.CreateVersion7()}.csv";
@@ -229,32 +229,53 @@ internal sealed partial class ServicioConversaciones(
         var desde = lectura.Filas.Min(f => f.Fecha).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         var hasta = lectura.Filas.Max(f => f.Fecha).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 
-        return $"Leí {lectura.Filas.Count} viajes entre {desde} y {hasta}, saliendo de {pasajero.Domicilio}. Responde CONFIRMAR para cargarlos o CANCELAR.";
+        return catalogo.Texto(
+            "carga.resumen",
+            new Dictionary<string, string>
+            {
+                ["cantidad"] = lectura.Filas.Count.ToString(CultureInfo.InvariantCulture),
+                ["desde"] = desde,
+                ["hasta"] = hasta,
+                ["domicilio"] = pasajero.Domicilio!,
+            });
     }
+
+    private string DetalleDeFilas(IEnumerable<ErrorFila> errores) =>
+        string.Join(
+            "\n",
+            errores.Take(5).Select(e => catalogo.Texto(
+                "carga.linea",
+                new Dictionary<string, string> { ["linea"] = e.Linea.ToString(CultureInfo.InvariantCulture), ["mensaje"] = e.Mensaje })));
 
     private async Task<string> ConfirmarCargaAsync(Pasajero pasajero, ConversacionBot conversacion, string comando, DateTimeOffset ahora, CancellationToken ct)
     {
         if (comando is not ("confirmar" or "si" or "sí"))
         {
-            return "Responde CONFIRMAR para cargar los viajes o CANCELAR para descartarlos.";
+            return catalogo.Texto("carga.confirmar_invalido");
         }
 
         await using var archivo = await almacenamiento.LeerAsync(conversacion.ArchivoItinerario!, ct)
-            ?? throw new NotFoundException("No encontré el archivo enviado. Escribe ITINERARIO para empezar de nuevo.");
+            ?? throw new NotFoundException(catalogo.Texto("carga.archivo_perdido"));
         using var lector = new StreamReader(archivo, Encoding.UTF8);
         var lectura = cargaItinerarios.Previsualizar(await lector.ReadToEndAsync(ct));
         var resultado = await cargaItinerarios.ConfirmarAsync(pasajero.Id, lectura.Filas, ct);
         conversacion.Terminar(ahora);
 
-        var texto = $"Listo, cargué {resultado.Creados.Count} viajes. Te asignaremos conductor 24 horas antes de cada uno.";
+        var variables = new Dictionary<string, string> { ["cantidad"] = resultado.Creados.Count.ToString(CultureInfo.InvariantCulture) };
 
-        return resultado.Omitidos.Count == 0
-            ? texto
-            : $"{texto}\nOmití {resultado.Omitidos.Count}:\n{string.Join("\n", resultado.Omitidos.Take(5).Select(o => $"Línea {o.Linea}: {o.Mensaje}"))}";
+        if (resultado.Omitidos.Count == 0)
+        {
+            return catalogo.Texto("carga.listo", variables);
+        }
+
+        variables["omitidos"] = resultado.Omitidos.Count.ToString(CultureInfo.InvariantCulture);
+        variables["detalle"] = DetalleDeFilas(resultado.Omitidos);
+
+        return catalogo.Texto("carga.listo_con_omitidos", variables);
     }
 
     private async Task<Pasajero> PasajeroAsync(Usuario usuario, CancellationToken ct) =>
-        await identidad.ObtenerPasajeroPorUsuarioAsync(usuario.Id, ct) ?? throw new NotFoundException("No encontramos tu perfil de pasajero.");
+        await identidad.ObtenerPasajeroPorUsuarioAsync(usuario.Id, ct) ?? throw new NotFoundException(catalogo.Texto("bot.pasajero.sin_perfil"));
 
     private async Task<string> EstadoDeUltimaSolicitudAsync(Usuario usuario, CancellationToken ct)
     {
@@ -262,8 +283,8 @@ internal sealed partial class ServicioConversaciones(
         var ultima = pasajero is null ? null : await solicitudes.ObtenerUltimaDePasajeroAsync(pasajero.Id, ct);
 
         return ultima is null
-            ? "Aún no tienes solicitudes. Escribe SOLICITAR para pedir un servicio."
-            : $"Tu última solicitud está en estado {ultima.Estado}.";
+            ? catalogo.Texto("bot.estado.sin_solicitudes")
+            : catalogo.Texto("bot.estado.ultima", new Dictionary<string, string> { ["estado"] = ultima.Estado.ToString() });
     }
 
     private async Task<string> CalificarUltimoViajeAsync(Usuario usuario, int puntaje, CancellationToken ct)
@@ -273,17 +294,17 @@ internal sealed partial class ServicioConversaciones(
 
         if (viaje is null)
         {
-            return "No tienes viajes finalizados para calificar.";
+            return catalogo.Texto("bot.calificar.sin_viajes");
         }
 
         await servicioViajes.CalificarAsync(viaje.Id, new CalificarViajeRequest(puntaje, null), ct);
 
-        return "¡Gracias por calificar tu viaje!";
+        return catalogo.Texto("bot.calificar.gracias");
     }
 
     private async Task<string> AtenderConductorAsync(Usuario usuario, string texto, CancellationToken ct)
     {
-        var conductor = await flota.ObtenerConductorPorUsuarioAsync(usuario.Id, ct) ?? throw new NotFoundException("No encontramos tu perfil de conductor.");
+        var conductor = await flota.ObtenerConductorPorUsuarioAsync(usuario.Id, ct) ?? throw new NotFoundException(catalogo.Texto("conductor.sin_perfil"));
         var partes = texto.Trim().Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
         var comando = partes.Length == 0 ? string.Empty : partes[0].ToUpperInvariant();
 
@@ -291,42 +312,42 @@ internal sealed partial class ServicioConversaciones(
         {
             case "ACEPTAR" or "RECHAZAR":
                 var pendiente = await asignaciones.ObtenerPendienteDeConductorAsync(conductor.Id, ct)
-                    ?? throw new NotFoundException("No tienes servicios por responder.");
+                    ?? throw new NotFoundException(catalogo.Texto("conductor.sin_servicios"));
 
                 if (comando == "ACEPTAR")
                 {
                     await servicioAsignaciones.AceptarAsync(pendiente.Id, ct);
 
-                    return "Servicio aceptado. Escribe INICIO cuando comience el viaje.";
+                    return catalogo.Texto("conductor.aceptado");
                 }
 
                 await servicioAsignaciones.RechazarAsync(pendiente.Id, ct);
 
-                return "Servicio rechazado.";
+                return catalogo.Texto("conductor.rechazado");
 
             case "INICIO":
                 await servicioViajes.IniciarAsync((await ViajeVigenteAsync(conductor.Id, ct)).Id, ct);
 
-                return "Viaje iniciado. Escribe FIN al terminar.";
+                return catalogo.Texto("conductor.iniciado");
 
             case "FIN":
                 await servicioViajes.FinalizarAsync((await ViajeVigenteAsync(conductor.Id, ct)).Id, ct);
 
-                return "Viaje finalizado. Gracias.";
+                return catalogo.Texto("conductor.finalizado");
 
             case "INCIDENTE":
                 var descripcion = partes.Length > 1 ? partes[1] : string.Empty;
                 await servicioViajes.ReportarIncidenteAsync((await ViajeVigenteAsync(conductor.Id, ct)).Id, new ReportarIncidenteRequest(descripcion), ct);
 
-                return "Incidente reportado al operador.";
+                return catalogo.Texto("conductor.incidente");
 
             default:
-                return "Comandos: ACEPTAR, RECHAZAR, INICIO, FIN, INCIDENTE <descripción>.";
+                return catalogo.Texto("conductor.ayuda");
         }
     }
 
     private async Task<FlowRide.Viajes.Dominio.Viaje> ViajeVigenteAsync(Guid conductorId, CancellationToken ct) =>
-        await viajes.ObtenerVigenteDeConductorAsync(conductorId, ct) ?? throw new NotFoundException("No tienes un viaje programado o en curso.");
+        await viajes.ObtenerVigenteDeConductorAsync(conductorId, ct) ?? throw new NotFoundException(catalogo.Texto("conductor.sin_viaje"));
 
     [GeneratedRegex(@"^calificar\s+([1-5])$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
     private static partial Regex CalificarRegex();

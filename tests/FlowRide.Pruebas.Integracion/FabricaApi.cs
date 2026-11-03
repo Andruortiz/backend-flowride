@@ -32,6 +32,7 @@ public sealed class FabricaApi : WebApplicationFactory<Program>, IAsyncLifetime
         Environment.SetEnvironmentVariable("WhatsApp__AppSecret", SecretoMeta);
         Environment.SetEnvironmentVariable("WhatsApp__VerifyToken", TokenVerificacion);
         Environment.SetEnvironmentVariable("Almacenamiento__Conexion", " ");
+        Environment.SetEnvironmentVariable("WhatsApp__AccessToken", " ");
     }
 
     async Task IAsyncLifetime.DisposeAsync()

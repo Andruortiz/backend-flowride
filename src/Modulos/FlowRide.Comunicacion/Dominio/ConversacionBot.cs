@@ -39,7 +39,7 @@ public enum IntencionConversacion
 
 public sealed record DatosSolicitudConversacion(string Origen, string Destino, DateTimeOffset FechaHoraUtc, bool Urgente);
 
-public sealed record RespuestaConversacion(string Texto, IntencionConversacion Intencion, DatosSolicitudConversacion? Solicitud = null);
+public sealed record RespuestaConversacion(string Clave, IntencionConversacion Intencion, DatosSolicitudConversacion? Solicitud = null, IReadOnlyDictionary<string, string>? Variables = null);
 
 public sealed class ConversacionBot : Entidad
 {
@@ -104,7 +104,7 @@ public sealed class ConversacionBot : Entidad
         if (comando == "cancelar")
         {
             Reiniciar();
-            return Responder("Cancelé la solicitud en curso. Escribe SOLICITAR para empezar de nuevo.");
+            return Responder("bot.cancelada");
         }
 
         return Estado switch
@@ -118,7 +118,7 @@ public sealed class ConversacionBot : Entidad
         };
     }
 
-    private static RespuestaConversacion Responder(string texto) => new(texto, IntencionConversacion.Ninguna);
+    private static RespuestaConversacion Responder(string clave) => new(clave, IntencionConversacion.Ninguna);
 
     private RespuestaConversacion Empezar(string comando)
     {
@@ -127,43 +127,43 @@ public sealed class ConversacionBot : Entidad
             Reiniciar();
             Estado = EstadoConversacion.EsperandoOrigen;
 
-            return Responder("¿Desde dónde sales? Escribe la dirección o el punto de origen.");
+            return Responder("bot.origen.pedir");
         }
 
-        return Responder("Hola. Escribe SOLICITAR para pedir un servicio o ESTADO para ver tu última solicitud.");
+        return Responder("bot.saludo");
     }
 
     private RespuestaConversacion PedirOrigen(string mensaje)
     {
         if (TextHelper.IsEmptyWithTrim(mensaje))
         {
-            return Responder("No entendí el origen. ¿Desde dónde sales?");
+            return Responder("bot.origen.invalido");
         }
 
         Origen = mensaje;
         Estado = EstadoConversacion.EsperandoDestino;
 
-        return Responder("¿A dónde vas?");
+        return Responder("bot.destino.pedir");
     }
 
     private RespuestaConversacion PedirDestino(string mensaje)
     {
         if (TextHelper.IsEmptyWithTrim(mensaje) || string.Equals(mensaje, Origen, StringComparison.OrdinalIgnoreCase))
         {
-            return Responder("El destino debe ser distinto del origen. ¿A dónde vas?");
+            return Responder("bot.destino.invalido");
         }
 
         Destino = mensaje;
         Estado = EstadoConversacion.EsperandoFechaHora;
 
-        return Responder("¿Cuándo? Escribe la fecha y hora local así: 2026-10-14 08:30");
+        return Responder("bot.fecha.pedir");
     }
 
     private RespuestaConversacion PedirFechaHora(string mensaje, DateTimeOffset ahora, TimeZoneInfo zona)
     {
         if (!DateTime.TryParseExact(mensaje, FormatosFechaHora, CultureInfo.InvariantCulture, DateTimeStyles.None, out var local))
         {
-            return Responder("No entendí la fecha. Usa este formato: 2026-10-14 08:30");
+            return Responder("bot.fecha.formato");
         }
 
         DateTimeOffset utc;
@@ -173,18 +173,18 @@ public sealed class ConversacionBot : Entidad
         }
         catch (ArgumentException)
         {
-            return Responder("Esa hora no existe en tu zona horaria. Escribe otra.");
+            return Responder("bot.fecha.inexistente");
         }
 
         if (utc <= ahora)
         {
-            return Responder("Esa fecha y hora ya pasó. Escribe una futura.");
+            return Responder("bot.fecha.pasada");
         }
 
         FechaHoraUtc = utc;
         Estado = EstadoConversacion.EsperandoUrgencia;
 
-        return Responder("¿Es urgente? Responde SÍ o NO.");
+        return Responder("bot.urgencia.pedir");
     }
 
     private RespuestaConversacion PedirUrgencia(string comando, TimeZoneInfo zona)
@@ -199,27 +199,29 @@ public sealed class ConversacionBot : Entidad
         }
         else
         {
-            return Responder("Responde SÍ o NO. ¿Es urgente?");
+            return Responder("bot.urgencia.invalida");
         }
 
         Estado = EstadoConversacion.EsperandoConfirmacion;
         var cuando = TimeZoneInfo.ConvertTime(FechaHoraUtc!.Value, zona).ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
 
-        return Responder(
-            $"Confirma tu solicitud: de {Origen} a {Destino}, el {cuando}{(Urgente == true ? " (urgente)" : string.Empty)}. Responde CONFIRMAR o CANCELAR.");
+        return new RespuestaConversacion(
+            Urgente == true ? "bot.confirmar.resumen_urgente" : "bot.confirmar.resumen",
+            IntencionConversacion.Ninguna,
+            Variables: new Dictionary<string, string> { ["origen"] = Origen!, ["destino"] = Destino!, ["cuando"] = cuando });
     }
 
     private RespuestaConversacion Confirmar(string comando)
     {
         if (Array.IndexOf(Afirmativos, comando) < 0)
         {
-            return Responder("Responde CONFIRMAR para registrar la solicitud o CANCELAR para descartarla.");
+            return Responder("bot.confirmar.invalido");
         }
 
         var datos = new DatosSolicitudConversacion(Origen!, Destino!, FechaHoraUtc!.Value, Urgente == true);
         Estado = EstadoConversacion.Completa;
 
-        return new RespuestaConversacion("Listo, registré tu solicitud. Te avisaremos cuando tengamos conductor.", IntencionConversacion.SolicitudCompleta, datos);
+        return new RespuestaConversacion("bot.confirmar.listo", IntencionConversacion.SolicitudCompleta, datos);
     }
 
     public void EsperarDomicilio(DateTimeOffset ahora) => Avanzar(EstadoConversacion.EsperandoDomicilio, null, ahora);

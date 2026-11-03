@@ -1,4 +1,5 @@
 using System.Globalization;
+using FlowRide.Mensajes;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -125,7 +126,7 @@ internal sealed class AlReasignar(IServicioNotificaciones notificaciones, Compos
     }
 }
 
-internal sealed class AlQuedarSinRecurso(IServicioNotificaciones notificaciones, IServicioAlertas alertas, ComposicionMensajes mensajes)
+internal sealed class AlQuedarSinRecurso(IServicioNotificaciones notificaciones, IServicioAlertas alertas, ComposicionMensajes mensajes, ICatalogoMensajes catalogo)
     : IManejadorEvento<SinRecursoDisponible>
 {
     public async Task ManejarAsync(SinRecursoDisponible evento, CancellationToken ct = default)
@@ -133,7 +134,7 @@ internal sealed class AlQuedarSinRecurso(IServicioNotificaciones notificaciones,
         var variables = await mensajes.DeSolicitudAsync(evento.SolicitudId, ct);
         await notificaciones.EnviarAPasajeroAsync(evento.PasajeroId, evento.EventoId, TipoNotificacion.SinConductorPasajero, "sin_conductor.pasajero", variables, ct);
         await alertas.CrearAsync(
-            "sin_conductor", SeveridadAlerta.Critica, "Solicitud sin conductor", evento.Motivo, $"solicitud/{evento.SolicitudId}", $"sin_conductor:{evento.SolicitudId}", ct);
+            "sin_conductor", SeveridadAlerta.Critica, catalogo.Texto("alerta.sin_conductor.titulo"), evento.Motivo, $"solicitud/{evento.SolicitudId}", $"sin_conductor:{evento.SolicitudId}", ct);
     }
 }
 
@@ -177,20 +178,19 @@ internal sealed class AlDebeRecordar(IServicioNotificaciones notificaciones, Com
     }
 }
 
-internal sealed class AlDesviarseLaEta(IServicioNotificaciones notificaciones, IServicioAlertas alertas) : IManejadorEvento<DesviacionEtaDetectada>
+internal sealed class AlDesviarseLaEta(IServicioNotificaciones notificaciones, IServicioAlertas alertas, ICatalogoMensajes catalogo) : IManejadorEvento<DesviacionEtaDetectada>
 {
     public async Task ManejarAsync(DesviacionEtaDetectada evento, CancellationToken ct = default)
     {
-        var minutos = Math.Round(evento.DesvioMinutos).ToString("0", CultureInfo.InvariantCulture);
-        await notificaciones.EnviarAPasajeroAsync(
-            evento.PasajeroId, evento.EventoId, TipoNotificacion.DesviacionEtaPasajero, "eta_desviacion.pasajero", new Dictionary<string, string> { ["minutos"] = minutos }, ct);
+        var variables = new Dictionary<string, string> { ["minutos"] = Math.Round(evento.DesvioMinutos).ToString("0", CultureInfo.InvariantCulture) };
+        await notificaciones.EnviarAPasajeroAsync(evento.PasajeroId, evento.EventoId, TipoNotificacion.DesviacionEtaPasajero, "eta_desviacion.pasajero", variables, ct);
         await alertas.CrearAsync(
-            "desviacion_eta", SeveridadAlerta.Atencion, "Viaje con retraso", $"La llegada se estima {minutos} min después de lo previsto.", $"viaje/{evento.ViajeId}", $"eta:{evento.EventoId}", ct);
+            "desviacion_eta", SeveridadAlerta.Atencion, catalogo.Texto("alerta.eta.titulo"), catalogo.Texto("alerta.eta.detalle", variables), $"viaje/{evento.ViajeId}", $"eta:{evento.EventoId}", ct);
     }
 }
 
-internal sealed class AlReportarIncidente(IServicioAlertas alertas) : IManejadorEvento<IncidenteReportado>
+internal sealed class AlReportarIncidente(IServicioAlertas alertas, ICatalogoMensajes catalogo) : IManejadorEvento<IncidenteReportado>
 {
     public Task ManejarAsync(IncidenteReportado evento, CancellationToken ct = default) =>
-        alertas.CrearAsync("incidente", SeveridadAlerta.Critica, "Incidente en viaje", evento.Descripcion, $"viaje/{evento.ViajeId}", $"incidente:{evento.EventoId}", ct);
+        alertas.CrearAsync("incidente", SeveridadAlerta.Critica, catalogo.Texto("alerta.incidente.titulo"), evento.Descripcion, $"viaje/{evento.ViajeId}", $"incidente:{evento.EventoId}", ct);
 }

@@ -3,6 +3,7 @@ using static FlowRide.Pruebas.Dominio.Escenarios;
 
 using FlowRide.Comunicacion.Dominio;
 using FlowRide.Contratos;
+using FlowRide.Mensajes;
 using FlowRide.Flota.Dominio;
 using FlowRide.Identidad.Dominio;
 using FlowRide.Nucleo.Excepciones;
@@ -34,12 +35,12 @@ public class SoporteTests
     [Fact]
     public void ElCatalogoRenderizaVariablesYRechazaClavesDesconocidas()
     {
-        var texto = CatalogoMensajes.Renderizar(
+        var texto = new CatalogoMensajes().Texto(
             "asignacion.pasajero",
             new Dictionary<string, string> { ["fecha"] = "15 oct 08:30", ["conductor"] = "Carlos", ["placa"] = "ABC123" });
 
         Assert.Equal("Tu servicio del 15 oct 08:30 tiene conductor: Carlos, vehículo ABC123.", texto);
-        Assert.Throws<KeyNotFoundException>(() => CatalogoMensajes.Renderizar("no.existe"));
+        Assert.Throws<KeyNotFoundException>(() => new CatalogoMensajes().Texto("no.existe"));
     }
 
     [Fact]

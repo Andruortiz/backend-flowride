@@ -2,6 +2,7 @@ using static FlowRide.Pruebas.Dominio.Escenarios;
 
 using FlowRide.Comunicacion.Dominio;
 using FlowRide.Contratos;
+using FlowRide.Mensajes;
 
 
 namespace FlowRide.Pruebas.Dominio.Conversaciones;
@@ -9,6 +10,10 @@ namespace FlowRide.Pruebas.Dominio.Conversaciones;
 public class ConversacionBotTests
 {
     private static readonly TimeZoneInfo Bogota = TimeZoneInfo.FindSystemTimeZoneById("America/Bogota");
+
+    private static readonly CatalogoMensajes Catalogo = new();
+
+    private static string Texto(RespuestaConversacion respuesta) => Catalogo.Texto(respuesta.Clave, respuesta.Variables);
 
     private static ConversacionBot Nueva() => ConversacionBot.Iniciar(Id(1), Ahora);
 
@@ -20,7 +25,7 @@ public class ConversacionBotTests
     {
         var respuesta = Di(Nueva(), "buenas");
 
-        Assert.Contains("SOLICITAR", respuesta.Texto);
+        Assert.Contains("SOLICITAR", Texto(respuesta));
         Assert.Equal(IntencionConversacion.Ninguna, respuesta.Intencion);
     }
 
@@ -36,7 +41,7 @@ public class ConversacionBotTests
         var resumen = Di(bot, "sí");
         var final = Di(bot, "confirmar");
 
-        Assert.Contains("Confirma tu solicitud", resumen.Texto);
+        Assert.Contains("Confirma tu solicitud", Texto(resumen));
         Assert.Equal(IntencionConversacion.SolicitudCompleta, final.Intencion);
         Assert.Equal("Aeropuerto JMC", final.Solicitud!.Origen);
         Assert.Equal("Hotel Poblado", final.Solicitud.Destino);
@@ -52,15 +57,15 @@ public class ConversacionBotTests
         Di(bot, "solicitar");
         Di(bot, "Casa");
 
-        Assert.Contains("distinto", Di(bot, "casa").Texto);
+        Assert.Contains("distinto", Texto(Di(bot, "casa")));
         Di(bot, "Oficina");
 
-        Assert.Contains("formato", Di(bot, "mañana").Texto);
-        Assert.Contains("ya pasó", Di(bot, "2020-01-01 08:00").Texto);
+        Assert.Contains("formato", Texto(Di(bot, "mañana")));
+        Assert.Contains("ya pasó", Texto(Di(bot, "2020-01-01 08:00")));
 
         Di(bot, "14/10/2026 18:00");
 
-        Assert.Contains("SÍ o NO", Di(bot, "quizás").Texto);
+        Assert.Contains("SÍ o NO", Texto(Di(bot, "quizás")));
         Assert.Equal(EstadoConversacion.EsperandoUrgencia, bot.Estado);
     }
 
@@ -90,7 +95,7 @@ public class ConversacionBotTests
         var respuesta = Di(bot, "Oficina", minutos: 45);
 
         Assert.Equal(EstadoConversacion.Inicio, bot.Estado);
-        Assert.Contains("SOLICITAR", respuesta.Texto);
+        Assert.Contains("SOLICITAR", Texto(respuesta));
     }
 
     [Fact]
