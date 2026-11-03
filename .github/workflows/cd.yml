@@ -87,6 +87,8 @@ jobs:
             dockerfile: Dockerfile
           - nombre: flowride-borde
             dockerfile: Dockerfile.borde
+          - nombre: flowride-waf
+            dockerfile: Dockerfile.waf
     steps:
       - uses: actions/checkout@v7
 
@@ -179,8 +181,15 @@ jobs:
         run: |
           az containerapp update \
             --resource-group "$AZURE_GRUPO" \
-            --name ca-flowride-borde \
+            --name ca-flowride-borde-interno \
             --image "$ACR_NOMBRE.azurecr.io/flowride-borde:${{ needs.validar.outputs.imagen_tag }}"
+
+      - name: Actualizar el WAF
+        run: |
+          az containerapp update \
+            --resource-group "$AZURE_GRUPO" \
+            --name ca-flowride-borde \
+            --image "$ACR_NOMBRE.azurecr.io/flowride-waf:${{ needs.validar.outputs.imagen_tag }}"
 
       - name: Prueba de humo
         run: |
