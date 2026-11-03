@@ -63,6 +63,11 @@ public sealed class ViajesController(IServicioViajes servicio) : ControllerBase
 [Route("api/v1/ubicaciones")]
 public sealed class UbicacionesController(IServicioSeguimiento servicio) : ControllerBase
 {
+    [HttpGet("ultimas")]
+    [Authorize(Politicas.Gestion)]
+    public async Task<IReadOnlyList<UbicacionVehiculoResponse>> Ultimas(int horas = 24, CancellationToken ct = default) =>
+        await servicio.UltimasAsync(horas, ct);
+
     [HttpPost]
     [Authorize(Politicas.Gestion)]
     public async Task<UbicacionResponse> Reportar(ReportarUbicacionRequest request, CancellationToken ct) =>

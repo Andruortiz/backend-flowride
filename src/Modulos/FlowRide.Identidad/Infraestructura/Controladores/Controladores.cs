@@ -74,3 +74,12 @@ public sealed class UsuariosController(IServicioUsuarios servicio) : ControllerB
         return NoContent();
     }
 }
+
+[ApiController]
+[Route("api/v1/pasajeros")]
+public sealed class PasajerosController(IServicioPasajeros servicio) : ControllerBase
+{
+    [HttpGet]
+    [Authorize(Politicas.Gestion)]
+    public async Task<IReadOnlyList<PasajeroResponse>> Listar(CancellationToken ct) => await servicio.ListarAsync(ct);
+}

@@ -45,5 +45,7 @@ internal interface IPasajeroRepository
 
     Task<IReadOnlyDictionary<Guid, Pasajero>> ObtenerVariosAsync(IEnumerable<Guid> ids, CancellationToken ct = default);
 
+    Task<IReadOnlyList<Pasajero>> ListarAsync(CancellationToken ct = default);
+
     Task AgregarAsync(Pasajero pasajero, CancellationToken ct = default);
 }

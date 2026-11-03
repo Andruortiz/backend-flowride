@@ -33,6 +33,10 @@ internal sealed partial class ServicioSeguimiento(
 {
     private const int PuntosParaEstimar = 5;
 
+    public async Task<IReadOnlyList<UbicacionVehiculoResponse>> UltimasAsync(int horas, CancellationToken ct = default) =>
+        [.. (await ubicaciones.ObtenerUltimasPorVehiculoAsync(reloj.GetUtcNow().AddHours(-horas), ct))
+            .Select(u => new UbicacionVehiculoResponse(u.VehiculoId, u.ViajeId, u.Latitud, u.Longitud, u.TimestampOrigen, u.Fuente))];
+
     public async Task<ResultadoIngesta> IngerirAsync(IReadOnlyList<ReportarUbicacionRequest> eventos, CancellationToken ct = default)
     {
         int aceptadas = 0, duplicadas = 0, rechazadas = 0;

@@ -55,5 +55,7 @@ internal interface IUbicacionRepository
 
     Task<IReadOnlyList<RegistroUbicacion>> ObtenerRecientesAsync(Guid vehiculoId, DateTimeOffset desde, int maximo, CancellationToken ct = default);
 
+    Task<IReadOnlyList<RegistroUbicacion>> ObtenerUltimasPorVehiculoAsync(DateTimeOffset desde, CancellationToken ct = default);
+
     Task AgregarAsync(RegistroUbicacion registro, CancellationToken ct = default);
 }

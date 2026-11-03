@@ -43,6 +43,8 @@ public interface IServicioSeguimiento
     Task<UbicacionResponse> ReportarAsync(ReportarUbicacionRequest request, CancellationToken ct = default);
 
     Task<ResultadoIngesta> IngerirAsync(IReadOnlyList<ReportarUbicacionRequest> eventos, CancellationToken ct = default);
+
+    Task<IReadOnlyList<UbicacionVehiculoResponse>> UltimasAsync(int horas, CancellationToken ct = default);
 }
 
 public interface ITelemetryProviderAdapter
