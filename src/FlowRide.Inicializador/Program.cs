@@ -6,6 +6,7 @@ using FlowRide.Identidad.Dominio;
 using FlowRide.Inicializador.Almacenamiento;
 using FlowRide.Inicializador.Configuracion;
 using FlowRide.Inicializador.Seguridad;
+using FlowRide.Inicializador.TiempoReal;
 using FlowRide.Mensajes;
 using FlowRide.Nucleo.Seguridad;
 using FlowRide.Nucleo.Tenancy;
@@ -63,6 +64,7 @@ builder.Services.AgregarModuloViajes();
 builder.Services.AgregarModuloAsignaciones();
 builder.Services.AgregarModuloComunicacion();
 builder.Services.AgregarModuloOperacion(builder.Configuration);
+builder.Services.AgregarTiempoReal();
 
 
 SymmetricSecurityKey? claveDesarrollo = null;
@@ -84,6 +86,20 @@ builder.Services
     {
         o.MapInboundClaims = false;
         o.RequireHttpsMetadata = !esDesarrollo;
+        o.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = contexto =>
+            {
+                var token = contexto.Request.Query["access_token"];
+
+                if (!string.IsNullOrEmpty(token) && contexto.HttpContext.Request.Path.StartsWithSegments(RegistroTiempoReal.Ruta))
+                {
+                    contexto.Token = token;
+                }
+
+                return Task.CompletedTask;
+            },
+        };
 
         if (claveDesarrollo is null)
         {
@@ -148,6 +164,7 @@ app.UseMiddleware<GuardiaTenant>();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapearTiempoReal();
 app.MapHealthChecks("/health/live", new() { Predicate = _ => false }).AllowAnonymous();
 app.MapHealthChecks("/health/ready", new() { Predicate = r => r.Tags.Contains("ready") }).AllowAnonymous();
 
