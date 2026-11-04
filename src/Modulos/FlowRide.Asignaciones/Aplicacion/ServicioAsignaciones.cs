@@ -2,6 +2,7 @@ using FlowRide.Mensajes;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
+using FlowRide.Nucleo.Observabilidad;
 using FlowRide.Nucleo.Seguridad;
 using FlowRide.Nucleo.Persistencia;
 using FlowRide.Nucleo.Eventos;
@@ -76,6 +77,7 @@ internal sealed class ServicioAsignaciones(
         await auditoria.RegistrarAsync(
             asignacion is null ? "asignacion.sin_recurso" : "asignacion.automatica", $"solicitud/{solicitudId}", despues: asignacion?.Id.ToString(), ct: ct);
         await unidad.GuardarCambiosAsync(ct);
+        Metricas.AsignacionesAutomaticas.Add(1, Metricas.Etiqueta("resultado", asignacion is null ? "sin_conductor" : "asignada"));
 
         return new ResultadoAsignacionResponse(asignacion is not null, asignacion?.A(), resultado.Decision, solicitud.Estado);
     }

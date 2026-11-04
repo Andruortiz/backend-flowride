@@ -1,6 +1,7 @@
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
+using FlowRide.Nucleo.Observabilidad;
 using FlowRide.Nucleo.Seguridad;
 using FlowRide.Nucleo.Persistencia;
 using FlowRide.Nucleo.Eventos;
@@ -45,6 +46,7 @@ internal sealed class ServicioSolicitudes(
         await solicitudes.AgregarAsync(solicitud, ct);
         await auditoria.RegistrarAsync("solicitud.registrar", $"solicitud/{solicitud.Id}", ct: ct);
         await unidad.GuardarCambiosAsync(ct);
+        Metricas.SolicitudesRegistradas.Add(1);
 
         return A(solicitud);
     }
