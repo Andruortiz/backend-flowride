@@ -45,7 +45,7 @@ public sealed class Conductor : Entidad
 
         if (usuario.Rol != RolUsuario.Conductor)
         {
-            throw new DomainException("Solo un usuario con rol Conductor puede tener perfil de conductor.");
+            throw new DomainException("error.solo_un_usuario_con_rol_conductor_puede");
         }
 
         ValidarLicencia(licencia);
@@ -78,7 +78,7 @@ public sealed class Conductor : Entidad
     {
         if (TextHelper.IsEmptyWithTrim(motivo))
         {
-            throw new DomainException("Indica el motivo por el que el conductor no está disponible.");
+            throw new DomainException("error.indica_el_motivo_por_el_que_el");
         }
 
         Disponible = false;
@@ -103,7 +103,7 @@ public sealed class Conductor : Entidad
             {
                 if (nuevos[i].SeSolapaCon(nuevos[j]))
                 {
-                    throw new DomainException("Los turnos del conductor no pueden solaparse.");
+                    throw new DomainException("error.los_turnos_del_conductor_no_pueden_solaparse");
                 }
             }
         }
@@ -156,7 +156,7 @@ public sealed class Conductor : Entidad
     {
         if (!licencia.Tipo.EsDeConductor())
         {
-            throw new DomainException("El documento indicado no es una licencia de conducción.");
+            throw new DomainException("error.el_documento_indicado_no_es_una_licencia");
         }
     }
 }

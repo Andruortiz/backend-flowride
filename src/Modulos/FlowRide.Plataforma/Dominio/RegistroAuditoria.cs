@@ -73,7 +73,7 @@ public sealed class RegistroAuditoria : Entidad
     {
         if (TextHelper.IsEmptyWithTrim(accion) || TextHelper.IsEmptyWithTrim(recurso))
         {
-            throw new DomainException("La auditoría requiere la acción y el recurso.");
+            throw new DomainException("error.la_auditoria_requiere_la_accion_y_el");
         }
 
         return new RegistroAuditoria(

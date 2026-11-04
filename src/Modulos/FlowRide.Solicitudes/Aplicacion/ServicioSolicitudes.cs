@@ -97,12 +97,12 @@ internal sealed class ServicioSolicitudes(
     }
 
     private async Task<SolicitudTransporte> Buscar(Guid id, CancellationToken ct) =>
-        await solicitudes.ObtenerAsync(id, ct) ?? throw new NotFoundException("La solicitud no existe.");
+        await solicitudes.ObtenerAsync(id, ct) ?? throw new NotFoundException("error.la_solicitud_no_existe");
 
     private async Task<Pasajero> PasajeroActualAsync(CancellationToken ct) =>
         actor.UsuarioId is { } usuarioId && await identidad.ObtenerPasajeroPorUsuarioAsync(usuarioId, ct) is { } pasajero
             ? pasajero
-            : throw new ForbiddenException("El usuario autenticado no es un pasajero.");
+            : throw new ForbiddenException("error.el_usuario_autenticado_no_es_un_pasajero");
 
     private async Task<Pasajero> ResolverPasajeroAsync(Guid? pasajeroId, CancellationToken ct)
     {
@@ -111,16 +111,16 @@ internal sealed class ServicioSolicitudes(
             return await PasajeroActualAsync(ct);
         }
 
-        var id = pasajeroId ?? throw new DomainException("Indica el pasajero de la solicitud.");
+        var id = pasajeroId ?? throw new DomainException("error.indica_el_pasajero_de_la_solicitud");
 
-        return await identidad.ObtenerPasajeroAsync(id, ct) ?? throw new NotFoundException("El pasajero no existe.");
+        return await identidad.ObtenerPasajeroAsync(id, ct) ?? throw new NotFoundException("carga.pasajero_inexistente");
     }
 
     private async Task ValidarAccesoAsync(SolicitudTransporte solicitud, CancellationToken ct)
     {
         if (actor.Rol == RolUsuario.Pasajero && (await PasajeroActualAsync(ct)).Id != solicitud.PasajeroId)
         {
-            throw new ForbiddenException("Solo puedes operar tus propias solicitudes.");
+            throw new ForbiddenException("error.solo_puedes_operar_tus_propias_solicitudes");
         }
     }
 

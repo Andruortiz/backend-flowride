@@ -68,27 +68,27 @@ public sealed class Itinerario : Entidad
     {
         if (TextHelper.IsEmptyWithTrim(codigoServicio))
         {
-            throw new DomainException("El código de servicio es obligatorio.");
+            throw new DomainException("error.el_codigo_de_servicio_es_obligatorio");
         }
 
         if (TextHelper.IsEmptyWithTrim(origen) || TextHelper.IsEmptyWithTrim(destino))
         {
-            throw new DomainException("El origen y el destino del itinerario son obligatorios.");
+            throw new DomainException("error.el_origen_y_el_destino_del_itinerario");
         }
 
         if (string.Equals(origen.Trim(), destino.Trim(), StringComparison.OrdinalIgnoreCase))
         {
-            throw new DomainException("El origen y el destino deben ser distintos.");
+            throw new DomainException("error.el_origen_y_el_destino_deben_ser");
         }
 
         if (fecha == default)
         {
-            throw new DomainException("La fecha del itinerario es obligatoria.");
+            throw new DomainException("error.la_fecha_del_itinerario_es_obligatoria");
         }
 
         if (horaSalida == horaLlegada)
         {
-            throw new DomainException("La hora de salida y la de llegada no pueden ser iguales.");
+            throw new DomainException("error.la_hora_de_salida_y_la_de");
         }
 
         return new Itinerario(

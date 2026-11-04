@@ -61,7 +61,7 @@ public sealed class ConfiguracionAsignacion : Entidad
 
         if (version < 1)
         {
-            throw new DomainException("La versión de la configuración debe ser positiva.");
+            throw new DomainException("error.la_version_de_la_configuracion_debe_ser");
         }
 
         var lista = reglas.OrderBy(r => r.Orden).ToList();
@@ -75,30 +75,30 @@ public static class ValidadorConfiguracion
 {
     public static void Validar(IReadOnlyList<ConfiguracionRegla> reglas, IReadOnlyList<IAssignmentRule> catalogo)
     {
-        var errores = new List<string>();
+        var errores = new List<MensajeClave>();
         var porId = catalogo.ToDictionary(r => r.Id);
 
         foreach (var duplicada in reglas.GroupBy(r => r.ReglaId).Where(g => g.Count() > 1))
         {
-            errores.Add($"La regla '{duplicada.Key}' está repetida.");
+            errores.Add(new MensajeClave("error.la_regla_esta_repetida", ("regla", duplicada.Key)));
         }
 
         foreach (var regla in reglas)
         {
             if (!porId.TryGetValue(regla.ReglaId, out var definicion))
             {
-                errores.Add($"La regla '{regla.ReglaId}' no existe.");
+                errores.Add(new MensajeClave("error.la_regla_no_existe", ("regla", regla.ReglaId)));
                 continue;
             }
 
             if (regla.Peso is < 0 or > 1)
             {
-                errores.Add($"El peso de '{definicion.Nombre}' debe estar entre 0 y 1.");
+                errores.Add(new MensajeClave("error.el_peso_de_la_regla_fuera_de_rango", ("regla", definicion.Nombre)));
             }
 
             if (!regla.Activa && definicion.Obligatoria)
             {
-                errores.Add($"La regla '{definicion.Nombre}' es obligatoria y no se puede desactivar.");
+                errores.Add(new MensajeClave("error.la_regla_es_obligatoria", ("regla", definicion.Nombre)));
             }
         }
 
@@ -106,24 +106,24 @@ public static class ValidadorConfiguracion
         {
             if (!reglas.Any(r => r.ReglaId == obligatoria.Id))
             {
-                errores.Add($"Falta la regla obligatoria '{obligatoria.Nombre}'.");
+                errores.Add(new MensajeClave("error.falta_la_regla_obligatoria", ("regla", obligatoria.Nombre)));
             }
         }
 
         if (reglas.GroupBy(r => r.Orden).Any(g => g.Count() > 1))
         {
-            errores.Add("Dos reglas no pueden tener el mismo orden.");
+            errores.Add(new MensajeClave("error.dos_reglas_no_pueden_tener_el_mismo_orden"));
         }
 
         var puntuaActiva = reglas.Any(r => r.Activa && porId.TryGetValue(r.ReglaId, out var d) && d.Tipo == TipoRegla.Puntuacion);
         if (!puntuaActiva)
         {
-            errores.Add("Debe haber al menos una regla de puntuación activa.");
+            errores.Add(new MensajeClave("error.debe_haber_una_regla_de_puntuacion_activa"));
         }
 
         if (errores.Count > 0)
         {
-            throw new DomainException(string.Join(" ", errores));
+            throw new DomainException(errores);
         }
     }
 }

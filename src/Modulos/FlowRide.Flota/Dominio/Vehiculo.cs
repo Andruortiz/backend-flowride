@@ -62,7 +62,7 @@ public sealed class Vehiculo : Entidad
 
         if (!documento.Tipo.EsDeVehiculo())
         {
-            throw new DomainException("Este documento no corresponde a un vehículo.");
+            throw new DomainException("error.este_documento_no_corresponde_a_un_vehiculo");
         }
 
         _documentos.RemoveAll(d => d.Tipo == documento.Tipo);
@@ -88,7 +88,7 @@ public sealed class Vehiculo : Entidad
     {
         if (TextHelper.IsEmptyWithTrim(placa))
         {
-            throw new DomainException("La placa del vehículo es obligatoria.");
+            throw new DomainException("error.la_placa_del_vehiculo_es_obligatoria");
         }
 
         var limpia = placa
@@ -98,7 +98,7 @@ public sealed class Vehiculo : Entidad
 
         if (!FormatoPlaca.IsMatch(limpia))
         {
-            throw new DomainException("La placa no tiene un formato válido, por ejemplo ABC123.");
+            throw new DomainException("error.la_placa_no_tiene_un_formato_valido");
         }
 
         return limpia;
@@ -108,7 +108,7 @@ public sealed class Vehiculo : Entidad
     {
         if (capacidad < 1)
         {
-            throw new DomainException("La capacidad del vehículo debe ser de al menos 1 pasajero.");
+            throw new DomainException("error.la_capacidad_del_vehiculo_debe_ser_de");
         }
     }
 }

@@ -66,6 +66,6 @@ public sealed class CargaItinerariosTests(FabricaApi api)
 
         var error = await Assert.ThrowsAsync<FlowRide.Nucleo.Excepciones.DomainException>(() => carga.ConfirmarAsync(pasajero.Id, []));
 
-        Assert.Contains("domicilio", error.Message, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal("carga.sin_domicilio", error.Clave);
     }
 }

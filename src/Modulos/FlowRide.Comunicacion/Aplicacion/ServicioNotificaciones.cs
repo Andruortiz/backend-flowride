@@ -44,19 +44,19 @@ internal sealed partial class ServicioNotificaciones(
 {
     public async Task EnviarAPasajeroAsync(Guid pasajeroId, Guid eventoId, TipoNotificacion tipo, string claveMensaje, IReadOnlyDictionary<string, string> variables, CancellationToken ct = default)
     {
-        var pasajero = await identidad.ObtenerPasajeroAsync(pasajeroId, ct) ?? throw new NotFoundException("El pasajero no existe.");
+        var pasajero = await identidad.ObtenerPasajeroAsync(pasajeroId, ct) ?? throw new NotFoundException("carga.pasajero_inexistente");
         await EnviarAUsuarioAsync(pasajero.UsuarioId, eventoId, tipo, claveMensaje, variables, ct);
     }
 
     public async Task EnviarAConductorAsync(Guid conductorId, Guid eventoId, TipoNotificacion tipo, string claveMensaje, IReadOnlyDictionary<string, string> variables, CancellationToken ct = default)
     {
-        var conductor = await flota.ObtenerConductorAsync(conductorId, ct) ?? throw new NotFoundException("El conductor no existe.");
+        var conductor = await flota.ObtenerConductorAsync(conductorId, ct) ?? throw new NotFoundException("error.el_conductor_no_existe");
         await EnviarAUsuarioAsync(conductor.UsuarioId, eventoId, tipo, claveMensaje, variables, ct);
     }
 
     public async Task EnviarAUsuarioAsync(Guid usuarioId, Guid eventoId, TipoNotificacion tipo, string claveMensaje, IReadOnlyDictionary<string, string> variables, CancellationToken ct = default)
     {
-        var usuario = await identidad.ObtenerUsuarioAsync(usuarioId, ct) ?? throw new NotFoundException("El destinatario no existe.");
+        var usuario = await identidad.ObtenerUsuarioAsync(usuarioId, ct) ?? throw new NotFoundException("error.el_destinatario_no_existe");
         var solicitud = new SolicitudNotificacion(eventoId, usuarioId, usuario.Rol, tipo, claveMensaje, variables);
 
         foreach (var canal in PoliticaCanal.Resolver(usuario.Rol))
@@ -110,7 +110,7 @@ internal sealed class ServicioAlertas(IAlertaRepository alertas, IUnitOfWork uni
 
     public async Task MarcarLeidaAsync(Guid id, CancellationToken ct = default)
     {
-        var alerta = await alertas.ObtenerAsync(id, ct) ?? throw new NotFoundException("La alerta no existe.");
+        var alerta = await alertas.ObtenerAsync(id, ct) ?? throw new NotFoundException("error.la_alerta_no_existe");
         alerta.MarcarLeida(reloj.GetUtcNow());
         await unidad.GuardarCambiosAsync(ct);
     }

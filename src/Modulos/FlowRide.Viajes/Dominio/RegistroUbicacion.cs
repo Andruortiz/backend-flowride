@@ -83,24 +83,24 @@ public sealed class RegistroUbicacion : Entidad, IRegistroInmutable
     {
         if (vehiculoId == Guid.Empty)
         {
-            throw new DomainException("El vehículo es obligatorio.");
+            throw new DomainException("error.el_vehiculo_es_obligatorio");
         }
 
         if (TextHelper.IsEmptyWithTrim(fuente))
         {
-            throw new DomainException("La fuente de la ubicación es obligatoria.");
+            throw new DomainException("error.la_fuente_de_la_ubicacion_es_obligatoria");
         }
 
         _ = Coordenada.Crear(latitud, longitud);
 
         if (timestampOrigen - timestampRecepcion > ToleranciaFuturo)
         {
-            throw new DomainException("El instante de origen está en el futuro.");
+            throw new DomainException("error.el_instante_de_origen_esta_en_el");
         }
 
         if (timestampRecepcion - timestampOrigen > TimeSpan.FromMinutes(ventanaMinutos))
         {
-            throw new DomainException($"El evento es más antiguo que la ventana permitida de {ventanaMinutos} minutos.");
+            throw new DomainException("error.el_evento_es_mas_antiguo_que_la", ("ventanaMinutos", ventanaMinutos));
         }
 
         return new RegistroUbicacion(

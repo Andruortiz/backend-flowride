@@ -53,7 +53,8 @@ public sealed class ParametroOperador : Entidad
         if (valor < definicion.Minimo || valor > definicion.Maximo)
         {
             throw new DomainException(
-                $"{definicion.Descripcion}: el valor debe estar entre {definicion.Minimo} y {definicion.Maximo} {definicion.Unidad}.");
+                "error.el_valor_del_parametro_fuera_de_rango",
+                ("descripcion", definicion.Descripcion), ("minimo", definicion.Minimo), ("maximo", definicion.Maximo), ("unidad", definicion.Unidad));
         }
     }
 }

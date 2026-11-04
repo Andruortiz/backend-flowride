@@ -86,9 +86,9 @@ internal sealed partial class ServicioConversaciones(
                     _ => (catalogo.Texto("bot.canal_restringido"), null),
                 };
             }
-            catch (Exception ex) when (ex is DomainException or ConflictException or ForbiddenException or NotFoundException)
+            catch (NegocioException ex)
             {
-                texto = ex.Message;
+                texto = catalogo.Texto(ex);
             }
         }
 
@@ -255,7 +255,7 @@ internal sealed partial class ServicioConversaciones(
         }
 
         await using var archivo = await almacenamiento.LeerAsync(conversacion.ArchivoItinerario!, ct)
-            ?? throw new NotFoundException(catalogo.Texto("carga.archivo_perdido"));
+            ?? throw new NotFoundException("carga.archivo_perdido");
         using var lector = new StreamReader(archivo, Encoding.UTF8);
         var lectura = cargaItinerarios.Previsualizar(await lector.ReadToEndAsync(ct));
         var resultado = await cargaItinerarios.ConfirmarAsync(pasajero.Id, lectura.Filas, ct);
@@ -275,7 +275,7 @@ internal sealed partial class ServicioConversaciones(
     }
 
     private async Task<Pasajero> PasajeroAsync(Usuario usuario, CancellationToken ct) =>
-        await identidad.ObtenerPasajeroPorUsuarioAsync(usuario.Id, ct) ?? throw new NotFoundException(catalogo.Texto("bot.pasajero.sin_perfil"));
+        await identidad.ObtenerPasajeroPorUsuarioAsync(usuario.Id, ct) ?? throw new NotFoundException("bot.pasajero.sin_perfil");
 
     private async Task<string> EstadoDeUltimaSolicitudAsync(Usuario usuario, CancellationToken ct)
     {
@@ -304,7 +304,7 @@ internal sealed partial class ServicioConversaciones(
 
     private async Task<string> AtenderConductorAsync(Usuario usuario, string texto, CancellationToken ct)
     {
-        var conductor = await flota.ObtenerConductorPorUsuarioAsync(usuario.Id, ct) ?? throw new NotFoundException(catalogo.Texto("conductor.sin_perfil"));
+        var conductor = await flota.ObtenerConductorPorUsuarioAsync(usuario.Id, ct) ?? throw new NotFoundException("conductor.sin_perfil");
         var partes = texto.Trim().Split(' ', 2, StringSplitOptions.RemoveEmptyEntries);
         var comando = partes.Length == 0 ? string.Empty : partes[0].ToUpperInvariant();
 
@@ -312,7 +312,7 @@ internal sealed partial class ServicioConversaciones(
         {
             case "ACEPTAR" or "RECHAZAR":
                 var pendiente = await asignaciones.ObtenerPendienteDeConductorAsync(conductor.Id, ct)
-                    ?? throw new NotFoundException(catalogo.Texto("conductor.sin_servicios"));
+                    ?? throw new NotFoundException("conductor.sin_servicios");
 
                 if (comando == "ACEPTAR")
                 {
@@ -347,7 +347,7 @@ internal sealed partial class ServicioConversaciones(
     }
 
     private async Task<FlowRide.Viajes.Dominio.Viaje> ViajeVigenteAsync(Guid conductorId, CancellationToken ct) =>
-        await viajes.ObtenerVigenteDeConductorAsync(conductorId, ct) ?? throw new NotFoundException(catalogo.Texto("conductor.sin_viaje"));
+        await viajes.ObtenerVigenteDeConductorAsync(conductorId, ct) ?? throw new NotFoundException("conductor.sin_viaje");
 
     [GeneratedRegex(@"^calificar\s+([1-5])$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)]
     private static partial Regex CalificarRegex();

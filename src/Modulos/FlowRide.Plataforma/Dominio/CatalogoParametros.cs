@@ -27,22 +27,22 @@ public static class CatalogoParametros
 
     private static readonly DefinicionParametro[] Todas =
     [
-        new(UmbralEtaMinutos, "Desviación de ETA que genera alerta", 1, 30, 5, "min"),
-        new(AnticipacionRecordatorioMinutos, "Anticipación del recordatorio de viaje", 5, 240, 30, "min"),
-        new(VentanaCancelacionMinutos, "Antelación mínima para que el pasajero cancele", 0, 1440, 60, "min"),
-        new(AlertaSinConductorMinutos, "Tiempo sin conductor antes de alertar al operador", 1, 120, 10, "min"),
-        new(DiasAvisoDocumentos, "Días de aviso antes del vencimiento de un documento", 1, 180, 30, "días"),
-        new(VentanaEventoGpsMinutos, "Antigüedad máxima aceptada de un evento GPS", 1, 120, 15, "min"),
-        new(RetencionTelemetriaMeses, "Meses de retención de la telemetría GPS", 1, 24, 6, "meses"),
-        new(VentanaCargaHoras,"Ventana para contar asignaciones recientes", 1, 72, 24, "h"),
-        new(MaximoIntentosAsignacion, "Intentos de asignación antes de pasar a revisión", 1, 10, 3, "intentos"),
-        new(DuracionViajeMinutos, "Duración estimada de un viaje sin itinerario", 5, 720, 45, "min"),
-        new(AnticipacionAsignacionHoras, "Antelación con la que se asigna conductor a un servicio programado", 1, 720, 24, "h"),
+        new(UmbralEtaMinutos, "parametro.eta.umbral_minutos", 1, 30, 5, "unidad.min"),
+        new(AnticipacionRecordatorioMinutos, "parametro.recordatorio.anticipacion_minutos", 5, 240, 30, "unidad.min"),
+        new(VentanaCancelacionMinutos, "parametro.solicitud.ventana_cancelacion_minutos", 0, 1440, 60, "unidad.min"),
+        new(AlertaSinConductorMinutos, "parametro.alerta.sin_conductor_minutos", 1, 120, 10, "unidad.min"),
+        new(DiasAvisoDocumentos, "parametro.documentos.dias_aviso", 1, 180, 30, "unidad.dias"),
+        new(VentanaEventoGpsMinutos, "parametro.telemetria.ventana_evento_minutos", 1, 120, 15, "unidad.min"),
+        new(RetencionTelemetriaMeses, "parametro.telemetria.retencion_meses", 1, 24, 6, "unidad.meses"),
+        new(VentanaCargaHoras, "parametro.asignacion.ventana_reciente_horas", 1, 72, 24, "unidad.h"),
+        new(MaximoIntentosAsignacion, "parametro.asignacion.maximo_intentos", 1, 10, 3, "unidad.intentos"),
+        new(DuracionViajeMinutos, "parametro.viaje.duracion_estimada_minutos", 5, 720, 45, "unidad.min"),
+        new(AnticipacionAsignacionHoras, "parametro.asignacion.anticipacion_horas", 1, 720, 24, "unidad.h"),
     ];
 
     public static IReadOnlyList<DefinicionParametro> Definiciones => Todas;
 
     public static DefinicionParametro Obtener(string clave) =>
         Array.Find(Todas, d => d.Clave == clave)
-        ?? throw new DomainException($"El parámetro '{clave}' no existe.");
+        ?? throw new DomainException("error.el_parametro_no_existe", ("clave", clave));
 }

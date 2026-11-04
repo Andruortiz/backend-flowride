@@ -20,7 +20,7 @@ public enum EstadoViaje
     Cancelado = 4,
 }
 
-public sealed record HitoViaje(DateTimeOffset Instante, string Tipo, string Detalle);
+public sealed record HitoViaje(DateTimeOffset Instante, string Tipo, string Detalle, IReadOnlyDictionary<string, string>? Variables = null);
 
 public sealed class Viaje : RaizAgregado
 {
@@ -94,7 +94,7 @@ public sealed class Viaje : RaizAgregado
     {
         if (etaProgramada <= programadoPara)
         {
-            throw new DomainException("La llegada prevista debe ser posterior a la salida programada.");
+            throw new DomainException("error.la_llegada_prevista_debe_ser_posterior_a");
         }
 
         var viaje = new Viaje(
@@ -109,7 +109,7 @@ public sealed class Viaje : RaizAgregado
             destinoLatitud,
             destinoLongitud);
 
-        viaje._hitos.Add(new HitoViaje(ahora, "Programado", "Viaje programado tras la aceptación del conductor"));
+        viaje._hitos.Add(new HitoViaje(ahora, "Programado", "hito.programado"));
 
         return viaje;
     }
@@ -118,12 +118,12 @@ public sealed class Viaje : RaizAgregado
     {
         if (Estado != EstadoViaje.Programado)
         {
-            throw new DomainException($"Un viaje {Estado} no se puede iniciar.");
+            throw new DomainException("error.un_viaje_no_se_puede_iniciar", ("estado", Estado));
         }
 
         Estado = EstadoViaje.EnCurso;
         IniciadoEn = ahora;
-        _hitos.Add(new HitoViaje(ahora, "Inicio", "El conductor reportó el inicio del viaje"));
+        _hitos.Add(new HitoViaje(ahora, "Inicio", "hito.inicio"));
         Registrar(new ViajeIniciado(Id, SolicitudId, PasajeroId, ConductorId, ahora));
     }
 
@@ -131,13 +131,13 @@ public sealed class Viaje : RaizAgregado
     {
         if (Estado != EstadoViaje.EnCurso)
         {
-            throw new DomainException($"Un viaje {Estado} no se puede finalizar.");
+            throw new DomainException("error.un_viaje_no_se_puede_finalizar", ("estado", Estado));
         }
 
         Estado = EstadoViaje.Finalizado;
         FinalizadoEn = ahora;
         AlertaEtaActiva = false;
-        _hitos.Add(new HitoViaje(ahora, "Fin", "El conductor reportó la finalización del viaje"));
+        _hitos.Add(new HitoViaje(ahora, "Fin", "hito.fin"));
         Registrar(new ViajeFinalizado(Id, SolicitudId, PasajeroId, ConductorId, ahora));
     }
 
@@ -145,12 +145,12 @@ public sealed class Viaje : RaizAgregado
     {
         if (Estado != EstadoViaje.EnCurso)
         {
-            throw new DomainException("Solo se reporta un incidente en un viaje en curso.");
+            throw new DomainException("error.solo_se_reporta_un_incidente_en_un");
         }
 
         if (TextHelper.IsEmptyWithTrim(descripcion))
         {
-            throw new DomainException("Describe el incidente.");
+            throw new DomainException("error.describe_el_incidente");
         }
 
         var detalle = descripcion.Trim();
@@ -162,11 +162,11 @@ public sealed class Viaje : RaizAgregado
     {
         if (Estado != EstadoViaje.Programado)
         {
-            throw new DomainException($"Un viaje {Estado} no se puede cancelar.");
+            throw new DomainException("error.un_viaje_no_se_puede_cancelar", ("estado", Estado));
         }
 
         Estado = EstadoViaje.Cancelado;
-        _hitos.Add(new HitoViaje(ahora, "Cancelado", "El viaje se canceló antes de iniciar"));
+        _hitos.Add(new HitoViaje(ahora, "Cancelado", "hito.cancelado"));
     }
 
     public void EvaluarDesviacionEta(DateTimeOffset etaEstimada, int umbralMinutos, DateTimeOffset ahora)
@@ -186,7 +186,7 @@ public sealed class Viaje : RaizAgregado
             }
 
             AlertaEtaActiva = true;
-            _hitos.Add(new HitoViaje(ahora, "DesviacionEta", $"ETA +{desvio:0.#} min sobre lo programado"));
+            _hitos.Add(new HitoViaje(ahora, "DesviacionEta", "hito.desviacion_eta", new Dictionary<string, string> { ["minutos"] = desvio.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) }));
             Registrar(new DesviacionEtaDetectada(Id, PasajeroId, Math.Round(desvio, 1), umbralMinutos, etaEstimada, ahora));
         }
         else

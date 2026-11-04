@@ -1,16 +1,12 @@
 namespace FlowRide.Nucleo.Excepciones;
 
-public class ConflictException : Exception
+public class ConflictException : NegocioException
 {
-    public ConflictException()
+    public ConflictException(string clave, params (string Nombre, object? Valor)[] variables) : base(clave, null, variables)
     {
     }
 
-    public ConflictException(string message) : base(message)
-    {
-    }
-
-    public ConflictException(string message, Exception innerException) : base(message, innerException)
+    public ConflictException(string clave, Exception interna) : base(clave, interna)
     {
     }
 }

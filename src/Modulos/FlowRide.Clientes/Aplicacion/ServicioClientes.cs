@@ -86,5 +86,5 @@ internal sealed class ServicioClientes(
         [.. (await itinerarios.ListarAsync(clienteEmpresarialId, ct)).Select(i => i.A())];
 
     private async Task<ClienteEmpresarial> Buscar(Guid id, CancellationToken ct) =>
-        await clientes.ObtenerAsync(id, ct) ?? throw new NotFoundException("El cliente empresarial no existe.");
+        await clientes.ObtenerAsync(id, ct) ?? throw new NotFoundException("error.el_cliente_empresarial_no_existe");
 }

@@ -29,11 +29,11 @@ public sealed record CandidatoAsignacion(Conductor Conductor, Vehiculo? Vehiculo
 
 public sealed record ContextoAsignacion(SolicitudTransporte Solicitud, DateOnly Fecha, TimeOnly Hora, int PasajerosRequeridos = 1);
 
-public sealed record EvaluacionRegla(bool Descarta, string? Motivo, double Puntos)
+public sealed record EvaluacionRegla(bool Descarta, MensajeClave? Motivo, double Puntos)
 {
     public static EvaluacionRegla Pasa { get; } = new(false, null, 0);
 
-    public static EvaluacionRegla Descartar(string motivo) => new(true, motivo, 0);
+    public static EvaluacionRegla Descartar(MensajeClave motivo) => new(true, motivo, 0);
 
     public static EvaluacionRegla ConPuntos(double puntos) => new(false, null, puntos);
 }
@@ -55,7 +55,7 @@ public sealed class ReglaDisponibilidad : IAssignmentRule
 {
     public string Id => "disponibilidad";
 
-    public string Nombre => "Disponibilidad";
+    public string Nombre => "regla.disponibilidad";
 
     public TipoRegla Tipo => TipoRegla.Eliminatoria;
 
@@ -67,11 +67,11 @@ public sealed class ReglaDisponibilidad : IAssignmentRule
 
         if (motivos.Contains(MotivoNoAsignable.ConductorInactivo))
         {
-            return EvaluacionRegla.Descartar("El conductor está inactivo");
+            return EvaluacionRegla.Descartar(new MensajeClave("motor.el_conductor_esta_inactivo"));
         }
 
         return motivos.Contains(MotivoNoAsignable.ConductorNoDisponible)
-            ? EvaluacionRegla.Descartar("El conductor se declaró no disponible")
+            ? EvaluacionRegla.Descartar(new MensajeClave("motor.el_conductor_se_declaro_no_disponible"))
             : EvaluacionRegla.Pasa;
     }
 }
@@ -80,7 +80,7 @@ public sealed class ReglaCompatibilidadTurno : IAssignmentRule
 {
     public string Id => "turno";
 
-    public string Nombre => "Compatibilidad de turno";
+    public string Nombre => "regla.turno";
 
     public TipoRegla Tipo => TipoRegla.Eliminatoria;
 
@@ -88,7 +88,7 @@ public sealed class ReglaCompatibilidadTurno : IAssignmentRule
 
     public EvaluacionRegla Evaluar(ContextoAsignacion contexto, CandidatoAsignacion candidato) =>
         candidato.Asignabilidad(contexto.Fecha, contexto.Hora).Motivos.Contains(MotivoNoAsignable.FueraDeTurno)
-            ? EvaluacionRegla.Descartar("El servicio queda fuera de su turno")
+            ? EvaluacionRegla.Descartar(new MensajeClave("motor.el_servicio_queda_fuera_de_su"))
             : EvaluacionRegla.Pasa;
 }
 
@@ -96,7 +96,7 @@ public sealed class ReglaRestriccionRegulatoria : IAssignmentRule
 {
     public string Id => "regulatoria";
 
-    public string Nombre => "Restricción regulatoria";
+    public string Nombre => "regla.regulatoria";
 
     public TipoRegla Tipo => TipoRegla.Eliminatoria;
 
@@ -108,21 +108,21 @@ public sealed class ReglaRestriccionRegulatoria : IAssignmentRule
 
         if (motivos.Contains(MotivoNoAsignable.LicenciaNoVigente))
         {
-            return EvaluacionRegla.Descartar("Licencia no vigente en la fecha del servicio");
+            return EvaluacionRegla.Descartar(new MensajeClave("motor.licencia_no_vigente_en_la_fecha"));
         }
 
         if (motivos.Contains(MotivoNoAsignable.SinVehiculo))
         {
-            return EvaluacionRegla.Descartar("No tiene vehículo asignado");
+            return EvaluacionRegla.Descartar(new MensajeClave("motor.no_tiene_vehiculo_asignado"));
         }
 
         if (motivos.Contains(MotivoNoAsignable.VehiculoNoHabilitado))
         {
-            return EvaluacionRegla.Descartar("Vehículo no habilitado");
+            return EvaluacionRegla.Descartar(new MensajeClave("motor.vehiculo_no_habilitado"));
         }
 
         return motivos.Contains(MotivoNoAsignable.DocumentosVehiculoNoVigentes)
-            ? EvaluacionRegla.Descartar("Documentos del vehículo no vigentes en la fecha del servicio")
+            ? EvaluacionRegla.Descartar(new MensajeClave("motor.documentos_del_vehiculo_no_vigentes_en"))
             : EvaluacionRegla.Pasa;
     }
 }
@@ -131,7 +131,7 @@ public sealed class ReglaCapacidadServicio : IAssignmentRule
 {
     public string Id => "capacidad";
 
-    public string Nombre => "Capacidad del servicio";
+    public string Nombre => "regla.capacidad";
 
     public TipoRegla Tipo => TipoRegla.Eliminatoria;
 
@@ -139,7 +139,7 @@ public sealed class ReglaCapacidadServicio : IAssignmentRule
 
     public EvaluacionRegla Evaluar(ContextoAsignacion contexto, CandidatoAsignacion candidato) =>
         candidato.Vehiculo is { } vehiculo && vehiculo.Capacidad < contexto.PasajerosRequeridos
-            ? EvaluacionRegla.Descartar($"El vehículo admite {vehiculo.Capacidad} y se requieren {contexto.PasajerosRequeridos}")
+            ? EvaluacionRegla.Descartar(new MensajeClave("motor.capacidad_insuficiente", ("capacidad", vehiculo.Capacidad), ("requeridos", contexto.PasajerosRequeridos)))
             : EvaluacionRegla.Pasa;
 }
 
@@ -147,7 +147,7 @@ public sealed class ReglaServicioUrgente : IAssignmentRule
 {
     public string Id => "urgente";
 
-    public string Nombre => "Servicio urgente";
+    public string Nombre => "regla.urgente";
 
     public TipoRegla Tipo => TipoRegla.Prioridad;
 
@@ -161,7 +161,7 @@ public sealed class ReglaBalanceCarga : IAssignmentRule
 {
     public string Id => "balance_carga";
 
-    public string Nombre => "Balance de carga";
+    public string Nombre => "regla.balance_carga";
 
     public TipoRegla Tipo => TipoRegla.Puntuacion;
 
@@ -175,7 +175,7 @@ public sealed class ReglaAsignacionesRecientes : IAssignmentRule
 {
     public string Id => "recientes";
 
-    public string Nombre => "Asignaciones recientes";
+    public string Nombre => "regla.recientes";
 
     public TipoRegla Tipo => TipoRegla.Puntuacion;
 

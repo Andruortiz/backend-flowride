@@ -32,11 +32,11 @@ internal sealed class ServicioFlota(
 {
     public async Task<ConductorResponse> CrearConductorAsync(CrearConductorRequest request, CancellationToken ct = default)
     {
-        var usuario = await identidad.ObtenerUsuarioAsync(request.UsuarioId, ct) ?? throw new NotFoundException("El usuario no existe.");
+        var usuario = await identidad.ObtenerUsuarioAsync(request.UsuarioId, ct) ?? throw new NotFoundException("error.el_usuario_no_existe");
 
         if (await conductores.ObtenerPorUsuarioAsync(usuario.Id, ct) is not null)
         {
-            throw new ConflictException("El usuario ya es conductor.");
+            throw new ConflictException("error.el_usuario_ya_es_conductor");
         }
 
         var licencia = DocumentoVigencia.Crear(request.Licencia.Tipo, request.Licencia.Numero, request.Licencia.VenceEl);
@@ -77,7 +77,7 @@ internal sealed class ServicioFlota(
 
     public async Task<ConductorResponse> AsignarVehiculoAsync(Guid id, AsignarVehiculoRequest request, CancellationToken ct = default)
     {
-        var vehiculo = await vehiculos.ObtenerAsync(request.VehiculoId, ct) ?? throw new NotFoundException("El vehículo no existe.");
+        var vehiculo = await vehiculos.ObtenerAsync(request.VehiculoId, ct) ?? throw new NotFoundException("error.el_vehiculo_no_existe");
 
         return await Modificar(id, "conductor.asignar_vehiculo", c => c.AsignarVehiculo(vehiculo), ct);
     }
@@ -91,7 +91,7 @@ internal sealed class ServicioFlota(
 
         if (await vehiculos.ObtenerPorPlacaAsync(vehiculo.Placa, ct) is not null)
         {
-            throw new ConflictException("Ya existe un vehículo con esa placa.");
+            throw new ConflictException("error.ya_existe_un_vehiculo_con_esa_placa");
         }
 
         await vehiculos.AgregarAsync(vehiculo, ct);
@@ -151,10 +151,10 @@ internal sealed class ServicioFlota(
     }
 
     private async Task<Conductor> BuscarConductor(Guid id, CancellationToken ct) =>
-        await conductores.ObtenerAsync(id, ct) ?? throw new NotFoundException("El conductor no existe.");
+        await conductores.ObtenerAsync(id, ct) ?? throw new NotFoundException("error.el_conductor_no_existe");
 
     private async Task<Vehiculo> BuscarVehiculo(Guid id, CancellationToken ct) =>
-        await vehiculos.ObtenerAsync(id, ct) ?? throw new NotFoundException("El vehículo no existe.");
+        await vehiculos.ObtenerAsync(id, ct) ?? throw new NotFoundException("error.el_vehiculo_no_existe");
 
     private async Task<(DateOnly Hoy, int Aviso)> ContextoVigencia(CancellationToken ct) =>
         (Fechas.Hoy(reloj, await operador.ZonaAsync(ct)), await parametros.ValorAsync(CatalogoParametros.DiasAvisoDocumentos, ct));

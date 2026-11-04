@@ -30,12 +30,12 @@ public sealed record Coordenada
     {
         if (double.IsNaN(latitud) || latitud is < -90 or > 90)
         {
-            throw new DomainException("La latitud debe estar entre -90 y 90.");
+            throw new DomainException("error.la_latitud_debe_estar_entre_90_y");
         }
 
         if (double.IsNaN(longitud) || longitud is < -180 or > 180)
         {
-            throw new DomainException("La longitud debe estar entre -180 y 180.");
+            throw new DomainException("error.la_longitud_debe_estar_entre_180_y");
         }
 
         return new Coordenada(latitud, longitud);

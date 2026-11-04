@@ -1,16 +1,12 @@
 namespace FlowRide.Nucleo.Excepciones;
 
-public class NotFoundException : Exception
+public class NotFoundException : NegocioException
 {
-    public NotFoundException()
+    public NotFoundException(string clave, params (string Nombre, object? Valor)[] variables) : base(clave, null, variables)
     {
     }
 
-    public NotFoundException(string message) : base(message)
-    {
-    }
-
-    public NotFoundException(string message, Exception innerException) : base(message, innerException)
+    public NotFoundException(string clave, Exception interna) : base(clave, interna)
     {
     }
 }

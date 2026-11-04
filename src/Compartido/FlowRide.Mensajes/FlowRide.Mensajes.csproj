@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Recursos/*.json" />
+    <ProjectReference Include="../FlowRide.Nucleo/FlowRide.Nucleo.csproj" />
   </ItemGroup>
 
 </Project>

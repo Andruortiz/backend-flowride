@@ -17,6 +17,8 @@ public sealed class CatalogoMensajes : ICatalogoMensajes
         _textos = JsonSerializer.Deserialize<Dictionary<string, string>>(flujo)!;
     }
 
+    public bool Contiene(string clave) => _textos.ContainsKey(clave);
+
     public string Texto(string clave, IReadOnlyDictionary<string, string>? variables = null)
     {
         if (!_textos.TryGetValue(clave, out var texto))

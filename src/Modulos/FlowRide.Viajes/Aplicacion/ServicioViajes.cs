@@ -22,6 +22,7 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 namespace FlowRide.Viajes.Aplicacion;
 
 internal sealed class ServicioViajes(
+    FlowRide.Mensajes.ICatalogoMensajes catalogo,
     IViajeRepository viajes,
     IConsultaFlota flota,
     IConsultaIdentidad identidad,
@@ -37,10 +38,10 @@ internal sealed class ServicioViajes(
 
         if (actor.Rol == RolUsuario.Conductor && (await ConductorActualAsync(ct)).Id != viaje.ConductorId)
         {
-            throw new ForbiddenException("Este viaje no es tuyo.");
+            throw new ForbiddenException("error.este_viaje_no_es_tuyo");
         }
 
-        return viaje.A();
+        return viaje.A(catalogo);
     }
 
     public async Task<IReadOnlyList<ViajeResponse>> ListarAsync(
@@ -51,7 +52,7 @@ internal sealed class ServicioViajes(
             conductorId = (await ConductorActualAsync(ct)).Id;
         }
 
-        return [.. (await viajes.ListarAsync(estado, conductorId, desde, hasta, pagina, tamano, ct)).Select(v => v.A())];
+        return [.. (await viajes.ListarAsync(estado, conductorId, desde, hasta, pagina, tamano, ct)).Select(v => v.A(catalogo))];
     }
 
     public async Task<ViajeResponse> IniciarAsync(Guid id, CancellationToken ct = default)
@@ -60,7 +61,7 @@ internal sealed class ServicioViajes(
 
         if (await viajes.ObtenerEnCursoDeVehiculoAsync(viaje.VehiculoId, ct) is { } enCurso && enCurso.Id != viaje.Id)
         {
-            throw new ConflictException("El vehículo ya tiene un viaje en curso.");
+            throw new ConflictException("error.el_vehiculo_ya_tiene_un_viaje_en");
         }
 
         viaje.Iniciar(reloj.GetUtcNow());
@@ -68,7 +69,7 @@ internal sealed class ServicioViajes(
         await auditoria.RegistrarAsync("viaje.iniciar", $"viaje/{id}", ct: ct);
         await unidad.GuardarCambiosAsync(ct);
 
-        return viaje.A();
+        return viaje.A(catalogo);
     }
 
     public async Task<ViajeResponse> FinalizarAsync(Guid id, CancellationToken ct = default)
@@ -79,7 +80,7 @@ internal sealed class ServicioViajes(
         await auditoria.RegistrarAsync("viaje.finalizar", $"viaje/{id}", ct: ct);
         await unidad.GuardarCambiosAsync(ct);
 
-        return viaje.A();
+        return viaje.A(catalogo);
     }
 
     public async Task<ViajeResponse> ReportarIncidenteAsync(Guid id, ReportarIncidenteRequest request, CancellationToken ct = default)
@@ -89,7 +90,7 @@ internal sealed class ServicioViajes(
         await auditoria.RegistrarAsync("viaje.incidente", $"viaje/{id}", motivo: request.Descripcion, ct: ct);
         await unidad.GuardarCambiosAsync(ct);
 
-        return viaje.A();
+        return viaje.A(catalogo);
     }
 
     public async Task<CalificacionResponse> CalificarAsync(Guid id, CalificarViajeRequest request, CancellationToken ct = default)
@@ -97,11 +98,11 @@ internal sealed class ServicioViajes(
         var viaje = await Buscar(id, ct);
         var pasajero = actor.UsuarioId is { } usuarioId && await identidad.ObtenerPasajeroPorUsuarioAsync(usuarioId, ct) is { } p
             ? p
-            : throw new ForbiddenException("Solo el pasajero califica su viaje.");
+            : throw new ForbiddenException("error.solo_el_pasajero_califica_su_viaje");
 
         if (await calificaciones.ExistePorViajeAsync(id, ct))
         {
-            throw new ConflictException("El viaje ya fue calificado.");
+            throw new ConflictException("error.el_viaje_ya_fue_calificado");
         }
 
         var calificacion = Calificacion.Crear(viaje, pasajero.Id, request.Puntaje, request.Comentario, reloj.GetUtcNow());
@@ -112,12 +113,12 @@ internal sealed class ServicioViajes(
     }
 
     private async Task<Viaje> Buscar(Guid id, CancellationToken ct) =>
-        await viajes.ObtenerAsync(id, ct) ?? throw new NotFoundException("El viaje no existe.");
+        await viajes.ObtenerAsync(id, ct) ?? throw new NotFoundException("error.el_viaje_no_existe");
 
     private async Task<Conductor> ConductorActualAsync(CancellationToken ct) =>
         actor.UsuarioId is { } usuarioId && await flota.ObtenerConductorPorUsuarioAsync(usuarioId, ct) is { } conductor
             ? conductor
-            : throw new ForbiddenException("El usuario autenticado no es un conductor.");
+            : throw new ForbiddenException("error.el_usuario_autenticado_no_es_un_conductor");
 
     private async Task<Viaje> BuscarDelConductorAsync(Guid id, CancellationToken ct)
     {
@@ -125,7 +126,7 @@ internal sealed class ServicioViajes(
 
         if ((await ConductorActualAsync(ct)).Id != viaje.ConductorId)
         {
-            throw new ForbiddenException("Este viaje no es tuyo.");
+            throw new ForbiddenException("error.este_viaje_no_es_tuyo");
         }
 
         return viaje;

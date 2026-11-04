@@ -1,11 +1,16 @@
 using System.Text;
 using FlowRide.Clientes.Aplicacion;
+using FlowRide.Mensajes;
 
 namespace FlowRide.Pruebas.Dominio.Itinerarios;
 
 public class LectorItinerarioCsvTests
 {
     private const string Cabecera = "codigo_servicio,fecha,hora_salida,hora_llegada,destino";
+
+    private static readonly CatalogoMensajes Catalogo = new();
+
+    private static string Texto(ErrorFila e) => Catalogo.Texto(e.Mensaje, e.Variables);
 
     private static string Archivo(params string[] filas) => string.Join("\n", [Cabecera, .. filas]);
 
@@ -52,7 +57,7 @@ public class LectorItinerarioCsvTests
         var resultado = LectorItinerarioCsv.Leer("codigo_servicio,fecha,hora_salida,destino\nAV1,2026-11-03,04:30,X");
 
         Assert.Empty(resultado.Filas);
-        Assert.Contains("hora_llegada", Assert.Single(resultado.Errores).Mensaje, StringComparison.Ordinal);
+        Assert.Contains("hora_llegada", Texto(Assert.Single(resultado.Errores)), StringComparison.Ordinal);
     }
 
     [Theory]
@@ -69,7 +74,7 @@ public class LectorItinerarioCsvTests
         Assert.Empty(resultado.Filas);
         var error = Assert.Single(resultado.Errores);
         Assert.Equal(2, error.Linea);
-        Assert.Contains(pista, error.Mensaje, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains(pista, Texto(error), StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
@@ -108,6 +113,6 @@ public class LectorItinerarioCsvTests
         var resultado = LectorItinerarioCsv.Leer(Cabecera + "\n" + filas);
 
         Assert.Equal(LectorItinerarioCsv.MaximoFilas, resultado.Filas.Count);
-        Assert.Contains("máximo", Assert.Single(resultado.Errores).Mensaje, StringComparison.Ordinal);
+        Assert.Contains("máximo", Texto(Assert.Single(resultado.Errores)), StringComparison.Ordinal);
     }
 }

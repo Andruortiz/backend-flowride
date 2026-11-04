@@ -21,12 +21,17 @@ internal sealed class ServicioCargaItinerarios(
     ICatalogoMensajes catalogo,
     TimeProvider reloj) : IServicioCargaItinerarios
 {
-    public ResultadoLectura Previsualizar(string contenido) => LectorItinerarioCsv.Leer(contenido);
+    public ResultadoLectura Previsualizar(string contenido)
+    {
+        var lectura = LectorItinerarioCsv.Leer(contenido);
+
+        return lectura with { Errores = [.. lectura.Errores.Select(e => e with { Mensaje = catalogo.Texto(e.Mensaje, e.Variables) })] };
+    }
 
     public async Task<ResultadoCarga> ConfirmarAsync(Guid pasajeroId, IReadOnlyList<FilaItinerario> filas, CancellationToken ct = default)
     {
-        var pasajero = await identidad.ObtenerPasajeroAsync(pasajeroId, ct) ?? throw new NotFoundException(catalogo.Texto("carga.pasajero_inexistente"));
-        var domicilio = pasajero.Domicilio ?? throw new DomainException(catalogo.Texto("carga.sin_domicilio"));
+        var pasajero = await identidad.ObtenerPasajeroAsync(pasajeroId, ct) ?? throw new NotFoundException("carga.pasajero_inexistente");
+        var domicilio = pasajero.Domicilio ?? throw new DomainException("carga.sin_domicilio");
         var zona = await operador.ZonaAsync(ct);
         var creados = new List<ViajeCargado>();
         var omitidos = new List<ErrorFila>();

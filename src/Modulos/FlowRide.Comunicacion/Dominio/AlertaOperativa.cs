@@ -72,7 +72,7 @@ public sealed class AlertaOperativa : Entidad
     {
         if (TextHelper.IsEmptyWithTrim(tipo) || TextHelper.IsEmptyWithTrim(titulo) || TextHelper.IsEmptyWithTrim(claveDeduplicacion))
         {
-            throw new DomainException("La alerta requiere tipo, título y clave de deduplicación.");
+            throw new DomainException("error.la_alerta_requiere_tipo_titulo_y_clave");
         }
 
         return new AlertaOperativa(

@@ -1,16 +1,12 @@
 namespace FlowRide.Nucleo.Excepciones;
 
-public class ForbiddenException : Exception
+public class ForbiddenException : NegocioException
 {
-    public ForbiddenException()
+    public ForbiddenException(string clave, params (string Nombre, object? Valor)[] variables) : base(clave, null, variables)
     {
     }
 
-    public ForbiddenException(string message) : base(message)
-    {
-    }
-
-    public ForbiddenException(string message, Exception innerException) : base(message, innerException)
+    public ForbiddenException(string clave, Exception interna) : base(clave, interna)
     {
     }
 }

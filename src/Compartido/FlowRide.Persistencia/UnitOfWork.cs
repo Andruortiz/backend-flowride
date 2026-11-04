@@ -15,11 +15,11 @@ internal sealed class UnitOfWork(FlowRideDbContext db) : IUnitOfWork
         }
         catch (DbUpdateConcurrencyException ex)
         {
-            throw new ConflictException("Otro usuario modificó el mismo registro; vuelve a consultarlo e inténtalo de nuevo.", ex);
+            throw new ConflictException("error.otro_usuario_modifico_el_mismo_registro_vuelve", ex);
         }
         catch (DbUpdateException ex) when (ex.InnerException is PostgresException { SqlState: PostgresErrorCodes.UniqueViolation })
         {
-            throw new ConflictException("La operación choca con un registro existente o con otra operación simultánea.", ex);
+            throw new ConflictException("error.la_operacion_choca_con_un_registro_existente", ex);
         }
     }
 }

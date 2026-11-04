@@ -1,11 +1,12 @@
 using System.Globalization;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace FlowRide.Clientes.Aplicacion;
 
 public sealed record FilaItinerario(int Linea, string CodigoServicio, DateOnly Fecha, TimeOnly HoraSalida, TimeOnly HoraLlegada, string Destino);
 
-public sealed record ErrorFila(int Linea, string Mensaje);
+public sealed record ErrorFila(int Linea, string Mensaje, [property: JsonIgnore] IReadOnlyDictionary<string, string>? Variables = null);
 
 public sealed record ResultadoLectura(IReadOnlyList<FilaItinerario> Filas, IReadOnlyList<ErrorFila> Errores);
 
@@ -25,7 +26,7 @@ public static class LectorItinerarioCsv
 
         if (primera < 0)
         {
-            return Rechazo(1, "El archivo está vacío.");
+            return Rechazo(1, "carga.csv_archivo_vacio");
         }
 
         var cabecera = lineas[primera].TrimEnd('\r');
@@ -36,7 +37,7 @@ public static class LectorItinerarioCsv
 
         if (faltantes.Count > 0)
         {
-            return Rechazo(primera + 1, $"Faltan las columnas: {string.Join(", ", faltantes)}.");
+            return Rechazo(primera + 1, "carga.csv_faltan_columnas", new Dictionary<string, string> { ["columnas"] = string.Join(", ", faltantes) });
         }
 
         var filas = new List<FilaItinerario>();
@@ -55,7 +56,7 @@ public static class LectorItinerarioCsv
 
             if (++total > MaximoFilas)
             {
-                errores.Add(new ErrorFila(i + 1, $"El archivo supera el máximo de {MaximoFilas} viajes."));
+                errores.Add(new ErrorFila(i + 1, "carga.csv_maximo_filas", new Dictionary<string, string> { ["maximo"] = MaximoFilas.ToString(CultureInfo.InvariantCulture) }));
 
                 break;
             }
@@ -75,7 +76,8 @@ public static class LectorItinerarioCsv
         return new ResultadoLectura(filas, errores);
     }
 
-    private static ResultadoLectura Rechazo(int linea, string mensaje) => new([], [new ErrorFila(linea, mensaje)]);
+    private static ResultadoLectura Rechazo(int linea, string mensaje, IReadOnlyDictionary<string, string>? variables = null) =>
+        new([], [new ErrorFila(linea, mensaje, variables)]);
 
     private static string? LeerFila(
         int linea, List<string> celdas, Dictionary<string, int> posiciones, HashSet<(string Codigo, DateOnly Fecha)> vistos, out FilaItinerario? fila)
@@ -87,47 +89,47 @@ public static class LectorItinerarioCsv
 
         if (codigo.Length == 0)
         {
-            return "El código de servicio es obligatorio.";
+            return "error.el_codigo_de_servicio_es_obligatorio";
         }
 
         if (codigo.Length > 50)
         {
-            return "El código de servicio no puede superar 50 caracteres.";
+            return "carga.csv_el_codigo_de_servicio_no_puede";
         }
 
         if (!DateOnly.TryParseExact(Celda(celdas, posiciones["fecha"]), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var fecha))
         {
-            return "La fecha debe tener formato yyyy-MM-dd.";
+            return "carga.csv_la_fecha_debe_tener_formato_yyyy";
         }
 
         if (!TimeOnly.TryParseExact(Celda(celdas, posiciones["hora_salida"]), FormatosHora, CultureInfo.InvariantCulture, DateTimeStyles.None, out var salida))
         {
-            return "La hora de salida debe tener formato HH:mm.";
+            return "carga.csv_la_hora_de_salida_debe_tener";
         }
 
         if (!TimeOnly.TryParseExact(Celda(celdas, posiciones["hora_llegada"]), FormatosHora, CultureInfo.InvariantCulture, DateTimeStyles.None, out var llegada))
         {
-            return "La hora de llegada debe tener formato HH:mm.";
+            return "carga.csv_la_hora_de_llegada_debe_tener";
         }
 
         if (destino.Length == 0)
         {
-            return "El destino es obligatorio.";
+            return "carga.csv_el_destino_es_obligatorio";
         }
 
         if (destino.Length > 300)
         {
-            return "El destino no puede superar 300 caracteres.";
+            return "carga.csv_el_destino_no_puede_superar_300";
         }
 
         if (salida == llegada)
         {
-            return "La hora de salida y la de llegada no pueden ser iguales.";
+            return "error.la_hora_de_salida_y_la_de";
         }
 
         if (!vistos.Add((codigo, fecha)))
         {
-            return "Viaje repetido en el archivo (mismo código y fecha).";
+            return "carga.csv_viaje_repetido_en_el_archivo_mismo";
         }
 
         fila = new FilaItinerario(linea, codigo, fecha, salida, llegada, destino);

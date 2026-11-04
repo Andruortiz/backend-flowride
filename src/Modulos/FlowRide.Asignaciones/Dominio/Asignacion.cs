@@ -99,7 +99,7 @@ public sealed class Asignacion : RaizAgregado
     {
         if (TextHelper.IsEmptyWithTrim(motivo))
         {
-            throw new DomainException("Indica el motivo de la reasignación manual.");
+            throw new DomainException("error.indica_el_motivo_de_la_reasignacion_manual");
         }
 
         var asignacion = new Asignacion(
@@ -143,7 +143,7 @@ public sealed class Asignacion : RaizAgregado
 
         if (Estado is not (EstadoAsignacion.PendienteAceptacion or EstadoAsignacion.Aceptada))
         {
-            throw new DomainException($"Una asignación {Estado} no se puede reasignar.");
+            throw new DomainException("error.una_asignacion_no_se_puede_reasignar", ("estado", Estado));
         }
 
         Estado = EstadoAsignacion.Reasignada;
@@ -155,7 +155,7 @@ public sealed class Asignacion : RaizAgregado
     {
         if (Estado is not (EstadoAsignacion.PendienteAceptacion or EstadoAsignacion.Aceptada))
         {
-            throw new DomainException($"Una asignación {Estado} no se puede cancelar.");
+            throw new DomainException("error.una_asignacion_no_se_puede_cancelar", ("estado", Estado));
         }
 
         Estado = EstadoAsignacion.Cancelada;
@@ -166,7 +166,7 @@ public sealed class Asignacion : RaizAgregado
     {
         if (Estado != esperado)
         {
-            throw new DomainException($"Una asignación {Estado} no se puede {accion}.");
+            throw new DomainException("error.una_asignacion_no_se_puede", ("estado", Estado), ("accion", accion));
         }
     }
 }
