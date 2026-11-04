@@ -17,4 +17,9 @@
     <ProjectReference Include="../FlowRide.Plataforma/FlowRide.Plataforma.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="FlowRide.Pruebas.Servicios" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
+
 </Project>

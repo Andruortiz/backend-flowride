@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -18,4 +19,4 @@ namespace FlowRide.Clientes.Aplicacion.Dtos;
 public sealed record CrearClienteEmpresarialRequest(string Nombre, string? Nit);
 
 public sealed record CrearItinerarioRequest(
-    string CodigoServicio, Guid? ClienteEmpresarialId, string Origen, string Destino, DateOnly Fecha, TimeOnly HoraSalida, TimeOnly HoraLlegada, Guid? PasajeroId = null);
+    string CodigoServicio, Guid? ClienteEmpresarialId, string Origen, string Destino, [property: JsonRequired] DateOnly Fecha, [property: JsonRequired] TimeOnly HoraSalida, [property: JsonRequired] TimeOnly HoraLlegada, Guid? PasajeroId = null);

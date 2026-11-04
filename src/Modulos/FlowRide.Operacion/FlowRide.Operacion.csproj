@@ -25,4 +25,9 @@
     <ProjectReference Include="../FlowRide.Comunicacion/FlowRide.Comunicacion.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="FlowRide.Pruebas.Servicios" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
+
 </Project>

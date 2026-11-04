@@ -69,7 +69,7 @@ public sealed class AlertasController(IServicioAlertas servicio) : ControllerBas
 public sealed class WhatsAppWebhookController(IServicioConversaciones servicio, IConfiguration configuracion) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Recibir(MensajeEntranteRequest request, CancellationToken ct)
+    public async Task<IActionResult> Recibir(MensajeEntranteRequest request, [FromHeader(Name = "X-Webhook-Secret")] string? recibido, CancellationToken ct)
     {
         var secreto = configuracion["WhatsApp:SecretoWebhook"];
 
@@ -78,9 +78,7 @@ public sealed class WhatsAppWebhookController(IServicioConversaciones servicio, 
             return NotFound();
         }
 
-        var recibido = Request.Headers["X-Webhook-Secret"].ToString();
-
-        if (!CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(recibido), Encoding.UTF8.GetBytes(secreto)))
+        if (!CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(recibido ?? string.Empty), Encoding.UTF8.GetBytes(secreto)))
         {
             return Unauthorized();
         }
@@ -110,7 +108,7 @@ public sealed partial class MetaWebhookController(IProcesadorWebhookMeta procesa
     }
 
     [HttpPost]
-    public async Task<IActionResult> Recibir(CancellationToken ct)
+    public async Task<IActionResult> Recibir([FromHeader(Name = "X-Hub-Signature-256")] string? firmaRecibida, CancellationToken ct)
     {
         var secreto = configuracion["WhatsApp:AppSecret"];
 
@@ -124,9 +122,9 @@ public sealed partial class MetaWebhookController(IProcesadorWebhookMeta procesa
         var cuerpo = memoria.ToArray();
         var firma = "sha256=" + Convert.ToHexStringLower(HMACSHA256.HashData(Encoding.UTF8.GetBytes(secreto), cuerpo));
 
-        if (!CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(Request.Headers["X-Hub-Signature-256"].ToString()), Encoding.UTF8.GetBytes(firma)))
+        if (!CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(firmaRecibida ?? string.Empty), Encoding.UTF8.GetBytes(firma)))
         {
-            FirmaInvalida(logger, Request.Headers.ContainsKey("X-Hub-Signature-256"));
+            FirmaInvalida(logger, firmaRecibida is not null);
 
             return Unauthorized();
         }

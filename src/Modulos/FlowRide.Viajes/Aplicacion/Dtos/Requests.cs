@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -23,7 +24,7 @@ namespace FlowRide.Viajes.Aplicacion.Dtos;
 
 public sealed record ReportarIncidenteRequest(string Descripcion);
 
-public sealed record CalificarViajeRequest(int Puntaje, string? Comentario);
+public sealed record CalificarViajeRequest([property: JsonRequired] int Puntaje, string? Comentario);
 
 public sealed record ReportarUbicacionRequest(
-    Guid VehiculoId, DateTimeOffset TimestampOrigen, double Latitud, double Longitud, string Fuente, bool Continua);
+    [property: JsonRequired] Guid VehiculoId, [property: JsonRequired] DateTimeOffset TimestampOrigen, [property: JsonRequired] double Latitud, [property: JsonRequired] double Longitud, string Fuente, [property: JsonRequired] bool Continua);

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -22,13 +23,13 @@ public sealed record CrearSolicitudRequest(
     Guid? PasajeroId,
     string Origen,
     string Destino,
-    DateTimeOffset FechaHoraProgramada,
-    bool Urgente,
-    bool EsPersonal,
+    [property: JsonRequired] DateTimeOffset FechaHoraProgramada,
+    [property: JsonRequired] bool Urgente,
+    [property: JsonRequired] bool EsPersonal,
     Guid? ItinerarioId,
     double? DestinoLatitud,
     double? DestinoLongitud);
 
-public sealed record ModificarSolicitudRequest(string Origen, string Destino, DateTimeOffset FechaHoraProgramada);
+public sealed record ModificarSolicitudRequest(string Origen, string Destino, [property: JsonRequired] DateTimeOffset FechaHoraProgramada);
 
 public sealed record CancelarSolicitudRequest(string Motivo);

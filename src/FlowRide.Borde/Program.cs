@@ -50,6 +50,6 @@ app.MapHealthChecks("/health");
 app.MapWebhooksMeta();
 app.MapReverseProxy();
 
-app.Run();
+await app.RunAsync();
 
 public partial class Program;
