@@ -47,24 +47,24 @@ public sealed class Calificacion : Entidad
 
         if (viaje.Estado != EstadoViaje.Finalizado)
         {
-            throw new DomainException("Solo se califica un viaje finalizado.");
+            throw new DomainException("error.solo_se_califica_un_viaje_finalizado");
         }
 
         if (viaje.PasajeroId != pasajeroId)
         {
-            throw new DomainException("Solo el pasajero del viaje puede calificarlo.");
+            throw new DomainException("error.solo_el_pasajero_del_viaje_puede_calificarlo");
         }
 
         if (puntaje is < PuntajeMinimo or > PuntajeMaximo)
         {
-            throw new DomainException($"El puntaje debe estar entre {PuntajeMinimo} y {PuntajeMaximo}.");
+            throw new DomainException("error.el_puntaje_debe_estar_entre_y", ("puntajeMinimo", PuntajeMinimo), ("puntajeMaximo", PuntajeMaximo));
         }
 
         var texto = TextHelper.IsEmptyWithTrim(comentario) ? null : comentario.Trim();
 
         if (texto is { Length: > LongitudMaximaComentario })
         {
-            throw new DomainException($"El comentario no puede superar {LongitudMaximaComentario} caracteres.");
+            throw new DomainException("error.el_comentario_no_puede_superar_caracteres", ("longitudMaximaComentario", LongitudMaximaComentario));
         }
 
         return new Calificacion(UuidHelper.GetOrGenerate(id), viaje.Id, pasajeroId, viaje.ConductorId, puntaje, texto, ahora);

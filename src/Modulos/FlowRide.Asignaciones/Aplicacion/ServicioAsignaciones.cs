@@ -1,3 +1,4 @@
+using FlowRide.Mensajes;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -39,14 +40,15 @@ internal sealed class ServicioAsignaciones(
     IServicioOperador operador,
     IServicioAuditoria auditoria,
     IContextoActor actor,
+    ICatalogoMensajes catalogo,
     IUnitOfWork unidad,
     TimeProvider reloj) : IServicioAsignaciones
 {
-    private static readonly AssignmentEngine Motor = new();
+    private readonly AssignmentEngine Motor = new(null, catalogo.Texto);
 
     public async Task<ResultadoAsignacionResponse?> AsignarAutomaticoAsync(Guid solicitudId, CancellationToken ct = default)
     {
-        var solicitud = await solicitudes.ObtenerAsync(solicitudId, ct) ?? throw new NotFoundException("La solicitud no existe.");
+        var solicitud = await solicitudes.ObtenerAsync(solicitudId, ct) ?? throw new NotFoundException("error.la_solicitud_no_existe");
 
         if (solicitud.Estado != EstadoSolicitud.Pendiente)
         {
@@ -68,7 +70,7 @@ internal sealed class ServicioAsignaciones(
         }
         else
         {
-            solicitud.MarcarEnRevision("Ningún conductor cumple las reglas de asignación.", ahora);
+            solicitud.MarcarEnRevision(catalogo.Texto("asignacion.ningun_conductor_cumple"), ahora);
         }
 
         await auditoria.RegistrarAsync(
@@ -80,8 +82,8 @@ internal sealed class ServicioAsignaciones(
 
     public async Task<ResultadoAsignacionResponse> ReasignarManualAsync(Guid solicitudId, ReasignarManualRequest request, CancellationToken ct = default)
     {
-        var solicitud = await solicitudes.ObtenerAsync(solicitudId, ct) ?? throw new NotFoundException("La solicitud no existe.");
-        var conductor = await flota.ObtenerConductorAsync(request.ConductorId, ct) ?? throw new NotFoundException("El conductor no existe.");
+        var solicitud = await solicitudes.ObtenerAsync(solicitudId, ct) ?? throw new NotFoundException("error.la_solicitud_no_existe");
+        var conductor = await flota.ObtenerConductorAsync(request.ConductorId, ct) ?? throw new NotFoundException("error.el_conductor_no_existe");
         var vehiculo = conductor.VehiculoId is { } vehiculoId ? await flota.ObtenerVehiculoAsync(vehiculoId, ct) : null;
 
         var zona = await operador.ZonaAsync(ct);
@@ -90,10 +92,11 @@ internal sealed class ServicioAsignaciones(
 
         if (!evaluacion.EsAsignable)
         {
+            var motivos = string.Join(", ", evaluacion.Motivos.Select(m => catalogo.Texto($"motivo_no_asignable.{m}")));
             await auditoria.RegistrarRechazoAsync(
-                "asignacion.manual", $"solicitud/{solicitudId}", $"El conductor no es asignable: {string.Join(", ", evaluacion.Motivos)}", ct);
+                "asignacion.manual", $"solicitud/{solicitudId}", catalogo.Texto("error.el_conductor_no_es_asignable", new Dictionary<string, string> { ["motivos"] = motivos }), ct);
 
-            throw new DomainException($"El conductor no es asignable: {string.Join(", ", evaluacion.Motivos)}.");
+            throw new DomainException("error.el_conductor_no_es_asignable", ("motivos", motivos));
         }
 
         var ahora = reloj.GetUtcNow();
@@ -128,7 +131,7 @@ internal sealed class ServicioAsignaciones(
     public async Task<AsignacionResponse> AceptarAsync(Guid asignacionId, CancellationToken ct = default)
     {
         var asignacion = await BuscarParaConductorAsync(asignacionId, ct);
-        var solicitud = await solicitudes.ObtenerAsync(asignacion.SolicitudId, ct) ?? throw new NotFoundException("La solicitud no existe.");
+        var solicitud = await solicitudes.ObtenerAsync(asignacion.SolicitudId, ct) ?? throw new NotFoundException("error.la_solicitud_no_existe");
         var ahora = reloj.GetUtcNow();
 
         asignacion.Aceptar(ahora);
@@ -150,7 +153,7 @@ internal sealed class ServicioAsignaciones(
     public async Task<AsignacionResponse> RechazarAsync(Guid asignacionId, CancellationToken ct = default)
     {
         var asignacion = await BuscarParaConductorAsync(asignacionId, ct);
-        var solicitud = await solicitudes.ObtenerAsync(asignacion.SolicitudId, ct) ?? throw new NotFoundException("La solicitud no existe.");
+        var solicitud = await solicitudes.ObtenerAsync(asignacion.SolicitudId, ct) ?? throw new NotFoundException("error.la_solicitud_no_existe");
         var ahora = reloj.GetUtcNow();
 
         asignacion.Rechazar(ahora);
@@ -160,7 +163,7 @@ internal sealed class ServicioAsignaciones(
 
         if (solicitud.Intentos >= maximo)
         {
-            solicitud.MarcarEnRevision($"Se agotaron {maximo} intentos de asignación.", ahora);
+            solicitud.MarcarEnRevision(catalogo.Texto("asignacion.intentos_agotados", new Dictionary<string, string> { ["maximo"] = maximo.ToString(System.Globalization.CultureInfo.InvariantCulture) }), ahora);
         }
 
         await auditoria.RegistrarAsync("asignacion.rechazar", $"asignacion/{asignacionId}", ct: ct);
@@ -171,7 +174,7 @@ internal sealed class ServicioAsignaciones(
 
     public async Task<SimulacionAsignacionResponse> SimularAsync(Guid solicitudId, CancellationToken ct = default)
     {
-        var solicitud = await solicitudes.ObtenerAsync(solicitudId, ct) ?? throw new NotFoundException("La solicitud no existe.");
+        var solicitud = await solicitudes.ObtenerAsync(solicitudId, ct) ?? throw new NotFoundException("error.la_solicitud_no_existe");
         var configuracion = await ConfiguracionVigenteAsync(reloj.GetUtcNow(), ct, persistir: false);
         var (resultado, _) = await EvaluarAsync(solicitud, configuracion, ct);
 
@@ -179,7 +182,7 @@ internal sealed class ServicioAsignaciones(
     }
 
     public async Task<AsignacionResponse> ObtenerAsync(Guid id, CancellationToken ct = default) =>
-        (await asignaciones.ObtenerAsync(id, ct) ?? throw new NotFoundException("La asignación no existe.")).A();
+        (await asignaciones.ObtenerAsync(id, ct) ?? throw new NotFoundException("error.la_asignacion_no_existe")).A();
 
     public async Task<IReadOnlyList<AsignacionResponse>> ListarAsync(Guid? conductorId, EstadoAsignacion? estado, int pagina, int tamano, CancellationToken ct = default)
     {
@@ -208,13 +211,13 @@ internal sealed class ServicioAsignaciones(
         return A(nueva);
     }
 
-    private static ConfiguracionAsignacionResponse A(ConfiguracionAsignacion c) =>
+    private ConfiguracionAsignacionResponse A(ConfiguracionAsignacion c) =>
         new(c.Version, c.CreadaEn,
         [
             .. c.Reglas.Select(r =>
             {
                 var regla = CatalogoReglas.Todas.First(x => x.Id == r.ReglaId);
-                return new ReglaConfiguradaResponse(r.ReglaId, regla.Nombre, regla.Tipo, regla.Obligatoria, r.Activa, r.Orden, r.Peso);
+                return new ReglaConfiguradaResponse(r.ReglaId, catalogo.Texto(regla.Nombre), regla.Tipo, regla.Obligatoria, r.Activa, r.Orden, r.Peso);
             }),
         ]);
 
@@ -283,15 +286,15 @@ internal sealed class ServicioAsignaciones(
     private async Task<Conductor> ConductorActualAsync(CancellationToken ct) =>
         actor.UsuarioId is { } usuarioId && await flota.ObtenerConductorPorUsuarioAsync(usuarioId, ct) is { } conductor
             ? conductor
-            : throw new ForbiddenException("El usuario autenticado no es un conductor.");
+            : throw new ForbiddenException("error.el_usuario_autenticado_no_es_un_conductor");
 
     private async Task<Asignacion> BuscarParaConductorAsync(Guid asignacionId, CancellationToken ct)
     {
-        var asignacion = await asignaciones.ObtenerAsync(asignacionId, ct) ?? throw new NotFoundException("La asignación no existe.");
+        var asignacion = await asignaciones.ObtenerAsync(asignacionId, ct) ?? throw new NotFoundException("error.la_asignacion_no_existe");
 
         if ((await ConductorActualAsync(ct)).Id != asignacion.ConductorId)
         {
-            throw new ForbiddenException("Esta asignación no es tuya.");
+            throw new ForbiddenException("error.esta_asignacion_no_es_tuya");
         }
 
         return asignacion;

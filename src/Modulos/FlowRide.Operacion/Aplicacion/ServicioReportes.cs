@@ -62,12 +62,12 @@ internal sealed class ServicioReportes(IReportesQuery consultas, IServicioParame
     {
         if (hasta <= desde)
         {
-            throw new DomainException("El rango del reporte es inválido: 'hasta' debe ser posterior a 'desde'.");
+            throw new DomainException("error.el_rango_del_reporte_es_invalido_hasta");
         }
 
         if ((hasta - desde).TotalDays > MaximoDias)
         {
-            throw new DomainException($"El rango del reporte no puede superar {MaximoDias} días.");
+            throw new DomainException("error.el_rango_del_reporte_no_puede_superar", ("maximoDias", MaximoDias));
         }
 
         return hasta;

@@ -1,3 +1,4 @@
+using FlowRide.Mensajes;
 using FlowRide.Nucleo.Excepciones;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -6,17 +7,17 @@ using Microsoft.Extensions.Logging;
 
 namespace FlowRide.Inicializador.Seguridad;
 
-internal sealed partial class ManejadorExcepciones(IProblemDetailsService problemas, ILogger<ManejadorExcepciones> logger) : IExceptionHandler
+internal sealed partial class ManejadorExcepciones(IProblemDetailsService problemas, ICatalogoMensajes catalogo, ILogger<ManejadorExcepciones> logger) : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         var (estado, titulo, detalle) = exception switch
         {
-            DomainException e => (StatusCodes.Status422UnprocessableEntity, "Regla de negocio", e.Message),
-            NotFoundException e => (StatusCodes.Status404NotFound, "No encontrado", e.Message),
-            ConflictException e => (StatusCodes.Status409Conflict, "Conflicto", e.Message),
-            ForbiddenException e => (StatusCodes.Status403Forbidden, "Prohibido", e.Message),
-            _ => (StatusCodes.Status500InternalServerError, "Error interno", "Ocurrió un error inesperado."),
+            DomainException e => (StatusCodes.Status422UnprocessableEntity, catalogo.Texto("http.regla_de_negocio"), catalogo.Texto(e)),
+            NotFoundException e => (StatusCodes.Status404NotFound, catalogo.Texto("http.no_encontrado"), catalogo.Texto(e)),
+            ConflictException e => (StatusCodes.Status409Conflict, catalogo.Texto("http.conflicto"), catalogo.Texto(e)),
+            ForbiddenException e => (StatusCodes.Status403Forbidden, catalogo.Texto("http.prohibido"), catalogo.Texto(e)),
+            _ => (StatusCodes.Status500InternalServerError, catalogo.Texto("http.error_interno"), catalogo.Texto("http.error_inesperado")),
         };
 
         if (estado == StatusCodes.Status500InternalServerError)

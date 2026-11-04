@@ -44,16 +44,16 @@ public sealed class Operador : Entidad
         Guid? id = null) =>
         new(
             UuidHelper.GetOrGenerate(id),
-            Obligatorio(razonSocial, "La razón social del operador es obligatoria."),
-            Obligatorio(nit, "El NIT del operador es obligatorio."),
+            Obligatorio(razonSocial, "error.la_razon_social_del_operador_es_obligatoria"),
+            Obligatorio(nit, "error.el_nit_del_operador_es_obligatorio"),
             NormalizarCorreo(correoContacto),
             ValidarZona(zonaHoraria),
             ahora);
 
     public void ActualizarDatos(string razonSocial, string nit, string correoContacto, string zonaHoraria)
     {
-        var razon = Obligatorio(razonSocial, "La razón social del operador es obligatoria.");
-        var nitNormalizado = Obligatorio(nit, "El NIT del operador es obligatorio.");
+        var razon = Obligatorio(razonSocial, "error.la_razon_social_del_operador_es_obligatoria");
+        var nitNormalizado = Obligatorio(nit, "error.el_nit_del_operador_es_obligatorio");
         var correo = NormalizarCorreo(correoContacto);
         var zona = ValidarZona(zonaHoraria);
 
@@ -70,16 +70,16 @@ public sealed class Operador : Entidad
 
     private static string NormalizarCorreo(string correo)
     {
-        var limpio = Obligatorio(correo, "El correo de contacto es obligatorio.").ToLowerInvariant();
+        var limpio = Obligatorio(correo, "error.el_correo_de_contacto_es_obligatorio").ToLowerInvariant();
 
         return MailAddress.TryCreate(limpio, out var direccion) && direccion.Address == limpio
             ? limpio
-            : throw new DomainException("El correo de contacto no es válido.");
+            : throw new DomainException("error.el_correo_de_contacto_no_es_valido");
     }
 
     private static string ValidarZona(string zona)
     {
-        var limpia = Obligatorio(zona, "La zona horaria del operador es obligatoria.");
+        var limpia = Obligatorio(zona, "error.la_zona_horaria_del_operador_es_obligatoria");
 
         try
         {
@@ -87,7 +87,7 @@ public sealed class Operador : Entidad
         }
         catch (Exception ex) when (ex is TimeZoneNotFoundException or InvalidTimeZoneException)
         {
-            throw new DomainException($"La zona horaria '{limpia}' no existe.");
+            throw new DomainException("error.la_zona_horaria_no_existe", ("limpia", limpia));
         }
 
         return limpia;

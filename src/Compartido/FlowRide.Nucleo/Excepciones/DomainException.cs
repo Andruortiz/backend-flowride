@@ -1,18 +1,16 @@
 namespace FlowRide.Nucleo.Excepciones;
 
-public class DomainException : Exception
+public class DomainException : NegocioException
 {
-
-    public DomainException()
-    {
-    }
-    public DomainException(string message) : base(message)
+    public DomainException(string clave, params (string Nombre, object? Valor)[] variables) : base(clave, null, variables)
     {
     }
 
-    public DomainException(string message, Exception innerException) : base(message, innerException)
+    public DomainException(string clave, Exception interna) : base(clave, interna)
     {
-
     }
 
+    public DomainException(IReadOnlyList<MensajeClave> detalles) : base(detalles)
+    {
+    }
 }

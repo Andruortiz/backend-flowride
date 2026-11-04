@@ -1,5 +1,6 @@
 using FlowRide.Asignaciones.Aplicacion.Dtos;
 using FlowRide.Asignaciones.Aplicacion.Puertos;
+using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Seguridad;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ public sealed class SolicitudesAsignacionController(IServicioAsignaciones asigna
     {
         var resultado = await asignaciones.AsignarAutomaticoAsync(id, ct);
 
-        return resultado is null ? Conflict(new ProblemDetails { Title = "Conflicto", Detail = "La solicitud ya no está pendiente." }) : resultado;
+        return resultado ?? throw new ConflictException("error.la_solicitud_ya_no_esta_pendiente");
     }
 
     [HttpPost("{id:guid}/reasignar")]

@@ -36,10 +36,12 @@ public sealed record ResultadoAsignacion(CandidatoAsignacion? Ganador, DecisionA
 public sealed class AssignmentEngine
 {
     private readonly IReadOnlyDictionary<string, IAssignmentRule> _catalogo;
+    private readonly Func<MensajeClave, string> _texto;
 
-    public AssignmentEngine(IEnumerable<IAssignmentRule>? catalogo = null)
+    public AssignmentEngine(IEnumerable<IAssignmentRule>? catalogo = null, Func<MensajeClave, string>? texto = null)
     {
         _catalogo = (catalogo ?? CatalogoReglas.Todas).ToDictionary(r => r.Id);
+        _texto = texto ?? (m => m.Clave);
     }
 
     public ResultadoAsignacion Asignar(
@@ -74,12 +76,12 @@ public sealed class AssignmentEngine
 
             if (descarte.Regla is not null)
             {
-                descartados.Add(new MotivoDescarte(candidato.Conductor.Id, descarte.Regla.Nombre, descarte.Evaluacion.Motivo ?? string.Empty));
+                descartados.Add(new MotivoDescarte(candidato.Conductor.Id, _texto(new MensajeClave(descarte.Regla.Nombre)), descarte.Evaluacion.Motivo is { } motivo ? _texto(motivo) : string.Empty));
                 continue;
             }
 
             var desglose = puntuables
-                .Select(p => new DesgloseRegla(p.Regla.Nombre, p.Config.Peso, Math.Round(p.Regla.Evaluar(contexto, candidato).Puntos * p.Config.Peso, 4)))
+                .Select(p => new DesgloseRegla(_texto(new MensajeClave(p.Regla.Nombre)), p.Config.Peso, Math.Round(p.Regla.Evaluar(contexto, candidato).Puntos * p.Config.Peso, 4)))
                 .ToList();
 
             vivos[candidato.Conductor.Id] = candidato;
@@ -92,11 +94,11 @@ public sealed class AssignmentEngine
 
         var decision = new DecisionAsignacion(
             configuracion.Version,
-            [.. activas.Select(a => a.Regla.Nombre)],
+            [.. activas.Select(a => _texto(new MensajeClave(a.Regla.Nombre)))],
             descartados,
             ordenado,
             elegido,
-            hayEmpate ? "Empate resuelto por identificador estable del conductor" : "Sin empate");
+            _texto(new MensajeClave(hayEmpate ? "motor.empate_resuelto" : "motor.sin_empate")));
 
         return new ResultadoAsignacion(elegido is { } id ? vivos[id] : null, decision);
     }

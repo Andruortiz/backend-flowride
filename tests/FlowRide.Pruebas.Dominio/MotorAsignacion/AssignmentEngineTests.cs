@@ -1,3 +1,4 @@
+using FlowRide.Mensajes;
 using static FlowRide.Pruebas.Dominio.Escenarios;
 
 using FlowRide.Asignaciones.Dominio;
@@ -12,7 +13,8 @@ namespace FlowRide.Pruebas.Dominio.MotorAsignacion;
 
 public class AssignmentEngineTests
 {
-    private readonly AssignmentEngine _motor = new();
+    private static readonly CatalogoMensajes Catalogo = new();
+    private readonly AssignmentEngine _motor = new(null, Catalogo.Texto);
     private readonly ConfiguracionAsignacion _config = ConfiguracionAsignacion.PorDefecto(Ahora);
 
     private static ContextoAsignacion Contexto(bool urgente = false) => new(Solicitud(urgente), Fecha, Hora);
@@ -149,7 +151,7 @@ public class AssignmentEngineTests
 
         var error = Assert.Throws<DomainException>(() => ConfiguracionAsignacion.Crear(2, reglas, null, Ahora));
 
-        Assert.Contains("obligatoria", error.Message);
+        Assert.Contains("obligatoria", Catalogo.Texto(error));
     }
 
     [Fact]

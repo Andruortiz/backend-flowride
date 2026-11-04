@@ -34,12 +34,12 @@ internal sealed class ServicioUsuarios(
 
         if (request.Rol == RolUsuario.Pasajero)
         {
-            var clienteId = request.ClienteEmpresarialId ?? throw new DomainException("El pasajero debe pertenecer a un cliente empresarial.");
-            var cliente = await clientes.ObtenerClienteAsync(clienteId, ct) ?? throw new NotFoundException("El cliente empresarial no existe.");
+            var clienteId = request.ClienteEmpresarialId ?? throw new DomainException("error.el_pasajero_debe_pertenecer_a_un_cliente");
+            var cliente = await clientes.ObtenerClienteAsync(clienteId, ct) ?? throw new NotFoundException("error.el_cliente_empresarial_no_existe");
 
             if (!cliente.Activo)
             {
-                throw new DomainException("El cliente empresarial está inactivo.");
+                throw new DomainException("error.el_cliente_empresarial_esta_inactivo");
             }
 
             await pasajeros.AgregarAsync(Pasajero.Crear(usuario, clienteId), ct);
@@ -75,7 +75,7 @@ internal sealed class ServicioUsuarios(
 
         if (anterior is RolUsuario.Pasajero or RolUsuario.Conductor && request.Rol != anterior)
         {
-            throw new DomainException("El rol de un pasajero o conductor no se cambia; crea un usuario nuevo.");
+            throw new DomainException("error.el_rol_de_un_pasajero_o_conductor");
         }
 
         usuario.CambiarRol(request.Rol);
@@ -103,23 +103,23 @@ internal sealed class ServicioUsuarios(
     }
 
     private async Task<Usuario> Buscar(Guid id, CancellationToken ct) =>
-        await usuarios.ObtenerAsync(id, ct) ?? throw new NotFoundException("El usuario no existe.");
+        await usuarios.ObtenerAsync(id, ct) ?? throw new NotFoundException("error.el_usuario_no_existe");
 
     private async Task ValidarUnicidadAsync(Usuario usuario, Guid? excluir, CancellationToken ct)
     {
         if (excluir is null && await usuarios.ExisteCodigoAsync(usuario.CodigoInterno, null, ct))
         {
-            throw new ConflictException("Ya existe un usuario con ese código interno.");
+            throw new ConflictException("error.ya_existe_un_usuario_con_ese_codigo");
         }
 
         if (usuario.Correo is not null && await usuarios.ExisteCorreoAsync(usuario.Correo, excluir, ct))
         {
-            throw new ConflictException("Ya existe un usuario con ese correo.");
+            throw new ConflictException("error.ya_existe_un_usuario_con_ese_correo");
         }
 
         if (usuario.Telefono is not null && await usuarios.ExisteTelefonoAsync(usuario.Telefono, excluir, ct))
         {
-            throw new ConflictException("Ya existe un usuario con ese teléfono.");
+            throw new ConflictException("error.ya_existe_un_usuario_con_ese_telefono");
         }
     }
 }

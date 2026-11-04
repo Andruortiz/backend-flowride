@@ -37,12 +37,12 @@ public sealed record Turno
     {
         if (!Enum.IsDefined(dia))
         {
-            throw new DomainException("El día del turno no es válido.");
+            throw new DomainException("error.el_dia_del_turno_no_es_valido");
         }
 
         if (inicio == fin)
         {
-            throw new DomainException("El inicio y el fin del turno no pueden ser iguales.");
+            throw new DomainException("error.el_inicio_y_el_fin_del_turno");
         }
 
         return new Turno(dia, inicio, fin);

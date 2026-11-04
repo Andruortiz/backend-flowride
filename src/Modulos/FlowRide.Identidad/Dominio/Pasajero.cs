@@ -34,7 +34,7 @@ public sealed class Pasajero : Entidad
 
         if (usuario.Rol != RolUsuario.Pasajero)
         {
-            throw new DomainException("Solo un usuario con rol Pasajero puede tener perfil de pasajero.");
+            throw new DomainException("error.solo_un_usuario_con_rol_pasajero_puede");
         }
 
         ValidarCliente(clienteEmpresarialId);
@@ -53,12 +53,12 @@ public sealed class Pasajero : Entidad
     {
         if (TextHelper.IsEmptyWithTrim(domicilio))
         {
-            throw new DomainException("El domicilio es obligatorio.");
+            throw new DomainException("error.el_domicilio_es_obligatorio");
         }
 
         if (domicilio.Trim().Length > MaximoDomicilio)
         {
-            throw new DomainException($"El domicilio no puede superar {MaximoDomicilio} caracteres.");
+            throw new DomainException("error.el_domicilio_no_puede_superar_caracteres", ("maximoDomicilio", MaximoDomicilio));
         }
 
         Domicilio = domicilio.Trim();
@@ -68,7 +68,7 @@ public sealed class Pasajero : Entidad
     {
         if (UuidHelper.IsDefault(clienteEmpresarialId))
         {
-            throw new DomainException("El pasajero debe pertenecer a un cliente empresarial.");
+            throw new DomainException("error.el_pasajero_debe_pertenecer_a_un_cliente");
         }
     }
 }

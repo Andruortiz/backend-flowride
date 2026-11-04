@@ -41,7 +41,7 @@ public sealed class ClienteEmpresarial : Entidad
 
     private static string NombreValido(string nombre) =>
         TextHelper.IsEmptyWithTrim(nombre)
-            ? throw new DomainException("El nombre del cliente empresarial es obligatorio.")
+            ? throw new DomainException("error.el_nombre_del_cliente_empresarial_es_obligatorio")
             : nombre.Trim();
 
     private static string? NitNormalizado(string? nit) =>

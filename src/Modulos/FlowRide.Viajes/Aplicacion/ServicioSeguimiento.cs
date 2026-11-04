@@ -71,7 +71,7 @@ internal sealed partial class ServicioSeguimiento(
 
     public async Task<UbicacionResponse> ReportarAsync(ReportarUbicacionRequest request, CancellationToken ct = default)
     {
-        _ = await flota.ObtenerVehiculoAsync(request.VehiculoId, ct) ?? throw new NotFoundException("El vehículo no existe.");
+        _ = await flota.ObtenerVehiculoAsync(request.VehiculoId, ct) ?? throw new NotFoundException("error.el_vehiculo_no_existe");
 
         var fuente = request.Fuente.Trim().ToLowerInvariant();
 

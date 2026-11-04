@@ -32,17 +32,17 @@ public sealed record DocumentoVigencia
     {
         if (!Enum.IsDefined(tipo))
         {
-            throw new DomainException("El tipo de documento no es válido.");
+            throw new DomainException("error.el_tipo_de_documento_no_es_valido");
         }
 
         if (TextHelper.IsEmptyWithTrim(numero))
         {
-            throw new DomainException("El número del documento es obligatorio.");
+            throw new DomainException("error.el_numero_del_documento_es_obligatorio");
         }
 
         if (venceEl == default)
         {
-            throw new DomainException("La fecha de vencimiento del documento es obligatoria.");
+            throw new DomainException("error.la_fecha_de_vencimiento_del_documento_es");
         }
 
         return new DocumentoVigencia(tipo, numero.Trim(), venceEl);
@@ -66,7 +66,7 @@ public sealed record DocumentoVigencia
     {
         if (nuevoVencimiento <= VenceEl)
         {
-            throw new DomainException("La renovación debe vencer después de la fecha de vencimiento actual.");
+            throw new DomainException("error.la_renovacion_debe_vencer_despues_de_la");
         }
 
         return Crear(Tipo, nuevoNumero, nuevoVencimiento);

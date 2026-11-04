@@ -15,6 +15,7 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 namespace FlowRide.Plataforma.Aplicacion;
 
 internal sealed class ServicioParametros(
+    FlowRide.Mensajes.ICatalogoMensajes catalogo,
     IParametroRepository repositorio,
     IServicioAuditoria auditoria,
     IMemoryCache cache,
@@ -49,7 +50,7 @@ internal sealed class ServicioParametros(
             .. CatalogoParametros.Definiciones.Select(d =>
             {
                 guardados.TryGetValue(d.Clave, out var p);
-                return new ParametroResponse(d.Clave, d.Descripcion, d.Unidad, d.Minimo, d.Maximo, d.Defecto, p?.Valor ?? d.Defecto, p?.Version ?? 0);
+                return new ParametroResponse(d.Clave, catalogo.Texto(d.Descripcion), catalogo.Texto(d.Unidad), d.Minimo, d.Maximo, d.Defecto, p?.Valor ?? d.Defecto, p?.Version ?? 0);
             }),
         ];
     }
@@ -80,7 +81,7 @@ internal sealed class ServicioParametros(
         await unidad.GuardarCambiosAsync(ct);
         cache.Remove(ClaveCache(clave));
 
-        return new ParametroResponse(definicion.Clave, definicion.Descripcion, definicion.Unidad, definicion.Minimo, definicion.Maximo, definicion.Defecto, parametro.Valor, parametro.Version);
+        return new ParametroResponse(definicion.Clave, catalogo.Texto(definicion.Descripcion), catalogo.Texto(definicion.Unidad), definicion.Minimo, definicion.Maximo, definicion.Defecto, parametro.Valor, parametro.Version);
     }
 }
 
@@ -108,11 +109,11 @@ internal sealed class ServicioAuditoria(IAuditoriaRepository repositorio, IUnitO
 internal sealed class ServicioOperador(IOperadorRepository repositorio, IServicioAuditoria auditoria, IUnitOfWork unidad) : IServicioOperador
 {
     public async Task<OperadorResponse> ObtenerAsync(CancellationToken ct = default) =>
-        (await repositorio.ObtenerAsync(ct) ?? throw new NotFoundException("El operador aún no está configurado.")).A();
+        (await repositorio.ObtenerAsync(ct) ?? throw new NotFoundException("error.el_operador_aun_no_esta_configurado")).A();
 
     public async Task<OperadorResponse> ActualizarAsync(ActualizarOperadorRequest request, CancellationToken ct = default)
     {
-        var operador = await repositorio.ObtenerAsync(ct) ?? throw new NotFoundException("El operador aún no está configurado.");
+        var operador = await repositorio.ObtenerAsync(ct) ?? throw new NotFoundException("error.el_operador_aun_no_esta_configurado");
         operador.ActualizarDatos(request.RazonSocial, request.Nit, request.CorreoContacto, request.ZonaHoraria);
         await auditoria.RegistrarAsync("operador.actualizar", $"operador/{operador.Id}", ct: ct);
         await unidad.GuardarCambiosAsync(ct);

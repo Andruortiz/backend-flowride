@@ -113,7 +113,7 @@ public sealed class SolicitudTransporte : RaizAgregado
     {
         if (!EstaAbierta)
         {
-            throw new DomainException("Solo se puede modificar una solicitud sin conductor; cancélala y crea otra.");
+            throw new DomainException("error.solo_se_puede_modificar_una_solicitud_sin");
         }
 
         ValidarRuta(origen, destino, fechaHoraProgramada, ahora);
@@ -128,7 +128,7 @@ public sealed class SolicitudTransporte : RaizAgregado
     {
         if (!EstaAbierta)
         {
-            throw new DomainException($"La solicitud está {Estado} y no admite una asignación nueva.");
+            throw new DomainException("error.la_solicitud_esta_y_no_admite_una", ("estado", Estado));
         }
 
         Estado = EstadoSolicitud.Asignada;
@@ -139,7 +139,7 @@ public sealed class SolicitudTransporte : RaizAgregado
     {
         if (Estado != EstadoSolicitud.Asignada)
         {
-            throw new DomainException("Solo una solicitud asignada admite el cambio de asignación.");
+            throw new DomainException("error.solo_una_solicitud_asignada_admite_el_cambio");
         }
 
         AsignacionId = nuevaAsignacionId;
@@ -149,7 +149,7 @@ public sealed class SolicitudTransporte : RaizAgregado
     {
         if (Estado != EstadoSolicitud.Asignada)
         {
-            throw new DomainException("Solo una solicitud asignada puede volver a pendiente.");
+            throw new DomainException("error.solo_una_solicitud_asignada_puede_volver_a");
         }
 
         Estado = EstadoSolicitud.Pendiente;
@@ -161,7 +161,7 @@ public sealed class SolicitudTransporte : RaizAgregado
     {
         if (Estado != EstadoSolicitud.Pendiente)
         {
-            throw new DomainException("Solo una solicitud pendiente puede pasar a revisión.");
+            throw new DomainException("error.solo_una_solicitud_pendiente_puede_pasar_a");
         }
 
         Estado = EstadoSolicitud.EnRevision;
@@ -173,7 +173,7 @@ public sealed class SolicitudTransporte : RaizAgregado
     {
         if (Estado != EstadoSolicitud.Asignada)
         {
-            throw new DomainException("Solo una solicitud asignada puede iniciar el servicio.");
+            throw new DomainException("error.solo_una_solicitud_asignada_puede_iniciar_el");
         }
 
         Estado = EstadoSolicitud.EnCurso;
@@ -183,7 +183,7 @@ public sealed class SolicitudTransporte : RaizAgregado
     {
         if (Estado != EstadoSolicitud.EnCurso)
         {
-            throw new DomainException("Solo un servicio en curso puede finalizar.");
+            throw new DomainException("error.solo_un_servicio_en_curso_puede_finalizar");
         }
 
         Estado = EstadoSolicitud.Finalizada;
@@ -193,18 +193,17 @@ public sealed class SolicitudTransporte : RaizAgregado
     {
         if (Estado is EstadoSolicitud.EnCurso or EstadoSolicitud.Finalizada or EstadoSolicitud.Cancelada)
         {
-            throw new DomainException($"Una solicitud {Estado} no se puede cancelar.");
+            throw new DomainException("error.una_solicitud_no_se_puede_cancelar", ("estado", Estado));
         }
 
         if (TextHelper.IsEmptyWithTrim(motivo))
         {
-            throw new DomainException("Indica el motivo de la cancelación.");
+            throw new DomainException("error.indica_el_motivo_de_la_cancelacion");
         }
 
         if (!esOperador && FechaHoraProgramada - ahora < TimeSpan.FromMinutes(ventanaMinutos))
         {
-            throw new DomainException(
-                $"Solo puedes cancelar con al menos {ventanaMinutos} minutos de antelación; contacta al operador.");
+            throw new DomainException("error.cancelacion_fuera_de_ventana", ("ventanaMinutos", ventanaMinutos));
         }
 
         var asignacionPrevia = AsignacionId;
@@ -235,12 +234,12 @@ public sealed class SolicitudTransporte : RaizAgregado
 
         if (latitud is null || longitud is null)
         {
-            throw new DomainException("Indica la latitud y la longitud del destino, o ninguna.");
+            throw new DomainException("error.indica_la_latitud_y_la_longitud_del");
         }
 
         if (double.IsNaN(latitud.Value) || latitud is < -90 or > 90 || double.IsNaN(longitud.Value) || longitud is < -180 or > 180)
         {
-            throw new DomainException("Las coordenadas del destino están fuera de rango.");
+            throw new DomainException("error.las_coordenadas_del_destino_estan_fuera_de");
         }
     }
 
@@ -248,17 +247,17 @@ public sealed class SolicitudTransporte : RaizAgregado
     {
         if (TextHelper.IsEmptyWithTrim(origen) || TextHelper.IsEmptyWithTrim(destino))
         {
-            throw new DomainException("El origen y el destino de la solicitud son obligatorios.");
+            throw new DomainException("error.el_origen_y_el_destino_de_la");
         }
 
         if (string.Equals(origen.Trim(), destino.Trim(), StringComparison.OrdinalIgnoreCase))
         {
-            throw new DomainException("El origen y el destino deben ser distintos.");
+            throw new DomainException("error.el_origen_y_el_destino_deben_ser");
         }
 
         if (fechaHora <= ahora)
         {
-            throw new DomainException("La fecha y hora del servicio debe ser futura.");
+            throw new DomainException("error.la_fecha_y_hora_del_servicio_debe");
         }
     }
 }
