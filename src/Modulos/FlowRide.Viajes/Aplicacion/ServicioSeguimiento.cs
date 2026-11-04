@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
+using FlowRide.Nucleo.Observabilidad;
 using FlowRide.Nucleo.Seguridad;
 using FlowRide.Nucleo.Persistencia;
 using FlowRide.Nucleo.Eventos;
@@ -62,6 +63,10 @@ internal sealed partial class ServicioSeguimiento(
                 EventoRechazado(logger, evento.Fuente, e.Message);
             }
         }
+
+        Metricas.UbicacionesIngeridas.Add(aceptadas, Metricas.Etiqueta("resultado", "aceptada"));
+        Metricas.UbicacionesIngeridas.Add(duplicadas, Metricas.Etiqueta("resultado", "duplicada"));
+        Metricas.UbicacionesIngeridas.Add(rechazadas, Metricas.Etiqueta("resultado", "rechazada"));
 
         return new ResultadoIngesta(aceptadas, duplicadas, rechazadas);
     }

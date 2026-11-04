@@ -1,6 +1,11 @@
 using System.Threading.RateLimiting;
+using Azure.Monitor.OpenTelemetry.AspNetCore;
 using FlowRide.Borde;
 using Microsoft.AspNetCore.HttpOverrides;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +23,16 @@ builder.Services.Configure<ForwardedHeadersOptions>(o =>
 });
 builder.Services.AddHttpClient(RouterWebhooks.Cliente, c => c.Timeout = TimeSpan.FromSeconds(10));
 builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+var telemetria = builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r => r.AddService("flowride-borde"))
+    .WithTracing(t => t.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation())
+    .WithMetrics(m => m.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation().AddMeter("FlowRide.Borde"));
+
+if (!string.IsNullOrWhiteSpace(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]))
+{
+    telemetria.UseAzureMonitor();
+}
+
 builder.Services.AddHealthChecks();
 builder.Services.AddRateLimiter(o =>
 {

@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using FlowRide.Identidad.Dominio;
 using FlowRide.Inicializador.Almacenamiento;
 using FlowRide.Inicializador.Configuracion;
+using FlowRide.Inicializador.Observabilidad;
 using FlowRide.Inicializador.Seguridad;
 using FlowRide.Inicializador.TiempoReal;
 using FlowRide.Mensajes;
@@ -23,9 +24,6 @@ using FlowRide.Operacion.Infraestructura;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 var esDesarrollo = builder.Environment.IsDevelopment();
@@ -122,27 +120,7 @@ builder.Services.AddAuthorization(PoliticasAutorizacion.Registrar);
 
 builder.Services.AddHealthChecks().AddDbContextCheck<FlowRideDbContext>("base-de-datos", tags: ["ready"]);
 
-var hayOtlp = !string.IsNullOrWhiteSpace(builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
-builder.Services.AddOpenTelemetry()
-    .ConfigureResource(r => r.AddService("flowride-backend"))
-    .WithTracing(t =>
-    {
-        t.AddAspNetCoreInstrumentation().AddSource("Npgsql");
-
-        if (hayOtlp)
-        {
-            t.AddOtlpExporter();
-        }
-    })
-    .WithMetrics(m =>
-    {
-        m.AddAspNetCoreInstrumentation().AddRuntimeInstrumentation();
-
-        if (hayOtlp)
-        {
-            m.AddOtlpExporter();
-        }
-    });
+builder.Services.AgregarObservabilidad(builder.Configuration);
 
 var app = builder.Build();
 

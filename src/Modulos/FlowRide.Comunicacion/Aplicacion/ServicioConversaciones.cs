@@ -7,6 +7,7 @@ using FlowRide.Nucleo.Almacenamiento;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
+using FlowRide.Nucleo.Observabilidad;
 using FlowRide.Nucleo.Seguridad;
 using FlowRide.Nucleo.Persistencia;
 using FlowRide.Nucleo.Eventos;
@@ -62,12 +63,15 @@ internal sealed partial class ServicioConversaciones(
     {
         if (await mensajes.ExisteAsync(request.ExternalMessageId, ct))
         {
+            Metricas.MensajesEntrantes.Add(1, Metricas.Etiqueta("resultado", "duplicado"));
             return new RespuestaBotResponse(string.Empty, null);
         }
 
         var usuario = await identidad.ObtenerUsuarioPorTelefonoAsync(request.Telefono, ct);
         string texto;
         Guid? solicitudId = null;
+
+        Metricas.MensajesEntrantes.Add(1, Metricas.Etiqueta("resultado", usuario is { Activo: true } ? usuario.Rol.ToString() : "no_registrado"));
 
         if (usuario is not { Activo: true })
         {

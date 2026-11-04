@@ -1,6 +1,7 @@
 using System.Text.Json;
 using FlowRide.Nucleo.Dominio;
 using FlowRide.Nucleo.Eventos;
+using FlowRide.Nucleo.Observabilidad;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -115,6 +116,7 @@ public sealed partial class ProcesadorOutbox(
         mensaje.DisponibleDesde = reloj.GetUtcNow().AddSeconds(Math.Min(Math.Pow(2, mensaje.Intentos), 300));
         await db.SaveChangesAsync(ct);
 
+        Metricas.OutboxFallos.Add(1, Metricas.Etiqueta("tipo", mensaje.Tipo));
         EventoFallido(logger, mensaje.Tipo, mensaje.Intentos, error);
     }
 
