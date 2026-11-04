@@ -197,6 +197,5 @@ if (claveDesarrollo is not null)
 
 await app.RunAsync();
 
-internal sealed record SolicitudToken(string CodigoInterno);
 
 public partial class Program;

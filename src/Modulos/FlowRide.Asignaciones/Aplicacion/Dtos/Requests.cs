@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -27,7 +28,7 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 
 namespace FlowRide.Asignaciones.Aplicacion.Dtos;
 
-public sealed record ReasignarManualRequest(Guid ConductorId, string Motivo);
+public sealed record ReasignarManualRequest([property: JsonRequired] Guid ConductorId, string Motivo);
 
 public sealed record ReglaConfiguracionRequest(string ReglaId, bool Activa, int Orden, double Peso);
 

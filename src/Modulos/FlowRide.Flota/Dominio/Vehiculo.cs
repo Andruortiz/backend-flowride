@@ -12,7 +12,7 @@ using FlowRide.Plataforma.Dominio;
 
 namespace FlowRide.Flota.Dominio;
 
-public sealed class Vehiculo : Entidad
+public sealed partial class Vehiculo : Entidad
 {
     public static readonly IReadOnlyList<TipoDocumento> DocumentosRequeridos =
     [
@@ -21,8 +21,8 @@ public sealed class Vehiculo : Entidad
         TipoDocumento.TarjetaOperacion,
     ];
 
-    private static readonly Regex FormatoPlaca =
-          new(@"^[A-Z]{3}\d{2}[A-Z0-9]$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    [GeneratedRegex(@"^[A-Z]{3}\d{2}[A-Z0-9]$", RegexOptions.CultureInvariant, matchTimeoutMilliseconds: 250)]
+    private static partial Regex FormatoPlaca();
 
     private readonly List<DocumentoVigencia> _documentos = [];
 
@@ -96,7 +96,7 @@ public sealed class Vehiculo : Entidad
             .Replace("-", string.Empty, StringComparison.Ordinal)
             .ToUpperInvariant();
 
-        if (!FormatoPlaca.IsMatch(limpia))
+        if (!FormatoPlaca().IsMatch(limpia))
         {
             throw new DomainException("error.la_placa_no_tiene_un_formato_valido");
         }

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using FlowRide.Nucleo.Excepciones;
 using FlowRide.Nucleo.Helpers;
 using FlowRide.Nucleo.Dominio;
@@ -19,8 +20,8 @@ using FlowRide.Plataforma.Aplicacion.Puertos;
 namespace FlowRide.Identidad.Aplicacion.Dtos;
 
 public sealed record CrearUsuarioRequest(
-    string Nombre, string? Correo, string? Telefono, string CodigoInterno, RolUsuario Rol, Guid? ClienteEmpresarialId);
+    string Nombre, string? Correo, string? Telefono, string CodigoInterno, [property: JsonRequired] RolUsuario Rol, Guid? ClienteEmpresarialId);
 
 public sealed record ActualizarUsuarioRequest(string Nombre, string? Correo, string? Telefono);
 
-public sealed record CambiarRolRequest(RolUsuario Rol);
+public sealed record CambiarRolRequest([property: JsonRequired] RolUsuario Rol);

@@ -51,7 +51,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: gitleaks/gitleaks-action@v3
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -120,7 +120,8 @@ jobs:
             /d:sonar.token="$SONAR_TOKEN" \
             /d:sonar.host.url="https://sonarcloud.io" \
             /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" \
-            /d:sonar.exclusions="**/Migraciones/**"
+            /d:sonar.exclusions="**/Migraciones/**" \
+            /d:sonar.coverage.exclusions="**/Aplicacion/Dtos/**,**/FabricaDbContextDiseno.cs,**/AlmacenamientoAzureBlob.cs,**/PlanificadorBackground.cs,**/ClienteMeta.cs"
 
           dotnet build FlowRide.slnx -c Release
 

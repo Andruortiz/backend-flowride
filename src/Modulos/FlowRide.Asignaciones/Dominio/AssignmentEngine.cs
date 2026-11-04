@@ -89,7 +89,7 @@ public sealed class AssignmentEngine
         }
 
         var ordenado = ranking.OrderByDescending(r => r.Total).ThenBy(r => r.ConductorId).ToList();
-        var hayEmpate = ordenado.Count > 1 && ordenado[0].Total == ordenado[1].Total;
+        var hayEmpate = ordenado.Count > 1 && Math.Abs(ordenado[0].Total - ordenado[1].Total) < 0.00005;
         var elegido = ordenado.Count > 0 ? ordenado[0].ConductorId : (Guid?)null;
 
         var decision = new DecisionAsignacion(

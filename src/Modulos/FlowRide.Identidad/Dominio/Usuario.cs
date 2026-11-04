@@ -13,10 +13,10 @@ using FlowRide.Plataforma.Dominio;
 
 namespace FlowRide.Identidad.Dominio;
 
-public sealed class Usuario : RaizAgregado
+public sealed partial class Usuario : RaizAgregado
 {
-    private static readonly Regex FormatoTelefono =
-        new(@"^\+[1-9]\d{7,14}$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    [GeneratedRegex(@"^\+[1-9]\d{7,14}$", RegexOptions.CultureInvariant, matchTimeoutMilliseconds: 250)]
+    private static partial Regex FormatoTelefono();
 
     private Usuario(Guid id, string nombre, string codigoInterno, RolUsuario rol, DateTimeOffset creadoEn)
         : base(id)
@@ -165,7 +165,7 @@ public sealed class Usuario : RaizAgregado
             .Replace(" ", string.Empty, StringComparison.Ordinal)
             .Replace("-", string.Empty, StringComparison.Ordinal);
 
-        if (!FormatoTelefono.IsMatch(limpio))
+        if (!FormatoTelefono().IsMatch(limpio))
         {
             throw new DomainException("error.el_telefono_debe_estar_en_formato_internacional");
         }
